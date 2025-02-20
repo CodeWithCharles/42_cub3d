@@ -1,5 +1,5 @@
-./*.a
-binaries/
+*.a
+bin/
 includes/libft.h
 build/
 third_party/*/
