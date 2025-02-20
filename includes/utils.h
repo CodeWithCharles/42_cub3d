@@ -1,19 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texturing.h                                        :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 16:59:57 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/20 17:00:47 by cpoulain         ###   ########.fr       */
+/*   Created: 2025/02/20 17:23:21 by cpoulain          #+#    #+#             */
+/*   Updated: 2025/02/20 17:55:46 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEXTURING_H
-# define TEXTURING_H
-
-int	parse_str_to_hex(
-		void **str);
+#ifndef UTILS_H
+# define UTILS_H
 
 #endif

@@ -6,18 +6,25 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/20 17:11:24 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:00:55 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include <fcntl.h>
+# include <errno.h>
+# include <string.h>
+# include <stdbool.h>
+# include <X11/keysym.h>
+# include <math.h>
+
 # include "libft.h"
 # include "mlx.h"
-# include "texturing.h"
 # include "error.h"
 # include "colors.h"
+# include "utils.h"
 
 //	Constants
 
@@ -26,9 +33,19 @@
 # define RET_OK						0
 # define RET_ERR					1
 
+//		Screen
+
+# define WIDTH						1920
+# define HEIGHT						1280
+
 //		Textures
 
-# define WIDTH
+# define TEX_SIZE					64
+
+//		File extensions
+
+# define EXT_XPM					".xpm"
+# define EXT_CUB					".cub"
 
 //	Enums
 
@@ -114,6 +131,7 @@ typedef struct s_game_ctx
 	int				is_ceil_rgb;
 	int				is_floor_rgb;
 	t_map_element	*map;
+	t_mlx_data		mlx_data;
 }	t_game_ctx;
 
 //		Door
@@ -136,5 +154,18 @@ void	print_arg_error(
 void	print_gen_error(
 			t_game_ctx *ctx,
 			const char *error);
+
+//		Texturing
+
+int		parse_str_to_hex(
+			t_game_ctx *ctx,
+			void **str);
+
+//		File validator
+
+int		check_file(
+			t_game_ctx *ctx,
+			char *str,
+			bool is_cub);
 
 #endif
