@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:51:53 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/20 18:08:41 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:16:17 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	_str_to_color_tab(
 		while (str_split[i][j])
 			if (!ft_isdigit(str[j++]))
 				return (ft_free_split(&str_split), RET_ERR);
-		*color_tab[i] = ft_atoi(str_split[i]);
+		(*color_tab)[i] = ft_atoi(str_split[i]);
 		i++;
 	}
 	ft_free_split(&str_split);

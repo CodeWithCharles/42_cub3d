@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/20 18:06:41 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:15:58 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 	game.p_name = argv[0];
 	str = ft_strdup("255,123,72");
 	if (parse_str_to_hex(&game, &str) == RET_OK)
-		printf("%lX\n", (unsigned long)(str));
+		printf("%X\n", *((unsigned int *)str));
 	free(str);
 	return (0);
 }
