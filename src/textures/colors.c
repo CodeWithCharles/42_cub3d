@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:51:53 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/20 18:16:17 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:16:45 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	parse_str_to_hex(
 	void **str
 )
 {
-	unsigned long	*color;
+	unsigned int	*color;
 	int				colors_tab[3];
 
 	colors_tab[0] = -1;
