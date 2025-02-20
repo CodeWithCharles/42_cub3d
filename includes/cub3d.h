@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/20 15:08:30 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:11:24 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 
 # include "libft.h"
 # include "mlx.h"
+# include "texturing.h"
+# include "error.h"
+# include "colors.h"
+
+//	Constants
+
+//		Returns and error codes
+
+# define RET_OK						0
+# define RET_ERR					1
+
+//		Textures
+
+# define WIDTH
 
 //	Enums
 
@@ -96,6 +110,7 @@ typedef struct s_mlx_data
 typedef struct s_game_ctx
 {
 	void			*game_textures[7];
+	char			*p_name;
 	int				is_ceil_rgb;
 	int				is_floor_rgb;
 	t_map_element	*map;
@@ -108,5 +123,18 @@ typedef struct s_door
 	t_door_state		is_closed;
 	t_door_anim_state	anim_state;
 }	t_door;
+
+//	Functions
+
+//		Errors
+
+void	print_arg_error(
+			t_game_ctx *ctx,
+			const char *error,
+			const char *arg);
+
+void	print_gen_error(
+			t_game_ctx *ctx,
+			const char *error);
 
 #endif
