@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:29:56 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/21 17:50:30 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:29:15 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,59 @@ bool	check_missing_texture(t_bool_format checker)
 	return (true);
 }
 
+t_2d_vector	find_start_pos(char **map)
+{
+	t_2d_vector	cur;
+	
+	cur.y = 0;
+	while (map[cur.y])
+	{
+		cur.x = 0;
+		while (map[cur.y][cur.x])
+		{
+			if (map[cur.y][cur.x] == 'N' || map[cur.y][cur.x] == 'E'
+					|| map[cur.y][cur.x] == 'S' || map[cur.y][cur.x] == 'W')
+				return (cur);
+			cur.x++;
+		}
+		cur.y++;
+	}
+	fd_printf(2, "Error: player spawn point not found\n");
+	cur.x = -1;
+	cur.y = -1;
+	return(cur);
+}
+
+void	flood_fill_parse(char **map, int x, int y, int *valid)
+{
+	if (x < 0 || y < 0 || map[y] == NULL || x >= (int)ft_strlen(map[y]))
+	{
+		*valid = 0;
+		return ;
+	} 
+	if (map[y][x] == '1' || map[y][x] == '2')
+		return ;
+	map[y][x] = '2';
+	flood_fill_parse(map, x + 1, y, valid);
+	flood_fill_parse(map, x - 1, y, valid);
+	flood_fill_parse(map, x, y + 1, valid);
+	flood_fill_parse(map, x, y - 1, valid);
+}
+
 bool	check_mini_map_format(char **map, int i)
 {
+	int	valid;
+	t_2d_vector	start_pos;
+
+	valid = 1;
 	while (map[i][0] == '_')
 		i++;
-	if (map[i][0] != '_' && map[i][0] != ' ' && map[i][0] != '1' && map[i][0] != '0')
-		return(fd_printf(2, "Error: wrong map param : %c\n", map[i][0]), false);
+	start_pos = find_start_pos(map + i);
+	if (start_pos.x == -1 && start_pos.y == -1)
+		return(false);
+	flood_fill_parse(map + i, start_pos.x, start_pos.y, &valid);
+	if (valid == 0)
+		return(fd_printf(2, "Error: Wrong map param\n"), false);
 	return(true);
 }
 void	set_bool_texture(char *line, t_bool_format *checker)
@@ -96,11 +143,15 @@ void	set_bool_texture(char *line, t_bool_format *checker)
 		if (line[3] != '\0')
 				checker->e_texture = true;
 	if (ft_strncmp(line, "F ", 2) == 0)
-		if (line[3] != '\0')
+		if (line[2] != '\0')
 				checker->f_colors = true;
 	if (ft_strncmp(line, "C ", 2) == 0)
-		if (line[3] != '\0')
+		if (line[2] != '\0')
 				checker->c_colors = true;
+	if(checker->c_colors == true && checker->n_texture == true
+			&& checker->f_colors == true && checker->s_texture == true
+			&& checker->e_texture == true && checker->w_texture == true)
+		checker->all_texture_found = true;
 }
 
 bool	check_map_format(char **map)
@@ -112,11 +163,10 @@ bool	check_map_format(char **map)
 	init_checker(&checker);
 	while (map[i] && checker.all_texture_found == false)
 	{
-		if (map[i][0] == '_')
+		if (map[i][0] == '_' && map[i][1] == '\0')
 			i++;
 		else
-			set_bool_texture(map[i], &checker);
-		i++;
+			set_bool_texture(map[i++], &checker);
 	}
 	if (checker.all_texture_found == false && check_missing_texture(checker) == false)
 		return (false);
