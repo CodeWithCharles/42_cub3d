@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/20 18:00:55 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:01:26 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,20 @@ typedef struct s_2d_vector
 	int	y;
 }	t_2d_vector;
 
+//		Texture context
+
+typedef struct s_tex_ctx
+{
+	char			*north_path;
+	char			*south_path;
+	char			*west_path;
+	char			*east_path;
+	char			*floor;
+	char			*ceiling;
+	int				map_width;
+	int				map_height;
+}	t_tex_ctx;
+
 //		Map element
 
 typedef struct s_map_element
@@ -109,29 +123,28 @@ typedef struct s_map_element
 	int			is_end;
 }	t_map_element;
 
-//		Mlx data
+//		Image data
 
-typedef struct s_mlx_data
+typedef struct s_img
 {
-	void	*mlx;
-	void	*window;
 	void	*img;
-	char	*img_pixels_ptr;
+	int		*pixels_ptr;
 	int		bits_per_pixel;
 	int		endianess;
 	int		line_len;
-}	t_mlx_data;
+}	t_img;
 
 //		Main context
 
 typedef struct s_game_ctx
 {
-	void			*game_textures[7];
+	void			*mlx;
+	void			*window;
+	int				*(game_textures[7]);
 	char			*p_name;
 	int				is_ceil_rgb;
 	int				is_floor_rgb;
-	t_map_element	*map;
-	t_mlx_data		mlx_data;
+	t_map_element	**map;
 }	t_game_ctx;
 
 //		Door
