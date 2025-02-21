@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/21 17:01:26 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:44:41 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 
 //		Screen
 
-# define WIDTH						1920
-# define HEIGHT						1280
+# define WIN_WIDTH					1920
+# define WIN_HEIGHT					1280
 
 //		Textures
 
@@ -109,6 +109,8 @@ typedef struct s_tex_ctx
 	char			*east_path;
 	char			*floor;
 	char			*ceiling;
+	bool			is_floor_rgb;
+	bool			is_ceil_rgb;
 	int				map_width;
 	int				map_height;
 }	t_tex_ctx;
@@ -138,12 +140,14 @@ typedef struct s_img
 
 typedef struct s_game_ctx
 {
+	char			*p_name;
 	void			*mlx;
 	void			*window;
-	int				*(game_textures[7]);
-	char			*p_name;
-	int				is_ceil_rgb;
-	int				is_floor_rgb;
+	t_tex_ctx		texctx;
+	int				*game_textures[7];
+	int				**screen_pixels;
+	unsigned int	hex_floor;
+	unsigned int	hex_ceiling;
 	t_map_element	**map;
 }	t_game_ctx;
 
@@ -156,6 +160,15 @@ typedef struct s_door
 }	t_door;
 
 //	Functions
+
+//		Inits
+
+void	init_game(
+			char *p_name,
+			t_game_ctx *ctx);
+
+void	refresh_screen_pixels(
+			t_game_ctx *ctx);
 
 //		Errors
 
@@ -172,7 +185,8 @@ void	print_gen_error(
 
 int		parse_str_to_hex(
 			t_game_ctx *ctx,
-			void **str);
+			unsigned int *var,
+			char *str);
 
 //		File validator
 

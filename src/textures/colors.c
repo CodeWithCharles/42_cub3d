@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:51:53 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/20 18:16:45 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:44:30 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,20 @@ static int	_check_valid_rgb(
 
 int	parse_str_to_hex(
 	t_game_ctx *ctx,
-	void **str
+	unsigned int *var,
+	char *str
 )
 {
-	unsigned int	*color;
 	int				colors_tab[3];
 
 	colors_tab[0] = -1;
 	colors_tab[1] = -1;
 	colors_tab[2] = -1;
-	_str_to_color_tab((char *)(*str), &colors_tab);
-	color = malloc(sizeof(unsigned long));
-	if (!color)
-		return (print_gen_error(ctx, ERR_FATAL_ALLOC), RET_ERR);
+	_str_to_color_tab(str, &colors_tab);
 	if (_check_valid_rgb(colors_tab))
-	{
-		free(color);
 		return (print_gen_error(ctx, ERR_INVALID_RGB_DATA), RET_ERR);
-	}
-	*color = ((colors_tab[0] & 0xff) << 16)
+	*var = ((colors_tab[0] & 0xff) << 16)
 		+ ((colors_tab[1] & 0xff) << 8) + (colors_tab[2] & 0xff);
-	free(*str);
-	*str = color;
 	return (RET_OK);
 }
 
