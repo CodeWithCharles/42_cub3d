@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/21 18:00:29 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:54:54 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ typedef struct s_tex_ctx
 	char			*ceiling;
 	bool			is_floor_rgb;
 	bool			is_ceil_rgb;
-	int				map_width;
+	int				map_width; // ? irregular map 
 	int				map_height;
 }	t_tex_ctx;
 
@@ -140,7 +140,7 @@ typedef struct s_img
 
 typedef struct s_game_ctx
 {
-	char			*p_name;
+	char			*p_name; // ? player direction ?
 	void			*mlx;
 	void			*window;
 	t_tex_ctx		texctx;

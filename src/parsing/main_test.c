@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:29:56 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/21 20:29:15 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:55:33 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,11 @@ void	flood_fill_parse(char **map, int x, int y, int *valid)
 	} 
 	if (map[y][x] == '1' || map[y][x] == '2')
 		return ;
-	map[y][x] = '2';
+	else if (map[y][x] == '0')
+		map[y][x] = '2';
+	else if (map[y][x] != 'N' && map[y][x] != 'S'
+			&& map[y][x] != 'W'  && map[y][x] != 'E')
+		*valid = 0;
 	flood_fill_parse(map, x + 1, y, valid);
 	flood_fill_parse(map, x - 1, y, valid);
 	flood_fill_parse(map, x, y + 1, valid);
@@ -173,6 +177,44 @@ bool	check_map_format(char **map)
 	return(check_mini_map_format(map, i));
 }
 
+void	set_texture(bool *texture_set, t_tex_ctx *textures, char *line)
+{
+	if (ft_strncmp(line, "NO ", 3) == 0)
+		textures->north_path = ft_strdup(line + 3);
+	if (ft_strncmp(line, "SO ", 3) == 0)
+		textures->south_path = ft_strdup(line + 3);
+	if (ft_strncmp(line, "WE ", 3) == 0)
+		textures->west_path = ft_strdup(line + 3);
+	if (ft_strncmp(line, "EA ", 3) == 0)
+		textures->east_path = ft_strdup(line + 3);
+	if (ft_strncmp(line, "F ", 2) == 0)
+		textures->floor = ft_strdup(line + 2);
+	if (ft_strncmp(line, "C ", 2) == 0)
+		textures->ceiling = ft_strdup(line + 2);
+}
+
+t_tex_ctx	init_tex_ctx(char **map)
+{
+	int			i;
+	bool		texture_set;
+	t_tex_ctx	textures;
+
+	i = 0;
+	texture_set = false;
+	while (map[i] && texture_set == false)
+	{
+		if (map[i][0] != '_')
+			set_texture(&texture_set, &textures, map[i]);
+		i++;
+	}
+	// TODO init map_element
+}
+
+void	init_game_ctx(char **map, t_game_ctx *ptr)
+{
+	ptr->texctx = init_tex_ctx(map);
+}
+
 t_game_ctx	*main_parsing(int argc, char **argv)
 {
 	char		**map;
@@ -187,10 +229,11 @@ t_game_ctx	*main_parsing(int argc, char **argv)
 	}
 	buffer = fill_buffer(argv[1]);
 	map = ft_split(buffer, '\n');
+	free(buffer);
 	if (check_map_format(map) == false) // ! invalid map format error
 		return (ft_free_split(&map), NULL);
 	return_pointer = malloc(sizeof(t_game_ctx));
-	// init_game_ctx(map);
+	// init_game_ctx(map, return_pointer);
 	return (return_pointer);
 }
 
