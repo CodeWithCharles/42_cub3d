@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:29:56 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/21 16:13:06 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:50:30 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,27 @@ bool	check_mini_map_format(char **map, int i)
 		return(fd_printf(2, "Error: wrong map param : %c\n", map[i][0]), false);
 	return(true);
 }
+void	set_bool_texture(char *line, t_bool_format *checker)
+{
+	if (ft_strncmp(line, "NO ", 3) == 0)
+		if (line[3] != '\0')
+				checker->n_texture = true;
+	if (ft_strncmp(line, "SO ", 3) == 0)
+		if (line[3] != '\0')
+				checker->s_texture = true;
+	if (ft_strncmp(line, "WE ", 3) == 0)
+		if (line[3] != '\0')
+				checker->w_texture = true;
+	if (ft_strncmp(line, "EA ", 3) == 0)
+		if (line[3] != '\0')
+				checker->e_texture = true;
+	if (ft_strncmp(line, "F ", 2) == 0)
+		if (line[3] != '\0')
+				checker->f_colors = true;
+	if (ft_strncmp(line, "C ", 2) == 0)
+		if (line[3] != '\0')
+				checker->c_colors = true;
+}
 
 bool	check_map_format(char **map)
 {
@@ -93,51 +114,8 @@ bool	check_map_format(char **map)
 	{
 		if (map[i][0] == '_')
 			i++;
-		if (ft_strncmp(map[i], "NO ", 3) == 0)
-		{
-			if (map[i][3] != '\0')
-				checker.n_texture = true;
-			else
-				return(ft_putstr_fd("Error: NO texture not set\n", 2), false);
-		}
-		else if (ft_strncmp(map[i], "SO ", 3) == 0 && checker.n_texture == true)
-		{
-			if (map[i][3] != '\0')
-				checker.s_texture = true;
-			else
-				return(ft_putstr_fd("Error: SO texture not set\n", 2), false);
-		}
-		else if (ft_strncmp(map[i], "WE ", 3) == 0 && checker.s_texture == true)
-		{
-			if (map[i][3] != '\0')
-				checker.w_texture = true;
-			else
-				return(ft_putstr_fd("Error: WE texture not set\n", 2), false);
-		}
-		else if (ft_strncmp(map[i], "EA ", 3) == 0 && checker.w_texture == true)
-		{
-			if (map[i][3] != '\0')
-				checker.e_texture = true;
-			else
-				return(ft_putstr_fd("Error: EA texture not set\n", 2), false);
-		}
-		else if (ft_strncmp(map[i], "F ", 2) == 0 && checker.e_texture == true)
-		{
-			if (map[i][2] != '\0')
-				checker.f_colors = true;
-			else
-				return(ft_putstr_fd("Error: F colors not set\n", 2), false);
-		}
-		else if (ft_strncmp(map[i], "C ", 2) == 0 && checker.f_colors == true)
-		{
-			if (map[i][2] != '\0')
-			{
-				checker.c_colors = true;
-				checker.all_texture_found = true;
-			}
-			else
-				return(ft_putstr_fd("Error: C colors not set\n", 2), false);
-		}
+		else
+			set_bool_texture(map[i], &checker);
 		i++;
 	}
 	if (checker.all_texture_found == false && check_missing_texture(checker) == false)
