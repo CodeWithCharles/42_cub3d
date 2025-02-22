@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:29:56 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/21 20:55:33 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/22 04:04:28 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,7 @@ void	flood_fill_parse(char **map, int x, int y, int *valid)
 		return ;
 	else if (map[y][x] == '0')
 		map[y][x] = '2';
-	else if (map[y][x] != 'N' && map[y][x] != 'S'
-			&& map[y][x] != 'W'  && map[y][x] != 'E')
+	else
 		*valid = 0;
 	flood_fill_parse(map, x + 1, y, valid);
 	flood_fill_parse(map, x - 1, y, valid);
@@ -118,7 +117,8 @@ void	flood_fill_parse(char **map, int x, int y, int *valid)
 
 bool	check_mini_map_format(char **map, int i)
 {
-	int	valid;
+	int			valid;
+	char		tmp;
 	t_2d_vector	start_pos;
 
 	valid = 1;
@@ -127,9 +127,13 @@ bool	check_mini_map_format(char **map, int i)
 	start_pos = find_start_pos(map + i);
 	if (start_pos.x == -1 && start_pos.y == -1)
 		return(false);
+	tmp = map[i + start_pos.y][start_pos.x];
+	map[i + start_pos.y][start_pos.x] = '0'; 
 	flood_fill_parse(map + i, start_pos.x, start_pos.y, &valid);
 	if (valid == 0)
 		return(fd_printf(2, "Error: Wrong map param\n"), false);
+	map[i + start_pos.y][start_pos.x] = tmp;
+	// TODO need to check for muliple spwan point behind walls
 	return(true);
 }
 void	set_bool_texture(char *line, t_bool_format *checker)
@@ -177,7 +181,7 @@ bool	check_map_format(char **map)
 	return(check_mini_map_format(map, i));
 }
 
-void	set_texture(bool *texture_set, t_tex_ctx *textures, char *line)
+void	set_texture(t_tex_ctx *textures, char *line)
 {
 	if (ft_strncmp(line, "NO ", 3) == 0)
 		textures->north_path = ft_strdup(line + 3);
@@ -196,18 +200,23 @@ void	set_texture(bool *texture_set, t_tex_ctx *textures, char *line)
 t_tex_ctx	init_tex_ctx(char **map)
 {
 	int			i;
-	bool		texture_set;
+	int			nbr_textures_set;
 	t_tex_ctx	textures;
 
 	i = 0;
-	texture_set = false;
-	while (map[i] && texture_set == false)
+	nbr_textures_set = 0;
+	while (map[i] && nbr_textures_set <= 6)
 	{
 		if (map[i][0] != '_')
-			set_texture(&texture_set, &textures, map[i]);
+		{
+			set_texture(&textures, map[i]);
+			nbr_textures_set++;
+		}
 		i++;
 	}
-	// TODO init map_element
+	textures.is_ceil_rgb = true;
+	textures.is_floor_rgb = true;
+	return(textures);
 }
 
 void	init_game_ctx(char **map, t_game_ctx *ptr)
@@ -233,7 +242,7 @@ t_game_ctx	*main_parsing(int argc, char **argv)
 	if (check_map_format(map) == false) // ! invalid map format error
 		return (ft_free_split(&map), NULL);
 	return_pointer = malloc(sizeof(t_game_ctx));
-	// init_game_ctx(map, return_pointer);
+	init_game_ctx(map, return_pointer);
 	return (return_pointer);
 }
 
