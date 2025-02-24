@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/21 20:54:54 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/24 03:38:43 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef enum e_elem
 	ELEM_VOID,
 	ELEM_WALL,
 	ELEM_SPAWN,
+	ELEM_FLOOR, // ? missing elem
 	ELEM_DOOR
 }	t_elem;
 
@@ -112,7 +113,7 @@ typedef struct s_tex_ctx
 	bool			is_floor_rgb;
 	bool			is_ceil_rgb;
 	int				map_width; // ? irregular map 
-	int				map_height;
+	int				map_height; // ? same 
 }	t_tex_ctx;
 
 //		Map element
@@ -148,7 +149,7 @@ typedef struct s_game_ctx
 	int				**screen_pixels;
 	unsigned int	hex_floor;
 	unsigned int	hex_ceiling;
-	t_map_element	**map;
+	t_map_element	*map; // * replaced for a single pointer so to access pos map[cur].pos
 }	t_game_ctx;
 
 //		Door
