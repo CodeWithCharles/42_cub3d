@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:29:56 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/24 04:36:54 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/24 20:08:33 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*fill_buffer(char *filename)
 {
 	char	*buffer;
 	char	*line;
+	char	*tmp;
 	int		fd;
 
 	fd = open(filename, O_RDONLY);
@@ -38,13 +39,16 @@ char	*fill_buffer(char *filename)
 			free(line);
 			line = ft_strdup("_\n");
 		}
-		buffer = ft_strjoin(buffer, line);
+		tmp = buffer;
+		buffer = ft_strjoin(tmp, line);
+		free(tmp);
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
 	return (buffer);
 }
+
 void	init_checker(t_bool_format *checker)
 {
 	checker->d_texture = false;
@@ -135,46 +139,41 @@ bool	check_mini_map_format(char **map, int i)
 	map[i + start_pos.y][start_pos.x] = '0';
 	flood_fill_parse(map + i, start_pos.x, start_pos.y, &valid);
 	if (valid == 0)
-		return(fd_printf(2, "Error: map not closed\n"), false);
+		return(fd_printf(2, "Error: map not valid\n"), false);
 	test = find_start_pos(map + i);
 	if (test.x != -1 && test.y != -1)
 		return(fd_printf(2, "Error: Multpile spawn points found\n", false));
 	map[i + start_pos.y][start_pos.x] = tmp;
 	return(true);
 }
+
+void	set_bool_pain(bool *pain, char *line)
+{
+	if (line[3] != '\0')
+		*pain = true;
+}
+
+void	set_bool_pain_2(bool *pain, char *line)
+{
+	if (line[2] != '\0')
+		*pain = true;
+}
+
 void	set_bool_texture(char *line, t_bool_format *checker)
 {
 	if (ft_strncmp(line, "NO ", 3) == 0)
-	{
-		if (line[3] != '\0')
-				checker->n_texture = true;
-	}
+		set_bool_pain(&(checker->n_texture), line);
 	else if (ft_strncmp(line, "SO ", 3) == 0)
-	{
-		if (line[3] != '\0')
-				checker->s_texture = true;
-	}
+		set_bool_pain(&(checker->s_texture), line);
 	else if (ft_strncmp(line, "WE ", 3) == 0)
-	{
-		if (line[3] != '\0')
-				checker->w_texture = true;
-	}
+		set_bool_pain(&(checker->w_texture), line);
 	else if (ft_strncmp(line, "EA ", 3) == 0)
-	{
-		if (line[3] != '\0')
-				checker->e_texture = true;
-	}
+		set_bool_pain(&(checker->e_texture), line);
 	else if (ft_strncmp(line, "F ", 2) == 0)
-	{
-		if (line[2] != '\0')
-				checker->f_colors = true;
-	}
+		set_bool_pain_2(&(checker->f_colors), line);
 	else if (ft_strncmp(line, "C ", 2) == 0)
-	{
-		if (line[2] != '\0')
-				checker->c_colors = true;
-	}
-	else
+		set_bool_pain_2(&(checker->c_colors), line);
+	else if (checker->wrong_param_found != true && checker->all_texture_found == false)
 	{
 		checker->wrong_param_found = true;
 		fd_printf(2, "Error: Wrong map param\n");
@@ -199,7 +198,9 @@ bool	check_map_format(char **map)
 		else
 			set_bool_texture(map[i++], &checker);
 	}
-	if (checker.all_texture_found == false || check_missing_texture(checker) == false || checker.wrong_param_found == true)
+	if (checker.all_texture_found == false
+			|| check_missing_texture(checker) == false
+			|| checker.wrong_param_found == true)
 		return (false);
 	return(check_mini_map_format(map, i));
 }
@@ -252,7 +253,6 @@ int	get_nbr_of_pos(char **map)
 	tot = 0;
 	while (map[i] && map[i][0] != '_')
 		tot += ft_strlen(map[i++]);
-	printf("%d\n", tot);
 	return(tot);
 }
 
@@ -266,6 +266,17 @@ t_elem	get_elem_type(char pos)
 		return(ELEM_SPAWN);
 	else
 		return (ELEM_VOID);
+}
+
+t_map_element	set_map_elem_cur(int i, int j, char **map, int map_start)
+{
+	t_map_element	map_element;
+
+	map_element.pos.x = j;
+	map_element.pos.y = i - map_start;
+	map_element.type = get_elem_type(map[i][j]);
+	map_element.is_end = false;
+	return (map_element);
 }
 
 t_map_element	*init_map_elem(char **map, char *mini)
@@ -285,15 +296,11 @@ t_map_element	*init_map_elem(char **map, char *mini)
 	while(map[i])
 	{
 		j = 0;
-		while(map[i][j])
+		while(map[i][j] && map[i][j] != '_')
 		{
-			map_element[cur].pos.x = j;
-			map_element[cur].pos.y = i - map_start;
-			map_element[cur].type = get_elem_type(map[i][j]);
-			map_element[cur].is_end = true;
-			// * test printf("at y = %d and x = %d char = %c\n type = %d\n\n", map_element[cur].pos.y, map_element[cur].pos.x, map[i][j],map_element[cur].type);
-			j++;
+			map_element[cur] = set_map_elem_cur(i, j, map, map_start);
 			cur++;
+			j++;
 		}
 		i++;
 	}
@@ -308,20 +315,8 @@ void	init_game_ctx(char **map, t_game_ctx **ptr)
 	start_of_minimap = NULL;
 	(*ptr)->texctx = init_tex_ctx(map, &start_of_minimap);
 	(*ptr)->map = init_map_elem(map, start_of_minimap);
+	free(start_of_minimap);
 }
-
-/* void	print_map_elem(t_map_element *map)
-{
-	int i = 0;
-
-	while(map[i].is_end != false)
-	{
-		printf("%d\n\n", map[i].type);
-		i++;
-	}
-	printf("%d\n\n", i);
-
-} */
 
 t_game_ctx	*main_parsing(int argc, char **argv)
 {
@@ -338,20 +333,48 @@ t_game_ctx	*main_parsing(int argc, char **argv)
 	buffer = fill_buffer(argv[1]);
 	map = ft_split(buffer, '\n');
 	free(buffer);
-	if (check_map_format(map) == false) // ! invalid map format error
+	if (check_map_format(map) == false)
 		return (ft_free_split(&map), NULL);
 	return_pointer = malloc(sizeof(t_game_ctx));
 	init_game_ctx(map, &return_pointer);
-	// print_map_elem(return_pointer->map); 
-	return (return_pointer);
+	return (ft_free_split(&map), return_pointer);
 }
 
-int	main(int argc, char **argv)
-{
-	if (main_parsing(argc, argv))
-	{
-		printf("gg boy\n");
-		return (0);
-	}
-	return(1);
-}
+// * debugging/test function
+
+// void	print_map_elem(t_map_element *map)
+// {
+// 	int i = 0;
+
+// 	while(map[i].is_end != true)
+// 	{
+// 		printf("at y = %d and x = %d\n type = %d\n-------------------------\n", map[i].pos.y, map[i].pos.x, map[i].type);
+// 		i++;
+// 	}
+// 	printf("at y = %d and x = %d\n type = %d\n-------------------------\n", map[i].pos.y, map[i].pos.x, map[i].type);
+// }
+
+// void	print_texture(t_tex_ctx test)
+// {
+// 	printf("North : %s\n", test.north_path);
+// 	printf("South : %s\n", test.south_path);
+// 	printf("West : %s\n", test.west_path);
+// 	printf("East : %s\n", test.east_path);
+// 	printf("floor : %s\n", test.floor);
+// 	printf("ceilling : %s\n", test.ceiling);
+// }
+
+// int	main(int argc, char **argv)
+// {
+// 	t_game_ctx	*return_pointer;
+
+// 	return_pointer = main_parsing(argc, argv);
+// 	if (return_pointer)
+// 	{
+// 		print_map_elem(return_pointer->map);
+// 		print_texture(return_pointer->texctx);
+// 		printf("gg boy\n");
+// 		return (0);
+// 	}
+// 	return(1);
+// }
