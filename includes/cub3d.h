@@ -6,11 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/02/25 15:56:30 by mkaliszc         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/25 15:41:34 by cpoulain         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/02/25 17:24:36 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +72,11 @@ typedef enum e_elem
 {
 	ELEM_VOID,
 	ELEM_WALL,
-	ELEM_SPAWN,
-	ELEM_FLOOR, // ? missing elem
+	ELEM_SPAWN_N,
+	ELEM_SPAWN_S,
+	ELEM_SPAWN_W,
+	ELEM_SPAWN_E,
+	ELEM_FLOOR,
 	ELEM_DOOR
 }	t_elem;
 
@@ -120,8 +119,6 @@ typedef struct s_tex_ctx
 	char			*ceiling;
 	bool			is_floor_rgb;
 	bool			is_ceil_rgb;
-	int				map_width; // ? irregular map
-	int				map_height; // ? same
 }	t_tex_ctx;
 
 //		Map element
@@ -131,7 +128,6 @@ typedef struct s_map_element
 	t_2d_vector	pos;
 	t_elem		type;
 	void		*data;
-	int			is_end;
 }	t_map_element;
 
 //		Image data
@@ -157,7 +153,9 @@ typedef struct s_game_ctx
 	unsigned int	**screen_pixels;
 	unsigned int	hex_floor;
 	unsigned int	hex_ceiling;
-	t_map_element	*map; // * replaced for a single pointer so to access pos map[cur].pos
+	t_map_element	**map;
+	unsigned int	m_width;
+	unsigned int	m_height;
 }	t_game_ctx;
 
 //		Door
@@ -214,13 +212,6 @@ int		check_file(
 			char *str,
 			bool is_cub);
 
-<<<<<<< Updated upstream
-// * parsing function
-
-t_game_ctx	*main_parsing(
-			int argc,
-			char **argv);
-
 // check.c
 
 bool	check_map_format(
@@ -233,14 +224,15 @@ int		is_good_format(
 
 void	fill_game_ctx(
 			char **map,
-			t_game_ctx **ptr);
+			t_game_ctx *ptr);
 
 //	getter.c
 
 t_2d_vector	find_start_pos(
 			char **map);
 
-int	get_nbr_of_pos(
+void	get_map_size(
+			t_game_ctx *game,
 			char **map);
 
 t_elem	get_elem_type(
@@ -257,14 +249,12 @@ char	*fill_buffer(
 void	set_bool_texture(
 			char *line,
 			t_bool_format *checker);
-=======
 void	clean_exit(
 			t_game_ctx *game,
 			int code);
 
 int		main_parsing(
-			char **argv,
-			t_game_ctx *game);
->>>>>>> Stashed changes
+			t_game_ctx *game,
+			char **argv);
 
 #endif

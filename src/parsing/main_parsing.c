@@ -3,35 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:29:56 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/25 16:00:46 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:26:52 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_game_ctx	*main_parsing(int argc, char **argv)
+int	main_parsing(t_game_ctx *game, char **argv)
 {
 	char		**map;
 	char		*buffer;
-	t_game_ctx	*return_pointer;
 
-	if (argc != 2 || is_good_format(argv[1]))
-	{
-		ft_putstr_fd("Error: wrong number of arguments\n", 2);
-		ft_putstr_fd("Valid format: <map>.cub\n", 2);
-		exit(1);
-	}
 	buffer = fill_buffer(argv[1]);
 	map = ft_split(buffer, '\n');
 	free(buffer);
 	if (check_map_format(map) == false)
-		return (ft_free_split(&map), NULL);
-	return_pointer = malloc(sizeof(t_game_ctx));
-	fill_game_ctx(map, &return_pointer);
-	return (ft_free_split(&map), return_pointer);
+		return (ft_free_split(&map), RET_ERR);
+	fill_game_ctx(map, game);
+	return (ft_free_split(&map), RET_OK);
 }
 
 // * debugging/test function

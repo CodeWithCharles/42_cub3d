@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:14:02 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/25 15:38:54 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:26:21 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,19 @@ t_2d_vector	find_start_pos(char **map)
 	return (cur);
 }
 
-int	get_nbr_of_pos(char **map)
+void	get_map_size(t_game_ctx *game, char **map)
 {
-	int	i;
-	int	tot;
+	unsigned int	line_size;
 
-	i = 0;
-	tot = 0;
-	while (map[i] && map[i][0] != '_')
-		tot += ft_strlen(map[i++]);
-	return (tot);
+	line_size = 0;
+	game->m_width = ft_strlen(map[game->m_height]);
+	while (map[game->m_height])
+	{
+		line_size = ft_strlen(map[game->m_height]);
+		if (game->m_width < line_size)
+			game->m_width = line_size;
+		game->m_height++;
+	}
 }
 
 t_elem	get_elem_type(char pos)
@@ -52,8 +55,14 @@ t_elem	get_elem_type(char pos)
 		return (ELEM_FLOOR);
 	else if (pos == '1')
 		return (ELEM_WALL);
-	else if (pos == 'N' || pos == 'W' || pos == 'E' || pos == 'S')
-		return (ELEM_SPAWN);
+	else if (pos == 'N')
+		return (ELEM_SPAWN_N);
+	else if (pos == 'S')
+		return (ELEM_SPAWN_S);
+	else if (pos == 'W')
+		return (ELEM_SPAWN_W);
+	else if (pos == 'E')
+		return (ELEM_SPAWN_E);
 	else
 		return (ELEM_VOID);
 }

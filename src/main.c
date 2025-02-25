@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 15:42:11 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:33:37 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	parse_args(t_game_ctx *game, char **argv)
 	(void)game;
 	if (check_file(argv[1], true) == RET_ERR)
 		return (RET_ERR);
-	if (main_parsing(argv, game) == RET_ERR)
+	if (main_parsing(game, argv) == RET_ERR)
 		return (RET_ERR);
 	return (RET_OK);
 }

@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:30:32 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 15:44:22 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:07:00 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	init_game(
 	ctx->mlx = NULL;
 	ctx->window = NULL;
 	ctx->texctx = (t_tex_ctx){};
+	ctx->m_width = 0;
+	ctx->m_height = 0;
 	ctx->screen_pixels = NULL;
 	refresh_screen_pixels(ctx);
 }
