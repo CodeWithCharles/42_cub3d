@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+         #
+#    By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 16:33:26 by cpoulain          #+#    #+#              #
-#    Updated: 2025/02/22 03:57:24 by mkaliszc         ###   ########.fr        #
+#    Updated: 2025/02/25 15:39:11 by cpoulain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -114,7 +114,7 @@ minilibx:
 
 $(NAME): $(THDPTY_DEPS) $(OBJS)
 	@mkdir -p $(@D)
-	@$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) $(THDPTY_TARGETS) -o $@ 
+	@$(CC) $(CFLAGS) $(LFLAGS) $(OBJS) -I$(INC_DIR) $(THDPTY_TARGETS) -o $@
 	@printf "$(TERM_CLEAR_LINE)\n  ✅  $(TERM_GREEN)Done building executable $(TERM_BLUE)\"%s\"$(TERM_GREEN) !$(TERM_RESET)\n" $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c

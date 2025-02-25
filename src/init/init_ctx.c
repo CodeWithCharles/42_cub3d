@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:30:32 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/21 17:39:41 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:44:22 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,16 @@
 // Header implementations
 
 void	init_game(
-	char *p_name,
 	t_game_ctx *ctx
 )
 {
-	ctx->p_name = p_name;
 	ctx->hex_ceiling = 0x0;
 	ctx->hex_floor = 0x0;
 	ctx->map = NULL;
 	ctx->mlx = NULL;
 	ctx->window = NULL;
 	ctx->texctx = (t_tex_ctx){};
+	ctx->screen_pixels = NULL;
 	refresh_screen_pixels(ctx);
 }
 

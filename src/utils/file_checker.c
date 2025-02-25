@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:23:07 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/20 18:00:12 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:28:17 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static int	_validate_extension(
 // Header implementations
 
 int	check_file(
-	t_game_ctx *ctx,
 	char *str,
 	bool is_cub
 )
@@ -32,10 +31,10 @@ int	check_file(
 	int	fd;
 
 	if (_is_dir(str))
-		return (print_gen_error(ctx, ERR_FILE_IS_DIR), RET_ERR);
+		return (print_gen_error(ERR_FILE_IS_DIR), RET_ERR);
 	fd = open(str, O_RDONLY);
 	if (fd == INVALID_FD)
-		return (print_arg_error(ctx, ERR_ERRNO, strerror(errno)), RET_ERR);
+		return (print_arg_error(ERR_ERRNO, strerror(errno)), RET_ERR);
 	close(fd);
 	if (is_cub && _validate_extension(str, EXT_CUB))
 		return (RET_ERR);
@@ -54,7 +53,7 @@ static int	_is_dir(
 	int		ret;
 
 	fd = open(str, __O_DIRECTORY);
-	ret = (!(fd >= 0));
+	ret = (fd >= 0);
 	if (fd >= 0)
 		close (fd);
 	return (ret);

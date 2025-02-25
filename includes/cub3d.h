@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/02/25 15:56:30 by mkaliszc         ###   ########.fr       */
+=======
+/*   Updated: 2025/02/25 15:41:34 by cpoulain         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +29,10 @@
 # include "error.h"
 # include "colors.h"
 # include "utils.h"
+
+//	Global variables
+
+extern char	*g_pname;
 
 //	Constants
 
@@ -112,8 +120,8 @@ typedef struct s_tex_ctx
 	char			*ceiling;
 	bool			is_floor_rgb;
 	bool			is_ceil_rgb;
-	int				map_width; // ? irregular map 
-	int				map_height; // ? same 
+	int				map_width; // ? irregular map
+	int				map_height; // ? same
 }	t_tex_ctx;
 
 //		Map element
@@ -145,8 +153,8 @@ typedef struct s_game_ctx
 	void			*mlx;
 	void			*window;
 	t_tex_ctx		texctx;
-	int				*game_textures[7];
-	int				**screen_pixels;
+	unsigned int	**game_textures;
+	unsigned int	**screen_pixels;
 	unsigned int	hex_floor;
 	unsigned int	hex_ceiling;
 	t_map_element	*map; // * replaced for a single pointer so to access pos map[cur].pos
@@ -180,7 +188,6 @@ typedef struct s_bool_format
 //		Inits
 
 void	init_game(
-			char *p_name,
 			t_game_ctx *ctx);
 
 void	refresh_screen_pixels(
@@ -189,28 +196,25 @@ void	refresh_screen_pixels(
 //		Errors
 
 void	print_arg_error(
-			t_game_ctx *ctx,
 			const char *error,
 			const char *arg);
 
 void	print_gen_error(
-			t_game_ctx *ctx,
 			const char *error);
 
 //		Texturing
 
 int		parse_str_to_hex(
-			t_game_ctx *ctx,
 			unsigned int *var,
 			char *str);
 
 //		File validator
 
 int		check_file(
-			t_game_ctx *ctx,
 			char *str,
 			bool is_cub);
 
+<<<<<<< Updated upstream
 // * parsing function
 
 t_game_ctx	*main_parsing(
@@ -253,5 +257,14 @@ char	*fill_buffer(
 void	set_bool_texture(
 			char *line,
 			t_bool_format *checker);
+=======
+void	clean_exit(
+			t_game_ctx *game,
+			int code);
+
+int		main_parsing(
+			char **argv,
+			t_game_ctx *game);
+>>>>>>> Stashed changes
 
 #endif
