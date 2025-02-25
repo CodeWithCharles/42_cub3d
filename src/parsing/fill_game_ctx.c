@@ -6,11 +6,11 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:10:53 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/25 17:34:07 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:11:19 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../../includes/cub3d.h"
 
 void	set_texture(t_tex_ctx *textures, char *line)
 {
@@ -28,14 +28,16 @@ void	set_texture(t_tex_ctx *textures, char *line)
 		textures->ceiling = ft_strdup(line + 2);
 }
 
-t_map_element	set_map_elem_cur(int i, int j, char **map, int map_start)
+void	set_map_elem_cur(
+	t_map_element *curr,
+	unsigned int i,
+	unsigned int j,
+	char curr_char
+)
 {
-	t_map_element	map_element;
-
-	map_element.pos.x = j;
-	map_element.pos.y = i - map_start;
-	map_element.type = get_elem_type(map[i][j]);
-	return (map_element);
+	curr->pos.x = j;
+	curr->pos.y = i;
+	curr->type = get_elem_type(curr_char);
 }
 
 t_tex_ctx	init_tex_ctx(char **map, int *start_of_minimap)
@@ -68,6 +70,35 @@ void	init_map_elem(t_map_element *map_element)
 	map_element->type = ELEM_VOID;
 }
 
+void	fill_map_line(
+	t_map_element *map_line,
+	char *line,
+	unsigned int m_width,
+	unsigned int i
+)
+{
+	unsigned int	j;
+
+	j = 0;
+	while (j < m_width)
+	{
+		set_map_elem_cur(&map_line[j], i, j, line[j]);
+		j++;
+	}
+}
+
+void	fill_map(t_game_ctx *game, char **map)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < game->m_height)
+	{
+		fill_map_line(game->map[i], map[i], game->m_width, i);
+		i++;
+	}
+}
+
 void	init_map_elems(t_game_ctx *game, char **map)
 {
 	unsigned int	i;
@@ -93,4 +124,5 @@ void	fill_game_ctx(char **map, t_game_ctx *ptr)
 
 	ptr->texctx = init_tex_ctx(map, &start_of_minimap);
 	init_map_elems(ptr, map + start_of_minimap);
+	fill_map(ptr, map + start_of_minimap);
 }
