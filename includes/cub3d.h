@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/24 03:38:43 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:56:30 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ typedef struct s_img
 
 typedef struct s_game_ctx
 {
-	char			*p_name; // ? player direction ?
+	char			*p_name;
 	void			*mlx;
 	void			*window;
 	t_tex_ctx		texctx;
@@ -159,6 +159,21 @@ typedef struct s_door
 	t_door_state		is_closed;
 	t_door_anim_state	anim_state;
 }	t_door;
+
+// bool parsing
+
+typedef struct s_bool_format
+{
+	bool	all_texture_found;
+	bool	wrong_param_found;
+	bool	n_texture;
+	bool	s_texture;
+	bool	w_texture;
+	bool	e_texture;
+	bool	f_colors;
+	bool	c_colors;
+	bool	d_texture;
+}	t_bool_format;
 
 //	Functions
 
@@ -195,5 +210,48 @@ int		check_file(
 			t_game_ctx *ctx,
 			char *str,
 			bool is_cub);
+
+// * parsing function
+
+t_game_ctx	*main_parsing(
+			int argc,
+			char **argv);
+
+// check.c
+
+bool	check_map_format(
+			char **map);
+
+int		is_good_format(
+			char *filename);
+
+//	fill_game_ctx.c
+
+void	fill_game_ctx(
+			char **map,
+			t_game_ctx **ptr);
+
+//	getter.c
+
+t_2d_vector	find_start_pos(
+			char **map);
+
+int	get_nbr_of_pos(
+			char **map);
+
+t_elem	get_elem_type(
+			char pos);
+
+// setter.c
+
+void	init_checker(
+			t_bool_format *checker);
+
+char	*fill_buffer(
+			char *filename);
+
+void	set_bool_texture(
+			char *line,
+			t_bool_format *checker);
 
 #endif
