@@ -1,0 +1,14 @@
+SO ./assets/S_texture
+NO ./assets/N_texture
+WE ./assets/W_texture
+EA ./assets/E_texture
+
+F R,G,B
+
+C R,G,B2
+
+111111111111
+100N00000011
+100000001101
+100000010001
+111111111111

@@ -1,2 +1,2 @@
 FILES	=																	\
-	main																	\
+	parsing/main_test									\

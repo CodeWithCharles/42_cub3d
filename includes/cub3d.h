@@ -3,18 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/20 15:08:30 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/24 03:38:43 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include <fcntl.h>
+# include <errno.h>
+# include <string.h>
+# include <stdbool.h>
+# include <X11/keysym.h>
+# include <math.h>
+
 # include "libft.h"
 # include "mlx.h"
+# include "error.h"
+# include "colors.h"
+# include "utils.h"
+
+//	Constants
+
+//		Returns and error codes
+
+# define RET_OK						0
+# define RET_ERR					1
+
+//		Screen
+
+# define WIN_WIDTH					1920
+# define WIN_HEIGHT					1280
+
+//		Textures
+
+# define TEX_SIZE					64
+
+//		File extensions
+
+# define EXT_XPM					".xpm"
+# define EXT_CUB					".cub"
 
 //	Enums
 
@@ -38,6 +69,7 @@ typedef enum e_elem
 	ELEM_VOID,
 	ELEM_WALL,
 	ELEM_SPAWN,
+	ELEM_FLOOR, // ? missing elem
 	ELEM_DOOR
 }	t_elem;
 
@@ -68,6 +100,22 @@ typedef struct s_2d_vector
 	int	y;
 }	t_2d_vector;
 
+//		Texture context
+
+typedef struct s_tex_ctx
+{
+	char			*north_path;
+	char			*south_path;
+	char			*west_path;
+	char			*east_path;
+	char			*floor;
+	char			*ceiling;
+	bool			is_floor_rgb;
+	bool			is_ceil_rgb;
+	int				map_width; // ? irregular map 
+	int				map_height; // ? same 
+}	t_tex_ctx;
+
 //		Map element
 
 typedef struct s_map_element
@@ -78,27 +126,30 @@ typedef struct s_map_element
 	int			is_end;
 }	t_map_element;
 
-//		Mlx data
+//		Image data
 
-typedef struct s_mlx_data
+typedef struct s_img
 {
-	void	*mlx;
-	void	*window;
 	void	*img;
-	char	*img_pixels_ptr;
+	int		*pixels_ptr;
 	int		bits_per_pixel;
 	int		endianess;
 	int		line_len;
-}	t_mlx_data;
+}	t_img;
 
 //		Main context
 
 typedef struct s_game_ctx
 {
-	void			*game_textures[7];
-	int				is_ceil_rgb;
-	int				is_floor_rgb;
-	t_map_element	*map;
+	char			*p_name; // ? player direction ?
+	void			*mlx;
+	void			*window;
+	t_tex_ctx		texctx;
+	int				*game_textures[7];
+	int				**screen_pixels;
+	unsigned int	hex_floor;
+	unsigned int	hex_ceiling;
+	t_map_element	*map; // * replaced for a single pointer so to access pos map[cur].pos
 }	t_game_ctx;
 
 //		Door
@@ -108,5 +159,41 @@ typedef struct s_door
 	t_door_state		is_closed;
 	t_door_anim_state	anim_state;
 }	t_door;
+
+//	Functions
+
+//		Inits
+
+void	init_game(
+			char *p_name,
+			t_game_ctx *ctx);
+
+void	refresh_screen_pixels(
+			t_game_ctx *ctx);
+
+//		Errors
+
+void	print_arg_error(
+			t_game_ctx *ctx,
+			const char *error,
+			const char *arg);
+
+void	print_gen_error(
+			t_game_ctx *ctx,
+			const char *error);
+
+//		Texturing
+
+int		parse_str_to_hex(
+			t_game_ctx *ctx,
+			unsigned int *var,
+			char *str);
+
+//		File validator
+
+int		check_file(
+			t_game_ctx *ctx,
+			char *str,
+			bool is_cub);
 
 #endif

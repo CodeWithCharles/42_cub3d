@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 13:21:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/21 17:44:12 by cpoulain         ###   ########.fr       */
+/*   Created: 2025/02/20 17:23:21 by cpoulain          #+#    #+#             */
+/*   Updated: 2025/02/21 17:36:35 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-int	main(int argc, char **argv)
-{
-	void		*str;
-	t_game_ctx	game;
+void	free_tab(
+			void **tab);
 
-	(void)argc;
-	init_game(argv[0], &game);
-	str = ft_strdup("255,123,a");
-	if (parse_str_to_hex(&game, &game.hex_ceiling, str) == RET_OK)
-		printf("%X\n", game.hex_ceiling);
-	free(str);
-	return (0);
-}
+#endif
