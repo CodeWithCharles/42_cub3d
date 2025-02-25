@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:17:22 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/25 15:41:30 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:03:25 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,12 @@ void	set_bool_texture(char *line, t_bool_format *checker)
 		set_bool_pain_2(&(checker->f_colors), line);
 	else if (ft_strncmp(line, "C ", 2) == 0)
 		set_bool_pain_2(&(checker->c_colors), line);
+	else if (ft_strncmp(line, "DO ", 3) == 0)
+		set_bool_pain(&(checker->d_texture), line);
 	else if (checker->wrong_param_found != true
 		&& checker->all_texture_found == false)
 	{
 		checker->wrong_param_found = true;
 		fd_printf(2, "Error: Wrong map param\n");
 	}
-	if (checker->c_colors == true && checker->n_texture == true
-		&& checker->f_colors == true && checker->s_texture == true
-		&& checker->e_texture == true && checker->w_texture == true)
-		checker->all_texture_found = true;
 }

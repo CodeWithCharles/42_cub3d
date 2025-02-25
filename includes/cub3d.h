@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 17:24:36 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:16:07 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct s_tex_ctx
 	char			*east_path;
 	char			*floor;
 	char			*ceiling;
+	char			*door_path;
 	bool			is_floor_rgb;
 	bool			is_ceil_rgb;
 }	t_tex_ctx;
@@ -249,6 +250,7 @@ char	*fill_buffer(
 void	set_bool_texture(
 			char *line,
 			t_bool_format *checker);
+			
 void	clean_exit(
 			t_game_ctx *game,
 			int code);
@@ -256,5 +258,8 @@ void	clean_exit(
 int		main_parsing(
 			t_game_ctx *game,
 			char **argv);
+
+char 	**dup_map(
+			char **map);
 
 #endif

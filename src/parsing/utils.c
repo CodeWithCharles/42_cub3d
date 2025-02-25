@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_parsing.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/20 15:29:56 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/25 20:33:35 by mkaliszc         ###   ########.fr       */
+/*   Created: 2025/02/25 19:26:31 by mkaliszc          #+#    #+#             */
+/*   Updated: 2025/02/25 20:06:21 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	main_parsing(t_game_ctx *game, char **argv)
+char **dup_map(char **map)
 {
-	char		**map;
-	char		*buffer;
+    int i;
+	int	count;
 
-	buffer = fill_buffer(argv[1]);
-	map = ft_split(buffer, '\n');
-	free(buffer);
-	if (check_map_format(map) == false)
-		return (ft_free_split(&map), RET_ERR);
-	fill_game_ctx(map, game);
-	return (ft_free_split(&map), RET_OK);
+	i = 0;
+	count = 0;
+    while (map[count])
+        count++;
+    char **new_map = malloc((count + 1) * sizeof(char *));
+    if (!new_map)
+        return NULL;
+    while (i < count)
+	{
+        new_map[i] = strdup(map[i]);
+		i++;
+	}
+    new_map[count] = NULL;
+    return (new_map);
 }
