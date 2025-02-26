@@ -1,11 +1,11 @@
-SO ./assets/S_texture
-NO ./assets/N_texture
-WE ./assets/W_texture
-EA ./assets/E_texture
-DO ./assets/D_texture
-F R,G,B
+SO                                  ./assets/S_texture
+NO           
+WE                  ./assets/W_texture
+EA               ./assets/E_texture
+DO           ./assets/D_texture
+F                                    R,G,B
 
-C R,G,B2
+C                         R,G,B2
 
 
 

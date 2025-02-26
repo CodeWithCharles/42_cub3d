@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:14:02 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/25 20:17:34 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:25:48 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_elem	get_elem_type(char pos)
 	else if (pos == 'E')
 		return (ELEM_SPAWN_E);
 	else if (pos == 'D')
-		return(ELEM_DOOR);
+		return (ELEM_DOOR);
 	else
 		return (ELEM_VOID);
 }
