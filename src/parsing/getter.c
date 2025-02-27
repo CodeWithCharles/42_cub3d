@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:14:02 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/26 17:25:48 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:54:16 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ t_2d_vector	find_start_pos(char **map)
 			if (map[cur.y][cur.x] == 'N' || map[cur.y][cur.x] == 'E'
 					|| map[cur.y][cur.x] == 'S' || map[cur.y][cur.x] == 'W')
 				return (cur);
+			else if (map[cur.y][cur.x] != '1' && map[cur.y][cur.x] != '0'
+					&& map[cur.y][cur.x] != 'D' && map[cur.y][cur.x] != ' '
+					&& map[cur.y][cur.x] != '\0')
+				break ;
 			cur.x++;
 		}
 		cur.y++;

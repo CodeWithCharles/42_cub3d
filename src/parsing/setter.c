@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:17:22 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/26 17:15:23 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:03:50 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_checker(t_bool_format *checker)
 	checker->n_texture = false;
 	checker->all_texture_found = false;
 	checker->wrong_param_found = false;
+	checker->map_found = false;
 }
 
 char	*fill_buffer(char *filename)
@@ -83,26 +84,30 @@ void	set_bool_texture(char *line, t_bool_format *checker)
 		set_bool_pain(&(checker->d_texture), line + 2);
 	else if (checker->wrong_param_found != true
 		&& checker->all_texture_found == false)
-	{
 		checker->wrong_param_found = true;
-		fd_printf(2, "Error: Wrong map param\n");
-	}
+}
+
+char *skip_space(char *line)
+{
+	while (*line == ' ')
+		line++;
+	return (line);
 }
 
 void	set_texture(t_tex_ctx *textures, char *line)
 {
-	if (ft_strncmp(line, "NO ", 3) == 0)
-		textures->north_path = ft_strdup(line + 3);
-	else if (ft_strncmp(line, "SO ", 3) == 0)
-		textures->south_path = ft_strdup(line + 3);
-	else if (ft_strncmp(line, "WE ", 3) == 0)
-		textures->west_path = ft_strdup(line + 3);
-	else if (ft_strncmp(line, "EA ", 3) == 0)
-		textures->east_path = ft_strdup(line + 3);
-	else if (ft_strncmp(line, "F ", 2) == 0)
-		textures->floor = ft_strdup(line + 2);
-	else if (ft_strncmp(line, "C ", 2) == 0)
-		textures->ceiling = ft_strdup(line + 2);
-	else if (ft_strncmp(line, "DO ", 3) == 0)
-		textures->door_path = ft_strdup(line + 3);
+	if (ft_strncmp(line, "NO", 2) == 0)
+		textures->north_path = ft_strdup(skip_space(line + 2));
+	else if (ft_strncmp(line, "SO", 2) == 0)
+		textures->south_path = ft_strdup(skip_space(line + 2));
+	else if (ft_strncmp(line, "WE", 2) == 0)
+		textures->west_path = ft_strdup(skip_space(line + 2));
+	else if (ft_strncmp(line, "EA", 2) == 0)
+		textures->east_path = ft_strdup(skip_space(line + 2));
+	else if (ft_strncmp(line, "F", 1) == 0)
+		textures->floor = ft_strdup(skip_space(line + 1));
+	else if (ft_strncmp(line, "C", 1) == 0)
+		textures->ceiling = ft_strdup(skip_space(line + 1));
+	else if (ft_strncmp(line, "DO", 2) == 0)
+		textures->door_path = ft_strdup(skip_space(line + 2));
 }
