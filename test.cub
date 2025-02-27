@@ -1,5 +1,5 @@
 SO                                  ./assets/S_texture
-NO           
+NO           ./assets
 WE                  ./assets/W_texture
 EA               ./assets/E_texture
 DO           ./assets/D_texture
@@ -7,22 +7,8 @@ F                                    R,G,B
 
 C                         R,G,B2
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-111111111111
-1D00N0000011
+  1111111111111111111111111
+111D00N0000011
 100000000101
 100000010001
 111111111111
