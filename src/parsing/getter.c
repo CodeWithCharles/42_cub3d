@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:14:02 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/25 17:26:21 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:25:48 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	get_map_size(t_game_ctx *game, char **map)
 
 t_elem	get_elem_type(char pos)
 {
-	if (pos == '2' || pos == '0')
+	if (pos == '0')
 		return (ELEM_FLOOR);
 	else if (pos == '1')
 		return (ELEM_WALL);
@@ -63,6 +63,8 @@ t_elem	get_elem_type(char pos)
 		return (ELEM_SPAWN_W);
 	else if (pos == 'E')
 		return (ELEM_SPAWN_E);
+	else if (pos == 'D')
+		return (ELEM_DOOR);
 	else
 		return (ELEM_VOID);
 }

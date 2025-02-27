@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fill_game_ctx.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:10:53 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/25 18:11:19 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:34:31 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-void	set_texture(t_tex_ctx *textures, char *line)
-{
-	if (ft_strncmp(line, "NO ", 3) == 0)
-		textures->north_path = ft_strdup(line + 3);
-	if (ft_strncmp(line, "SO ", 3) == 0)
-		textures->south_path = ft_strdup(line + 3);
-	if (ft_strncmp(line, "WE ", 3) == 0)
-		textures->west_path = ft_strdup(line + 3);
-	if (ft_strncmp(line, "EA ", 3) == 0)
-		textures->east_path = ft_strdup(line + 3);
-	if (ft_strncmp(line, "F ", 2) == 0)
-		textures->floor = ft_strdup(line + 2);
-	if (ft_strncmp(line, "C ", 2) == 0)
-		textures->ceiling = ft_strdup(line + 2);
-}
 
 void	set_map_elem_cur(
 	t_map_element *curr,
@@ -43,21 +27,18 @@ void	set_map_elem_cur(
 t_tex_ctx	init_tex_ctx(char **map, int *start_of_minimap)
 {
 	int			i;
-	int			nbr_textures_set;
 	t_tex_ctx	textures;
 
 	i = 0;
-	nbr_textures_set = 0;
-	while (map[i] && nbr_textures_set <= 6)
+	while (map[i])
 	{
-		if (map[i][0] != '_')
-		{
+		if (map[i][0] != '_' && map[i][0] != '1')
 			set_texture(&textures, map[i]);
-			nbr_textures_set++;
-		}
+		else if (map[i][0] == '1')
+			break ;
 		i++;
 	}
-	*start_of_minimap = i - 1;
+	*start_of_minimap = i;
 	textures.is_ceil_rgb = true;
 	textures.is_floor_rgb = true;
 	return (textures);
@@ -68,35 +49,6 @@ void	init_map_elem(t_map_element *map_element)
 	map_element->data = NULL;
 	map_element->pos = (t_2d_vector){};
 	map_element->type = ELEM_VOID;
-}
-
-void	fill_map_line(
-	t_map_element *map_line,
-	char *line,
-	unsigned int m_width,
-	unsigned int i
-)
-{
-	unsigned int	j;
-
-	j = 0;
-	while (j < m_width)
-	{
-		set_map_elem_cur(&map_line[j], i, j, line[j]);
-		j++;
-	}
-}
-
-void	fill_map(t_game_ctx *game, char **map)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < game->m_height)
-	{
-		fill_map_line(game->map[i], map[i], game->m_width, i);
-		i++;
-	}
 }
 
 void	init_map_elems(t_game_ctx *game, char **map)

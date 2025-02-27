@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 16:33:37 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/25 20:33:10 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*g_pname = NULL;
 
 static int	parse_args(t_game_ctx *game, char **argv)
 {
-	(void)game;
 	if (check_file(argv[1], true) == RET_ERR)
 		return (RET_ERR);
 	if (main_parsing(game, argv) == RET_ERR)
