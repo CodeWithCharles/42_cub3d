@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 20:33:10 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:44:13 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (print_gen_error(ERR_ARGS), RET_ERR);
 	init_game(&game);
-	if (parse_args(&game, argv) == RET_ERR)
+	if (parse_args(&game, argv) == RET_ERR || load_textures(&game))
 		clean_exit(&game, RET_ERR);
 	return (0);
 }

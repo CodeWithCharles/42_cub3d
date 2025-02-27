@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/26 17:34:15 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:24:12 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,104 +186,119 @@ typedef struct s_bool_format
 
 //		Inits
 
-void	init_game(
-			t_game_ctx *ctx);
+void		init_game(
+				t_game_ctx *ctx);
 
-void	refresh_screen_pixels(
-			t_game_ctx *ctx);
+void		refresh_screen_pixels(
+				t_game_ctx *ctx);
 
 //		Errors
 
-void	print_arg_error(
-			const char *error,
-			const char *arg);
+void		print_arg_error(
+				const char *error,
+				const char *arg);
 
-void	print_gen_error(
-			const char *error);
+void		print_gen_error(
+				const char *error);
 
 //		Texturing
 
-int		parse_str_to_hex(
-			unsigned int *var,
-			char *str);
+int			parse_str_to_hex(
+				unsigned int *var,
+				char *str);
 
 //		File validator
 
-int		check_file(
-			char *str,
-			bool is_cub);
+int			check_file(
+				char *str,
+				bool is_cub);
 
 // check.c
 
-bool	check_map_format(
-			char **map);
+bool		check_map_format(
+				char **map);
 
-int		is_good_format(
-			char *filename);
+int			is_good_format(
+				char *filename);
 
 //	fill_game_ctx.c
 
-void	fill_game_ctx(
-			char **map,
-			t_game_ctx *ptr);
+void		fill_game_ctx(
+				char **map,
+				t_game_ctx *ptr);
 
 //	getter.c
 
 t_2d_vector	find_start_pos(
-			char **map);
+				char **map);
 
-void	get_map_size(
-			t_game_ctx *game,
-			char **map);
+void		get_map_size(
+				t_game_ctx *game,
+				char **map);
 
-t_elem	get_elem_type(
-			char pos);
+t_elem		get_elem_type(
+				char pos);
 
 // setter.c
 
-void	init_checker(
-			t_bool_format *checker);
+void		init_checker(
+				t_bool_format *checker);
 
-char	*fill_buffer(
-			char *filename);
+char		*fill_buffer(
+				char *filename);
 
-void	set_bool_texture(
-			char *line,
-			t_bool_format *checker);
-			
-void	clean_exit(
-			t_game_ctx *game,
-			int code);
+void		set_bool_texture(
+				char *line,
+				t_bool_format *checker);
 
-int		main_parsing(
-			t_game_ctx *game,
-			char **argv);
+void		clean_exit(
+				t_game_ctx *game,
+				int code);
 
-void	set_texture(
-			t_tex_ctx *textures,
-			char *line);
+int			main_parsing(
+				t_game_ctx *game,
+				char **argv);
 
-char 	**dup_map(
-			char **map);
+void		set_texture(
+				t_tex_ctx *textures,
+				char *line);
+
+char		**dup_map(
+				char **map);
+
+void		set_map_elem_cur(
+				t_map_element *curr,
+				unsigned int i,
+				unsigned int j,
+				char curr_char);
 
 // fill.c
 
-void	flood_fill_parse(
-			char **map,
-			int x,
-			int y,
-			int *valid);
+void		flood_fill_parse(
+				char **map,
+				int x,
+				int y,
+				int *valid);
 
-void	flood_fill_parse_door(
-			char **map,
-			int x,
-			int y,
-			int *valid);
+void		flood_fill_parse_door(
+				char **map,
+				int x,
+				int y,
+				int *valid);
 
-void	fill_map_line(
-			t_map_element *map_line,
-			char *line,
-			unsigned int m_width,
-			unsigned int i);		
+void		fill_map_line(
+				t_map_element *map_line,
+				char *line,
+				unsigned int m_width,
+				unsigned int i);
+
+void		fill_map(
+				t_game_ctx *game,
+				char **map);
+
+//		Texture loading
+
+int			load_textures(
+				t_game_ctx *ctx);
 
 #endif

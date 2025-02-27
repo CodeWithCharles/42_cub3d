@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:51:53 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 15:38:29 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:00:41 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,14 @@ static int	_str_to_color_tab(
 	str_split = ft_split(str, ',');
 	if (!str_split)
 		return (RET_ERR);
+	if (!str_split[0])
+		return (ft_free_split(&str_split), RET_ERR);
 	i = 0;
 	while (i < 3 && str_split[i])
 	{
 		j = 0;
 		while (str_split[i][j])
-			if (!ft_isdigit(str[j++]))
+			if (!ft_isdigit(str_split[i][j++]))
 				return (ft_free_split(&str_split), RET_ERR);
 		(*color_tab)[i] = ft_atoi(str_split[i]);
 		i++;

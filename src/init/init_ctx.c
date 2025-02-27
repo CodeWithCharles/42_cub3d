@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:30:32 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 18:21:54 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:02:12 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_game(
 	ctx->mlx = NULL;
 	ctx->window = NULL;
 	ctx->texctx = (t_tex_ctx){};
+	ctx->texctx.door_path = NULL;
 	ctx->game_textures = NULL;
 	ctx->m_width = 0;
 	ctx->m_height = 0;

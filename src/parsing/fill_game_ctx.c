@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_game_ctx.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:10:53 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/26 17:34:31 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:05:16 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_tex_ctx	init_tex_ctx(char **map, int *start_of_minimap)
 	int			i;
 	t_tex_ctx	textures;
 
+	textures = (t_tex_ctx){};
 	i = 0;
 	while (map[i])
 	{
