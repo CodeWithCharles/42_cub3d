@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:32:34 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/25 15:38:13 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:31:24 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,10 @@ bool	check_missing_texture(t_bool_format checker)
 	return (true);
 }
 
-void	flood_fill_parse(char **map, int x, int y, int *valid)
-{
-	if (x < 0 || y < 0 || map[y] == NULL || x >= (int)ft_strlen(map[y]))
-	{
-		*valid = 0;
-		return ;
-	}
-	if (map[y][x] == '1' || map[y][x] == '2')
-		return ;
-	else if (map[y][x] == '0')
-		map[y][x] = '2';
-	else
-		*valid = 0;
-	flood_fill_parse(map, x + 1, y, valid);
-	flood_fill_parse(map, x - 1, y, valid);
-	flood_fill_parse(map, x, y + 1, valid);
-	flood_fill_parse(map, x, y - 1, valid);
-}
-
-bool	check_mini_map_format(char **map, int i)
+bool	check_mini_map_format(char **map, int i, bool door)
 {
 	int			valid;
-	char		tmp;
+	char		**cpy_map;
 	t_2d_vector	start_pos;
 	t_2d_vector	test;
 
@@ -67,18 +48,20 @@ bool	check_mini_map_format(char **map, int i)
 		i++;
 	if (map[i][0] != '1')
 		return (fd_printf(2, "Error: invalid char in config file\n"), false);
-	start_pos = find_start_pos(map + i);
+	cpy_map = dup_map(map + i);
+	start_pos = find_start_pos(cpy_map);
 	if (start_pos.x == -1 && start_pos.y == -1)
 		return (fd_printf(2, "Error: player spawn point not found\n"), false);
-	tmp = map[i + start_pos.y][start_pos.x];
-	map[i + start_pos.y][start_pos.x] = '0';
-	flood_fill_parse(map + i, start_pos.x, start_pos.y, &valid);
+	cpy_map[start_pos.y][start_pos.x] = '0';
+	if (door == true)
+		flood_fill_parse_door(cpy_map, start_pos.x, start_pos.y, &valid);
+	else
+		flood_fill_parse(cpy_map, start_pos.x, start_pos.y, &valid);
 	if (valid == 0)
 		return (fd_printf(2, "Error: map not valid\n"), false);
-	test = find_start_pos(map + i);
+	test = find_start_pos(cpy_map);
 	if (test.x != -1 && test.y != -1)
 		return (fd_printf(2, "Error: Multpile spawn points found\n", false));
-	map[i + start_pos.y][start_pos.x] = tmp;
 	return (true);
 }
 
@@ -89,16 +72,17 @@ bool	check_map_format(char **map)
 
 	i = 0;
 	init_checker(&checker);
-	while (map[i] && checker.all_texture_found == false)
+	while (map[i])
 	{
 		if (map[i][0] == '_' && map[i][1] == '\0')
 			i++;
+		else if (map[i][0] == '1')
+			break ;
 		else
 			set_bool_texture(map[i++], &checker);
 	}
-	if (checker.all_texture_found == false
-		|| check_missing_texture(checker) == false
+	if (check_missing_texture(checker) == false
 		|| checker.wrong_param_found == true)
 		return (false);
-	return (check_mini_map_format(map, i));
+	return (check_mini_map_format(map, i, checker.d_texture));
 }

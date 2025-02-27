@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:17:22 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/25 15:41:30 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:15:23 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,38 +56,53 @@ char	*fill_buffer(char *filename)
 
 void	set_bool_pain(bool *pain, char *line)
 {
-	if (line[3] != '\0')
-		*pain = true;
-}
+	size_t	i;
 
-void	set_bool_pain_2(bool *pain, char *line)
-{
-	if (line[2] != '\0')
+	i = 0;
+	while (ft_isspace(line[i]))
+		i++;
+	if (line[i] != '\0' && i != ft_strlen(line))
 		*pain = true;
 }
 
 void	set_bool_texture(char *line, t_bool_format *checker)
 {
-	if (ft_strncmp(line, "NO ", 3) == 0)
-		set_bool_pain(&(checker->n_texture), line);
-	else if (ft_strncmp(line, "SO ", 3) == 0)
-		set_bool_pain(&(checker->s_texture), line);
-	else if (ft_strncmp(line, "WE ", 3) == 0)
-		set_bool_pain(&(checker->w_texture), line);
-	else if (ft_strncmp(line, "EA ", 3) == 0)
-		set_bool_pain(&(checker->e_texture), line);
-	else if (ft_strncmp(line, "F ", 2) == 0)
-		set_bool_pain_2(&(checker->f_colors), line);
-	else if (ft_strncmp(line, "C ", 2) == 0)
-		set_bool_pain_2(&(checker->c_colors), line);
+	if (ft_strncmp(line, "NO", 2) == 0)
+		set_bool_pain(&(checker->n_texture), line + 2);
+	else if (ft_strncmp(line, "SO", 2) == 0)
+		set_bool_pain(&(checker->s_texture), line + 2);
+	else if (ft_strncmp(line, "WE", 2) == 0)
+		set_bool_pain(&(checker->w_texture), line + 2);
+	else if (ft_strncmp(line, "EA", 2) == 0)
+		set_bool_pain(&(checker->e_texture), line + 2);
+	else if (line[0] == 'F')
+		set_bool_pain(&(checker->f_colors), line + 1);
+	else if (line[0] == 'C')
+		set_bool_pain(&(checker->c_colors), line + 1);
+	else if (ft_strncmp(line, "DO", 2) == 0)
+		set_bool_pain(&(checker->d_texture), line + 2);
 	else if (checker->wrong_param_found != true
 		&& checker->all_texture_found == false)
 	{
 		checker->wrong_param_found = true;
 		fd_printf(2, "Error: Wrong map param\n");
 	}
-	if (checker->c_colors == true && checker->n_texture == true
-		&& checker->f_colors == true && checker->s_texture == true
-		&& checker->e_texture == true && checker->w_texture == true)
-		checker->all_texture_found = true;
+}
+
+void	set_texture(t_tex_ctx *textures, char *line)
+{
+	if (ft_strncmp(line, "NO ", 3) == 0)
+		textures->north_path = ft_strdup(line + 3);
+	else if (ft_strncmp(line, "SO ", 3) == 0)
+		textures->south_path = ft_strdup(line + 3);
+	else if (ft_strncmp(line, "WE ", 3) == 0)
+		textures->west_path = ft_strdup(line + 3);
+	else if (ft_strncmp(line, "EA ", 3) == 0)
+		textures->east_path = ft_strdup(line + 3);
+	else if (ft_strncmp(line, "F ", 2) == 0)
+		textures->floor = ft_strdup(line + 2);
+	else if (ft_strncmp(line, "C ", 2) == 0)
+		textures->ceiling = ft_strdup(line + 2);
+	else if (ft_strncmp(line, "DO ", 3) == 0)
+		textures->door_path = ft_strdup(line + 3);
 }

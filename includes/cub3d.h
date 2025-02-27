@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 15:56:30 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/26 17:34:15 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 # include "error.h"
 # include "colors.h"
 # include "utils.h"
+
+//	Global variables
+
+extern char	*g_pname;
 
 //	Constants
 
@@ -68,8 +72,11 @@ typedef enum e_elem
 {
 	ELEM_VOID,
 	ELEM_WALL,
-	ELEM_SPAWN,
-	ELEM_FLOOR, // ? missing elem
+	ELEM_SPAWN_N,
+	ELEM_SPAWN_S,
+	ELEM_SPAWN_W,
+	ELEM_SPAWN_E,
+	ELEM_FLOOR,
 	ELEM_DOOR
 }	t_elem;
 
@@ -110,10 +117,9 @@ typedef struct s_tex_ctx
 	char			*east_path;
 	char			*floor;
 	char			*ceiling;
+	char			*door_path;
 	bool			is_floor_rgb;
 	bool			is_ceil_rgb;
-	int				map_width; // ? irregular map 
-	int				map_height; // ? same 
 }	t_tex_ctx;
 
 //		Map element
@@ -123,7 +129,6 @@ typedef struct s_map_element
 	t_2d_vector	pos;
 	t_elem		type;
 	void		*data;
-	int			is_end;
 }	t_map_element;
 
 //		Image data
@@ -145,11 +150,13 @@ typedef struct s_game_ctx
 	void			*mlx;
 	void			*window;
 	t_tex_ctx		texctx;
-	int				*game_textures[7];
-	int				**screen_pixels;
+	unsigned int	**game_textures;
+	unsigned int	**screen_pixels;
 	unsigned int	hex_floor;
 	unsigned int	hex_ceiling;
-	t_map_element	*map; // * replaced for a single pointer so to access pos map[cur].pos
+	t_map_element	**map;
+	unsigned int	m_width;
+	unsigned int	m_height;
 }	t_game_ctx;
 
 //		Door
@@ -180,7 +187,6 @@ typedef struct s_bool_format
 //		Inits
 
 void	init_game(
-			char *p_name,
 			t_game_ctx *ctx);
 
 void	refresh_screen_pixels(
@@ -189,33 +195,23 @@ void	refresh_screen_pixels(
 //		Errors
 
 void	print_arg_error(
-			t_game_ctx *ctx,
 			const char *error,
 			const char *arg);
 
 void	print_gen_error(
-			t_game_ctx *ctx,
 			const char *error);
 
 //		Texturing
 
 int		parse_str_to_hex(
-			t_game_ctx *ctx,
 			unsigned int *var,
 			char *str);
 
 //		File validator
 
 int		check_file(
-			t_game_ctx *ctx,
 			char *str,
 			bool is_cub);
-
-// * parsing function
-
-t_game_ctx	*main_parsing(
-			int argc,
-			char **argv);
 
 // check.c
 
@@ -229,14 +225,15 @@ int		is_good_format(
 
 void	fill_game_ctx(
 			char **map,
-			t_game_ctx **ptr);
+			t_game_ctx *ptr);
 
 //	getter.c
 
 t_2d_vector	find_start_pos(
 			char **map);
 
-int	get_nbr_of_pos(
+void	get_map_size(
+			t_game_ctx *game,
 			char **map);
 
 t_elem	get_elem_type(
@@ -253,5 +250,40 @@ char	*fill_buffer(
 void	set_bool_texture(
 			char *line,
 			t_bool_format *checker);
+			
+void	clean_exit(
+			t_game_ctx *game,
+			int code);
+
+int		main_parsing(
+			t_game_ctx *game,
+			char **argv);
+
+void	set_texture(
+			t_tex_ctx *textures,
+			char *line);
+
+char 	**dup_map(
+			char **map);
+
+// fill.c
+
+void	flood_fill_parse(
+			char **map,
+			int x,
+			int y,
+			int *valid);
+
+void	flood_fill_parse_door(
+			char **map,
+			int x,
+			int y,
+			int *valid);
+
+void	fill_map_line(
+			t_map_element *map_line,
+			char *line,
+			unsigned int m_width,
+			unsigned int i);		
 
 #endif
