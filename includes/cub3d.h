@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 15:13:05 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:24:50 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,28 @@ extern char	*g_pname;
 # define PLANE_INIT_POSITIVE_ANGLE	0.66
 # define PLANE_INIT_NEGATIVE_ANGLE	-0.66
 
+//		Raycasting
+
+# ifndef RAYCASTING_RAY_COUNT
+#  define RAYCASTING_RAY_COUNT		WIN_WIDTH
+# endif
+
+# define RAY_BOUND_MIN_OFFSET		0.25
+# define RAY_BOUND_MAX_OFFSET		1.25
+
 //	Enums
 
 //		Faces
 
 typedef enum e_face
 {
-	FACE_NO,
-	FACE_SO,
-	FACE_WE,
-	FACE_EA,
-	FACE_F,
-	FACE_C,
-	FACE_D
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST,
+	FLOOR,
+	CEILING,
+	DOOR
 }	t_face;
 
 //		Element type
@@ -133,19 +142,34 @@ typedef struct s_player
 	int				rotate;
 }	t_player;
 
+//		Raycasting
+
+//			Texture computer
+
+typedef struct s_tex_computer
+{
+	t_face			face;
+	t_2d_vector		bound;
+	double			pos;
+	double			step;
+}	t_tex_computer;
+
+//			Ray
+
 typedef struct s_ray
 {
 	double			cam_x;
 	t_2dd_vector	dir;
-	t_2d_vector		map_pos;
+	t_2d_vector		map;
 	t_2d_vector		step;
 	t_2dd_vector	side_dist;
 	t_2dd_vector	delta_dist;
-	t_2dd_vector	wall_dist;
+	double			wall_dist;
+	double			wall_x;
 	int				side;
 	int				line_height;
-	int				draw_start;
-	int				draw_end;
+	t_2d_vector		draw_boundaries;
+	t_tex_computer	tex_cpt;
 }	t_ray;
 
 //		Texture context
@@ -361,6 +385,19 @@ void		fill_map(
 				t_game_ctx *game,
 				char **map);
 
-//		Texture loading
+//		Raycasting
+
+int			raycasting(
+				t_game_ctx *ctx);
+
+//		Rendering
+
+void		update_screen_pixel(
+				t_game_ctx *ctx,
+				t_ray *ray,
+				int x);
+
+void		render_screen(
+				t_game_ctx *ctx);
 
 #endif

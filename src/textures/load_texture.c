@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:45:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 12:11:08 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:18:32 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ int	init_hex_texture(
 	char			*texture;
 
 	texture = NULL;
-	if (index == FACE_F && ctx->texctx.is_floor_rgb)
+	if (index == FLOOR && ctx->texctx.is_floor_rgb)
 	{
 		hex_value = &ctx->hex_floor;
 		texture = ctx->texctx.floor;
 	}
-	else if (index == FACE_C && ctx->texctx.is_ceil_rgb)
+	else if (index == CEILING && ctx->texctx.is_ceil_rgb)
 	{
 		hex_value = &ctx->hex_ceiling;
 		texture = ctx->texctx.ceiling;

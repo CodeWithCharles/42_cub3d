@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:43:35 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 11:46:29 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:18:28 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,14 @@ void	init_textures(
 		_xpm_to_pixels(ctx, ctx->texctx.ceiling);
 	if (!ctx->texctx.is_floor_rgb)
 		_xpm_to_pixels(ctx, ctx->texctx.floor);
-	ctx->game_textures[FACE_NO] = _xpm_to_pixels(ctx, ctx->texctx.north_path);
-	ctx->game_textures[FACE_SO] = _xpm_to_pixels(ctx, ctx->texctx.south_path);
-	ctx->game_textures[FACE_WE] = _xpm_to_pixels(ctx, ctx->texctx.west_path);
-	ctx->game_textures[FACE_EA] = _xpm_to_pixels(ctx, ctx->texctx.east_path);
+	ctx->game_textures[NORTH] = _xpm_to_pixels(ctx,
+			ctx->texctx.north_path);
+	ctx->game_textures[SOUTH] = _xpm_to_pixels(ctx,
+			ctx->texctx.south_path);
+	ctx->game_textures[WEST] = _xpm_to_pixels(ctx,
+			ctx->texctx.west_path);
+	ctx->game_textures[EAST] = _xpm_to_pixels(ctx,
+			ctx->texctx.east_path);
 }
 
 // Static implementations
