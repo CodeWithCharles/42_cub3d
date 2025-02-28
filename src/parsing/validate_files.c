@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:57:13 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 11:20:45 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:12:24 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,8 @@ int	validate_files(
 	t_game_ctx *ctx
 )
 {
-	if (((!ctx->texctx.is_ceil_rgb && check_file(ctx->texctx.ceiling, false))
-			|| parse_str_to_hex(&ctx->hex_ceiling, ctx->texctx.ceiling))
-		|| ((!ctx->texctx.is_floor_rgb
-				&& check_file(ctx->texctx.floor, false))
-			|| parse_str_to_hex(&ctx->hex_floor, ctx->texctx.floor))
+	if ((!ctx->texctx.is_ceil_rgb && check_file(ctx->texctx.ceiling, false))
+		|| (!ctx->texctx.is_floor_rgb && check_file(ctx->texctx.floor, false))
 		|| check_file(ctx->texctx.north_path, false)
 		|| check_file(ctx->texctx.south_path, false)
 		|| check_file(ctx->texctx.east_path, false)

@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:51:53 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 11:43:32 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:10:50 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static int	_check_valid_rgb(
 // Header implementation
 
 int	parse_str_to_hex(
+	t_game_ctx *ctx,
 	unsigned int *var,
 	char *str
 )
@@ -34,8 +35,10 @@ int	parse_str_to_hex(
 	colors_tab[1] = -1;
 	colors_tab[2] = -1;
 	_str_to_color_tab(str, &colors_tab);
-	if (_check_valid_rgb(colors_tab))
+	if (colors_tab[0] == -1 || colors_tab[1] == -1 || colors_tab[2] == -1)
 		return (RET_ERR);
+	if (_check_valid_rgb(colors_tab))
+		clean_exit(ctx, ERR_INVALID_RGB_DATA, 1);
 	*var = ((colors_tab[0] & 0xff) << 16)
 		+ ((colors_tab[1] & 0xff) << 8) + (colors_tab[2] & 0xff);
 	return (RET_OK);

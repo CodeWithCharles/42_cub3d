@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:10:53 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/28 11:44:19 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:14:35 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	set_map_elem_cur(
 	curr->type = get_elem_type(curr_char);
 }
 
-t_tex_ctx	init_tex_ctx(
+void	init_tex_ctx(
 	t_game_ctx *ctx,
 	char **map,
 	int *start_of_minimap
@@ -44,11 +44,11 @@ t_tex_ctx	init_tex_ctx(
 		i++;
 	}
 	*start_of_minimap = i;
-	textures.is_ceil_rgb = !parse_str_to_hex(&ctx->hex_ceiling,
+	ctx->texctx = textures;
+	ctx->texctx.is_ceil_rgb = !parse_str_to_hex(ctx, &ctx->hex_ceiling,
 			textures.ceiling);
-	textures.is_floor_rgb = !parse_str_to_hex(&ctx->hex_ceiling,
-			textures.ceiling);
-	return (textures);
+	ctx->texctx.is_floor_rgb = !parse_str_to_hex(ctx, &ctx->hex_floor,
+			textures.floor);
 }
 
 void	init_map_elem(t_map_element *map_element)
@@ -81,7 +81,7 @@ void	fill_game_ctx(char **map, t_game_ctx *ptr)
 {
 	int	start_of_minimap;
 
-	ptr->texctx = init_tex_ctx(ptr, map, &start_of_minimap);
+	init_tex_ctx(ptr, map, &start_of_minimap);
 	init_map_elems(ptr, map + start_of_minimap);
 	fill_map(ptr, map + start_of_minimap);
 }

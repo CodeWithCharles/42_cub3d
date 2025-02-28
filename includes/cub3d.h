@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 11:31:08 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:08:42 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ void		clean_exit(
 //		Texturing
 
 int			parse_str_to_hex(
+				t_game_ctx *ctx,
 				unsigned int *var,
 				char *str);
 

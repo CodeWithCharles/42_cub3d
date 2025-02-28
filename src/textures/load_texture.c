@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:45:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 11:23:14 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:11:08 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	init_hex_texture(
 		hex_value = &ctx->hex_ceiling;
 		texture = ctx->texctx.ceiling;
 	}
-	if (texture && parse_str_to_hex(hex_value, texture) == RET_ERR)
+	if (texture && parse_str_to_hex(ctx, hex_value, texture) == RET_ERR)
 		return (RET_ERR);
 	if (texture && hex_value)
 		_hex_to_texture(&ctx->game_textures[index], *hex_value);
