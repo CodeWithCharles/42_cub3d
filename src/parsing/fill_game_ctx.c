@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:10:53 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/28 12:14:35 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:33:49 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,5 @@ void	fill_game_ctx(char **map, t_game_ctx *ptr)
 	init_tex_ctx(ptr, map, &start_of_minimap);
 	init_map_elems(ptr, map + start_of_minimap);
 	fill_map(ptr, map + start_of_minimap);
+	init_player_data(ptr, map + start_of_minimap);
 }

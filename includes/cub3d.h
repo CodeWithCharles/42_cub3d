@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 12:08:42 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 15:13:05 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ extern char	*g_pname;
 # define EXT_XPM					".xpm"
 # define EXT_CUB					".cub"
 
+//		Directions
+
+# define DIR_INIT_POSITIVE			1
+# define DIR_INIT_NEGATIVE			-1
+
+# define PLANE_INIT_POSITIVE_ANGLE	0.66
+# define PLANE_INIT_NEGATIVE_ANGLE	-0.66
+
 //	Enums
 
 //		Faces
@@ -72,10 +80,10 @@ typedef enum e_elem
 {
 	ELEM_VOID,
 	ELEM_WALL,
-	ELEM_SPAWN_N,
-	ELEM_SPAWN_S,
-	ELEM_SPAWN_W,
-	ELEM_SPAWN_E,
+	ELEM_SPAWN_DIR_NORTH,
+	ELEM_SPAWN_DIR_SOUTH,
+	ELEM_SPAWN_DIR_WEST,
+	ELEM_SPAWN_DIR_EAST,
 	ELEM_FLOOR,
 	ELEM_DOOR
 }	t_elem;
@@ -106,6 +114,39 @@ typedef struct s_2d_vector
 	int	x;
 	int	y;
 }	t_2d_vector;
+
+typedef struct s_2dd_vector
+{
+	double	x;
+	double	y;
+}	t_2dd_vector;
+
+//		Player
+
+typedef struct s_player
+{
+	t_elem			spawn_dir;
+	t_2dd_vector	pos;
+	t_2dd_vector	dir;
+	t_2dd_vector	plane;
+	int				has_moved;
+	int				rotate;
+}	t_player;
+
+typedef struct s_ray
+{
+	double			cam_x;
+	t_2dd_vector	dir;
+	t_2d_vector		map_pos;
+	t_2d_vector		step;
+	t_2dd_vector	side_dist;
+	t_2dd_vector	delta_dist;
+	t_2dd_vector	wall_dist;
+	int				side;
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+}	t_ray;
 
 //		Texture context
 
@@ -157,6 +198,8 @@ typedef struct s_game_ctx
 	t_map_element	**map;
 	unsigned int	m_width;
 	unsigned int	m_height;
+	t_player		player;
+	t_ray			ray;
 }	t_game_ctx;
 
 //		Door
@@ -204,6 +247,13 @@ int			init_hex_texture(
 
 void		init_checker(
 				t_bool_format *checker);
+
+void		init_player_data(
+				t_game_ctx *ctx,
+				char **map);
+
+void		init_player_dir(
+				t_player *player);
 
 //		Errors
 

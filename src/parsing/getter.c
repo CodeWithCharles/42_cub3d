@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:14:02 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/26 17:25:48 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/28 15:13:04 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ t_elem	get_elem_type(char pos)
 	else if (pos == '1')
 		return (ELEM_WALL);
 	else if (pos == 'N')
-		return (ELEM_SPAWN_N);
+		return (ELEM_SPAWN_DIR_NORTH);
 	else if (pos == 'S')
-		return (ELEM_SPAWN_S);
+		return (ELEM_SPAWN_DIR_SOUTH);
 	else if (pos == 'W')
-		return (ELEM_SPAWN_W);
+		return (ELEM_SPAWN_DIR_WEST);
 	else if (pos == 'E')
-		return (ELEM_SPAWN_E);
+		return (ELEM_SPAWN_DIR_EAST);
 	else if (pos == 'D')
 		return (ELEM_DOOR);
 	else
