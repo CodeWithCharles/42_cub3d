@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:51:53 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/27 17:00:41 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:43:32 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	parse_str_to_hex(
 	colors_tab[2] = -1;
 	_str_to_color_tab(str, &colors_tab);
 	if (_check_valid_rgb(colors_tab))
-		return (print_gen_error(ERR_INVALID_RGB_DATA), RET_ERR);
+		return (RET_ERR);
 	*var = ((colors_tab[0] & 0xff) << 16)
 		+ ((colors_tab[1] & 0xff) << 8) + (colors_tab[2] & 0xff);
 	return (RET_OK);

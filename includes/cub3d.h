@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/27 16:24:12 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:31:08 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,19 @@ void		init_game(
 void		refresh_screen_pixels(
 				t_game_ctx *ctx);
 
+void		init_mlx(
+				t_game_ctx *ctx);
+
+void		init_textures(
+				t_game_ctx *ctx);
+
+int			init_hex_texture(
+				t_game_ctx *ctx,
+				int index);
+
+void		init_checker(
+				t_bool_format *checker);
+
 //		Errors
 
 void		print_arg_error(
@@ -200,6 +213,11 @@ void		print_arg_error(
 
 void		print_gen_error(
 				const char *error);
+
+void		clean_exit(
+				t_game_ctx *game,
+				char *error,
+				int code);
 
 //		Texturing
 
@@ -212,6 +230,9 @@ int			parse_str_to_hex(
 int			check_file(
 				char *str,
 				bool is_cub);
+
+int			validate_files(
+				t_game_ctx *ctx);
 
 // check.c
 
@@ -241,19 +262,12 @@ t_elem		get_elem_type(
 
 // setter.c
 
-void		init_checker(
-				t_bool_format *checker);
-
 char		*fill_buffer(
 				char *filename);
 
 void		set_bool_texture(
 				char *line,
 				t_bool_format *checker);
-
-void		clean_exit(
-				t_game_ctx *game,
-				int code);
 
 int			main_parsing(
 				t_game_ctx *game,
@@ -297,8 +311,5 @@ void		fill_map(
 				char **map);
 
 //		Texture loading
-
-int			load_textures(
-				t_game_ctx *ctx);
 
 #endif

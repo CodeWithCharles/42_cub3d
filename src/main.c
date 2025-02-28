@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/27 15:44:13 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:26:20 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static int	parse_args(t_game_ctx *game, char **argv)
 		return (RET_ERR);
 	if (main_parsing(game, argv) == RET_ERR)
 		return (RET_ERR);
+	if (validate_files(game) == RET_ERR)
+		return (RET_ERR);
 	return (RET_OK);
 }
 
@@ -31,7 +33,8 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (print_gen_error(ERR_ARGS), RET_ERR);
 	init_game(&game);
-	if (parse_args(&game, argv) == RET_ERR || load_textures(&game))
-		clean_exit(&game, RET_ERR);
+	if (parse_args(&game, argv) == RET_ERR)
+		clean_exit(&game, NULL, RET_ERR);
+	init_textures(&game);
 	return (0);
 }
