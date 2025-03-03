@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:07:25 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 15:14:28 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:25:53 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@ static void	free_game_ctx(
 
 void	clean_exit(
 	t_game_ctx *game,
+	char *error,
 	int code
 )
 {
+	if (error)
+		print_gen_error(error);
 	if (!game)
 		exit(code);
 	if (game->window && game->mlx)

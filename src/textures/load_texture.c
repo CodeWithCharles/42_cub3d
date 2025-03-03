@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:45:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 15:37:56 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:18:32 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,61 +14,41 @@
 
 // Static prototypes
 
-static int	load_texture(
-	t_game_ctx *ctx,
-	unsigned int **texture
+static void	_hex_to_texture(
+	unsigned int **texture,
+	unsigned int hex
 )
 {
-	void	*texture_ptr;
-	int		size;
+	int	i;
 
-	size = TEX_SIZE;
-	texture_ptr = mlx_xpm_file_to_image(ctx->mlx,
-			(char *)(*texture), &size, &size);
-	if (!texture_ptr)
-		return (print_gen_error(ERR_LOADING_XPM), RET_ERR);
-	free(*texture);
-	*texture = texture_ptr;
-	return (RET_OK);
+	i = 0;
+	*texture = malloc(sizeof(unsigned int) * (TEX_SIZE * TEX_SIZE));
+	while (i < TEX_SIZE * TEX_SIZE)
+		(*texture)[i++] = hex;
 }
 
-static int	_get_hex_texture(
+int	init_hex_texture(
 	t_game_ctx *ctx,
 	int index
 )
 {
-	if (index == FACE_F && ctx->texctx.is_floor_rgb)
-	{
-		if (parse_str_to_hex(&ctx->hex_floor, ctx->texctx.floor) == RET_ERR)
-			return (RET_ERR);
-	}
-	else if (index == FACE_C && ctx->texctx.is_ceil_rgb)
-	{
-		if (parse_str_to_hex(&ctx->hex_ceiling, ctx->texctx.ceiling) == RET_ERR)
-			return (RET_ERR);
-	}
-	return (RET_OK);
-}
+	unsigned int	*hex_value;
+	char			*texture;
 
-int	load_textures(
-	t_game_ctx *ctx
-)
-{
-	int		i;
-
-	i = FACE_NO;
-	while (i < FACE_D + 1)
+	texture = NULL;
+	if (index == FLOOR && ctx->texctx.is_floor_rgb)
 	{
-		if (_get_hex_texture(ctx, i) == RET_ERR)
-			clean_exit(ctx, 1);
-		else if (check_file((char *)(ctx->game_textures[i]), false) != 0)
-			return (RET_ERR);
-		else
-		{
-			if (load_texture(ctx, &ctx->game_textures[i]) == RET_ERR)
-				return (RET_ERR);
-		}
-		i++;
+		hex_value = &ctx->hex_floor;
+		texture = ctx->texctx.floor;
 	}
+	else if (index == CEILING && ctx->texctx.is_ceil_rgb)
+	{
+		hex_value = &ctx->hex_ceiling;
+		texture = ctx->texctx.ceiling;
+	}
+	if (texture && parse_str_to_hex(ctx, hex_value, texture) == RET_ERR)
+		return (RET_ERR);
+	if (texture && hex_value)
+		_hex_to_texture(&ctx->game_textures[index], *hex_value);
 	return (RET_OK);
 }

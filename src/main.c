@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 20:33:10 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:02:37 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static int	parse_args(t_game_ctx *game, char **argv)
 		return (RET_ERR);
 	if (main_parsing(game, argv) == RET_ERR)
 		return (RET_ERR);
+	if (validate_files(game) == RET_ERR)
+		return (RET_ERR);
 	return (RET_OK);
 }
 
@@ -32,6 +34,8 @@ int	main(int argc, char **argv)
 		return (print_gen_error(ERR_ARGS), RET_ERR);
 	init_game(&game);
 	if (parse_args(&game, argv) == RET_ERR)
-		clean_exit(&game, RET_ERR);
+		clean_exit(&game, NULL, RET_ERR);
+	init_textures(&game);
+	render_screen(&game);
 	return (0);
 }
