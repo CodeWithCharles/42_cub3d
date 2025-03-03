@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 15:47:14 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:42:23 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,6 +326,10 @@ void		set_image_pixel(
 				int x,
 				int y,
 				int color);
+
+void		hex_to_texture(
+				unsigned int **texture,
+				unsigned int hex);
 
 //		File validator
 

@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:43:35 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 17:18:28 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:44:29 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,13 @@ void	init_textures(
 	ctx->game_textures = ft_calloc(7 + (ctx->texctx.door_path != NULL),
 			sizeof(ctx->game_textures));
 	if (!ctx->texctx.is_ceil_rgb)
-		_xpm_to_pixels(ctx, ctx->texctx.ceiling);
+		ctx->game_textures[CEILING] = _xpm_to_pixels(ctx, ctx->texctx.ceiling);
+	else
+		hex_to_texture(&ctx->game_textures[CEILING], ctx->hex_ceiling);
 	if (!ctx->texctx.is_floor_rgb)
-		_xpm_to_pixels(ctx, ctx->texctx.floor);
+		ctx->game_textures[FLOOR] = _xpm_to_pixels(ctx, ctx->texctx.floor);
+	else
+		hex_to_texture(&ctx->game_textures[FLOOR], ctx->hex_floor);
 	ctx->game_textures[NORTH] = _xpm_to_pixels(ctx,
 			ctx->texctx.north_path);
 	ctx->game_textures[SOUTH] = _xpm_to_pixels(ctx,

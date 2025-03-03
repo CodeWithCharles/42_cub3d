@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:29:56 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/03 12:53:47 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:46:17 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ int	main_parsing(t_game_ctx *game, char **argv)
 	free(buffer);
 	if (check_map_format(map) == false)
 		return (ft_free_split(&map), RET_ERR);
-	init_game(game);
 	fill_game_ctx(map, game);
-	test_game(*game);
+	//test_game(*game);
 	return (ft_free_split(&map), RET_OK);
 }
