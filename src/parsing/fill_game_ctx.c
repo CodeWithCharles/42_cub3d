@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:10:53 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/26 17:34:31 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:49:11 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ t_tex_ctx	init_tex_ctx(char **map, int *start_of_minimap)
 	i = 0;
 	while (map[i])
 	{
-		if (map[i][0] != '_' && map[i][0] != '1')
+		if (map[i][0] != '_' && map[i][0] != '1' && map[i][0] != ' ')
 			set_texture(&textures, map[i]);
-		else if (map[i][0] == '1')
+		else if (map[i][0] == '1' || map[i][0] == ' ')
 			break ;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/26 17:34:15 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:42:00 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ typedef struct s_door
 
 typedef struct s_bool_format
 {
+	bool	map_found;
 	bool	all_texture_found;
 	bool	wrong_param_found;
 	bool	n_texture;
@@ -284,6 +285,19 @@ void	fill_map_line(
 			t_map_element *map_line,
 			char *line,
 			unsigned int m_width,
-			unsigned int i);		
+			unsigned int i);
 
+void	fill_map(
+			t_game_ctx *game,
+			char **map);	
+
+void	set_map_elem_cur(
+			t_map_element *curr,
+			unsigned int i,
+			unsigned int j,
+			char curr_char);
+
+char	*skip_space(
+			char *line);
+	
 #endif

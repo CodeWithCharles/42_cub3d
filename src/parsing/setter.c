@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:17:22 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/27 19:03:50 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:28:01 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,6 @@ void	set_bool_texture(char *line, t_bool_format *checker)
 	else if (checker->wrong_param_found != true
 		&& checker->all_texture_found == false)
 		checker->wrong_param_found = true;
-}
-
-char *skip_space(char *line)
-{
-	while (*line == ' ')
-		line++;
-	return (line);
 }
 
 void	set_texture(t_tex_ctx *textures, char *line)

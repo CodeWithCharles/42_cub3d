@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:32:34 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/27 19:00:23 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:28:47 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	check_if_start_of_map(char *line, t_bool_format *checker)
 
 	i = 0;
 	while (line[i] && line[i] == ' ')
-        i++;
+		i++;
 	if (line[i] != '1')
-        checker->wrong_param_found = true;
+		checker->wrong_param_found = true;
 	else if (line[i] == '1')
 		checker->map_found = true;
 }
@@ -57,7 +57,6 @@ bool	check_mini_map_format(char **map, int i, bool door)
 	t_2d_vector	test;
 
 	valid = 1;
-	
 	cpy_map = dup_map(map + i);
 	start_pos = find_start_pos(cpy_map);
 	if (start_pos.x == -1 && start_pos.y == -1)
@@ -82,7 +81,8 @@ bool	check_map_format(char **map)
 
 	i = 0;
 	init_checker(&checker);
-	while (map[i] && checker.wrong_param_found == false && checker.map_found == false)
+	while (map[i] && checker.wrong_param_found == false
+		&& checker.map_found == false)
 	{
 		if (map[i][0] == '_' && map[i][1] == '\0')
 			i++;
