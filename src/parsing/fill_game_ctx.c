@@ -37,9 +37,9 @@ void	init_tex_ctx(
 	i = 0;
 	while (map[i])
 	{
-		if (map[i][0] != '_' && map[i][0] != '1')
+		if (map[i][0] != '_' && map[i][0] != '1' && map[i][0] != ' ')
 			set_texture(&textures, map[i]);
-		else if (map[i][0] == '1')
+		else if (map[i][0] == '1' || map[i][0] == ' ')
 			break ;
 		i++;
 	}

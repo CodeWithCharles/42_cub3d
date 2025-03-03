@@ -25,6 +25,10 @@ t_2d_vector	find_start_pos(char **map)
 			if (map[cur.y][cur.x] == 'N' || map[cur.y][cur.x] == 'E'
 					|| map[cur.y][cur.x] == 'S' || map[cur.y][cur.x] == 'W')
 				return (cur);
+			else if (map[cur.y][cur.x] != '1' && map[cur.y][cur.x] != '0'
+					&& map[cur.y][cur.x] != 'D' && map[cur.y][cur.x] != ' '
+					&& map[cur.y][cur.x] != '\0')
+				break ;
 			cur.x++;
 		}
 		cur.y++;

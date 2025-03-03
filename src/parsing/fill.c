@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:31:03 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/26 17:33:38 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/27 18:55:08 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	flood_fill_parse_door(char **map, int x, int y, int *valid)
 		map[y][x] = '2';
 	else
 		*valid = 0;
-	flood_fill_parse(map, x + 1, y, valid);
-	flood_fill_parse(map, x - 1, y, valid);
-	flood_fill_parse(map, x, y + 1, valid);
-	flood_fill_parse(map, x, y - 1, valid);
+	flood_fill_parse_door(map, x + 1, y, valid);
+	flood_fill_parse_door(map, x - 1, y, valid);
+	flood_fill_parse_door(map, x, y + 1, valid);
+	flood_fill_parse_door(map, x, y - 1, valid);
 }
 
 void	flood_fill_parse(char **map, int x, int y, int *valid)
