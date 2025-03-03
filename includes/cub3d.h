@@ -238,6 +238,7 @@ typedef struct s_door
 
 typedef struct s_bool_format
 {
+	bool	map_found;
 	bool	all_texture_found;
 	bool	wrong_param_found;
 	bool	n_texture;
@@ -410,4 +411,17 @@ void		update_screen_pixel(
 void		render_screen(
 				t_game_ctx *ctx);
 
+void	fill_map(
+			t_game_ctx *game,
+			char **map);	
+
+void	set_map_elem_cur(
+			t_map_element *curr,
+			unsigned int i,
+			unsigned int j,
+			char curr_char);
+
+char	*skip_space(
+			char *line);
+	
 #endif

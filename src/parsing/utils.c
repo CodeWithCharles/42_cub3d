@@ -6,11 +6,18 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:26:31 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/26 17:27:21 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:43:32 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+char	*skip_space(char *line)
+{
+	while (*line == ' ')
+		line++;
+	return (line);
+}
 
 char	**dup_map(char **map)
 {
@@ -33,3 +40,4 @@ char	**dup_map(char **map)
 	new_map[count] = NULL;
 	return (new_map);
 }
+
