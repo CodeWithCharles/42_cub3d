@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 13:47:52 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:47:14 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ extern char	*g_pname;
 
 //		Screen
 
-# define WIN_WIDTH					1920
-# define WIN_HEIGHT					1280
+# define WIN_WIDTH					1440
+# define WIN_HEIGHT					960
 
 //		Textures
 
@@ -72,7 +72,12 @@ extern char	*g_pname;
 
 # define MOUSE_ROT_SPEED			0.030
 # define MOUSE_EDGE_RESET_OFFSET	20
+# define MOUSE_PITCH_SPEED			25
 # define PLAYER_MOVE_SPEED			0.0725
+
+# define PLAYER_PITCH_INCREMENT		10
+# define PLAYER_ROT_INCREMENT		1
+# define PLAYER_MOVE				1
 
 //	Enums
 
@@ -146,6 +151,7 @@ typedef struct s_player
 	t_2dd_vector	plane;
 	int				has_moved;
 	int				rotate;
+	int				pitch;
 	t_2d_vector		move;
 }	t_player;
 

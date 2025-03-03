@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 12:43:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 13:37:33 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:21:29 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ static void	_set_frame_image_pixel(
 {
 	if (ctx->screen_pixels[y][x] > 0)
 		set_image_pixel(img, x, y, ctx->screen_pixels[y][x]);
-	else if (y < WIN_HEIGHT / 2)
+	else if (y < WIN_HEIGHT / 2 + ctx->player.pitch)
 		set_image_pixel(img, x, y, ctx->hex_ceiling);
-	else if (y < WIN_HEIGHT - 1)
+	else if (y >= WIN_HEIGHT / 2 + ctx->player.pitch)
 		set_image_pixel(img, x, y, ctx->hex_floor);
 }
