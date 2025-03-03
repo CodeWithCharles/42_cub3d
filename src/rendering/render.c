@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 12:43:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 12:41:28 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:37:33 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	render(
 	t_game_ctx *ctx
 )
 {
-	ctx->player.has_moved += move_player(ctx);
+	ctx->player.has_moved += move_player_handler(ctx);
 	if (ctx->player.has_moved == 0)
 		return (0);
 	render_screen(ctx);
