@@ -3,3 +3,4 @@
 --leak-check=full
 --show-leak-kinds=all
 --track-origins=yes
+--suppressions=std.supp

@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 12:10:48 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:47:14 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ extern char	*g_pname;
 
 //		Screen
 
-# define WIN_WIDTH					1920
-# define WIN_HEIGHT					1280
+# define WIN_WIDTH					1440
+# define WIN_HEIGHT					960
 
 //		Textures
 
@@ -67,6 +67,17 @@ extern char	*g_pname;
 
 # define RAY_BOUND_MIN_OFFSET		0.25
 # define RAY_BOUND_MAX_OFFSET		1.25
+
+//		Movements
+
+# define MOUSE_ROT_SPEED			0.030
+# define MOUSE_EDGE_RESET_OFFSET	20
+# define MOUSE_PITCH_SPEED			25
+# define PLAYER_MOVE_SPEED			0.0725
+
+# define PLAYER_PITCH_INCREMENT		10
+# define PLAYER_ROT_INCREMENT		1
+# define PLAYER_MOVE				1
 
 //	Enums
 
@@ -140,6 +151,8 @@ typedef struct s_player
 	t_2dd_vector	plane;
 	int				has_moved;
 	int				rotate;
+	int				pitch;
+	t_2d_vector		move;
 }	t_player;
 
 //		Raycasting
@@ -284,7 +297,7 @@ void		init_img(
 				t_game_ctx *ctx,
 				t_img *img);
 
-//		Errors
+//		Errors & Exits
 
 void		print_arg_error(
 				const char *error,
@@ -297,6 +310,9 @@ void		clean_exit(
 				t_game_ctx *game,
 				char *error,
 				int code);
+
+int			quit_cube(
+				t_game_ctx *ctx);
 
 //		Texturing
 
@@ -411,6 +427,40 @@ void		update_screen_pixel(
 void		render_screen(
 				t_game_ctx *ctx);
 
+int			render(
+				t_game_ctx *ctx);
+
+//		Movements
+
+int			rotate_player(
+				t_game_ctx *ctx,
+				double rot_dir);
+
+int			validate_player_pos(
+				t_game_ctx *ctx,
+				t_2dd_vector new_pos);
+
+int			move_player_handler(
+				t_game_ctx *ctx);
+
+//		Hooks
+
+void		init_hooks(
+				t_game_ctx *ctx);
+
+int			mouse_move_hook(
+				int x,
+				int y,
+				t_game_ctx *ctx);
+
+int			key_pressed_hook(
+				int key,
+				t_game_ctx *ctx);
+
+int			key_released_hook(
+				int key,
+				t_game_ctx *ctx);
+
 void	fill_map(
 			t_game_ctx *game,
 			char **map);	
@@ -423,5 +473,5 @@ void	set_map_elem_cur(
 
 char	*skip_space(
 			char *line);
-	
+
 #endif

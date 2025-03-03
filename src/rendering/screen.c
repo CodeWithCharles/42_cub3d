@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:46:38 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 12:01:36 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:27:10 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ void	update_screen_pixel(
 		|| (ray->side == 1 && ray->dir.y > 0))
 		ray->tex_cpt.bound.x = TEX_SIZE - ray->tex_cpt.bound.x - 1;
 	ray->tex_cpt.step = 1.0 * TEX_SIZE / ray->line_height;
-	ray->tex_cpt.pos = (ray->draw_boundaries.x - WIN_HEIGHT / 2
-			+ ray->line_height / 2) * ray->tex_cpt.step;
+	ray->tex_cpt.pos = (ray->draw_boundaries.x - (WIN_HEIGHT / 2
+				+ ctx->player.pitch) + ray->line_height / 2)
+		* ray->tex_cpt.step;
 	y = ray->draw_boundaries.x;
 	while (y < ray->draw_boundaries.y)
 	{

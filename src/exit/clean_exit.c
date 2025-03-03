@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:07:25 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 11:25:53 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:03:26 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,12 @@ void	clean_exit(
 	}
 	free_game_ctx(game);
 	exit (code);
+}
+
+int	quit_cube(
+	t_game_ctx *ctx
+)
+{
+	clean_exit(ctx, NULL, 0);
+	return (0);
 }
