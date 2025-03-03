@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 12:43:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 17:28:59 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:41:28 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ void	render_screen(
 	_render_raycasting(ctx);
 }
 
+int	render(
+	t_game_ctx *ctx
+)
+{
+	ctx->player.has_moved += move_player(ctx);
+	if (ctx->player.has_moved == 0)
+		return (0);
+	render_screen(ctx);
+	return (0);
+}
+
 // Static implementations
 
 static void	_render_raycasting(
@@ -57,7 +68,7 @@ static void	_render_frame(
 	int		y;
 
 	img.img = NULL;
-	refresh_screen_pixels(ctx);
+	init_img(ctx, &img);
 	y = 0;
 	while (y < WIN_HEIGHT)
 	{
@@ -71,4 +82,19 @@ static void	_render_frame(
 	}
 	mlx_put_image_to_window(ctx->mlx, ctx->window, img.img, 0, 0);
 	mlx_destroy_image(ctx->mlx, img.img);
+}
+
+static void	_set_frame_image_pixel(
+	t_game_ctx *ctx,
+	t_img *img,
+	int x,
+	int y
+)
+{
+	if (ctx->screen_pixels[y][x] > 0)
+		set_image_pixel(img, x, y, ctx->screen_pixels[y][x]);
+	else if (y < WIN_HEIGHT / 2)
+		set_image_pixel(img, x, y, ctx->hex_ceiling);
+	else if (y < WIN_HEIGHT - 1)
+		set_image_pixel(img, x, y, ctx->hex_floor);
 }

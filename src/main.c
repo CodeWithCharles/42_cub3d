@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 11:26:20 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:02:37 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ int	main(int argc, char **argv)
 	if (parse_args(&game, argv) == RET_ERR)
 		clean_exit(&game, NULL, RET_ERR);
 	init_textures(&game);
+	render_screen(&game);
 	return (0);
 }

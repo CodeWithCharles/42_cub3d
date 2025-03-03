@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:22:11 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 16:27:30 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:05:04 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	_perform_dda(
 				t_ray *ray);
 
 static void	_calculate_line_length(
-				t_game_ctx *ctx,
 				t_ray *ray,
 				t_player *player);
 
@@ -48,6 +47,9 @@ int	raycasting(
 		_init_raycasting_ray(&ray, &ctx->player, x);
 		_init_dda(&ray, &ctx->player);
 		_perform_dda(ctx, &ray);
+		_calculate_line_length(&ray, &ctx->player);
+		update_screen_pixel(ctx, &ray, x);
+		++x;
 	}
 	return (RET_OK);
 }
@@ -118,7 +120,6 @@ static void	_perform_dda(
 }
 
 static void	_calculate_line_length(
-	t_game_ctx *ctx,
 	t_ray *ray,
 	t_player *player
 )
@@ -126,7 +127,7 @@ static void	_calculate_line_length(
 	ray->wall_dist = (ray->side_dist.x - ray->delta_dist.x) * (ray->side == 0)
 		+ (ray->side_dist.y - ray->delta_dist.y) * (ray->side != 0);
 	ray->line_height = (int)(WIN_HEIGHT / ray->wall_dist);
-	ray->draw_boundaries.x -(ray->line_height) / 2 + WIN_HEIGHT / 2;
+	ray->draw_boundaries.x = -(ray->line_height) / 2 + WIN_HEIGHT / 2;
 	ray->draw_boundaries.x *= !(ray->draw_boundaries.x < 0);
 	ray->draw_boundaries.y = ray->line_height / 2 + WIN_HEIGHT / 2;
 	if (ray->draw_boundaries.y >= WIN_HEIGHT)

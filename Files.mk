@@ -3,5 +3,6 @@ FILES	=																	\
 	init/init_ctx init/init_mlx init/init_player init/init_textures main	\
 	parsing/check parsing/fill parsing/fill_game_ctx parsing/getter			\
 	parsing/main_parsing parsing/setter parsing/utils						\
-	parsing/validate_files rendering/raycasting textures/colors				\
-	textures/load_texture utils/file_checker utils/free_tab					\
+	parsing/validate_files rendering/raycasting rendering/render			\
+	rendering/screen textures/colors textures/load_texture					\
+	utils/file_checker utils/free_tab utils/set_image_pixel					\

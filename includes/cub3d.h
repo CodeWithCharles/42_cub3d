@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 17:24:50 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:10:48 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,6 +279,10 @@ void		init_player_data(
 void		init_player_dir(
 				t_player *player);
 
+void		init_img(
+				t_game_ctx *ctx,
+				t_img *img);
+
 //		Errors
 
 void		print_arg_error(
@@ -299,6 +303,12 @@ int			parse_str_to_hex(
 				t_game_ctx *ctx,
 				unsigned int *var,
 				char *str);
+
+void		set_image_pixel(
+				t_img *img,
+				int x,
+				int y,
+				int color);
 
 //		File validator
 

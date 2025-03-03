@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:46:38 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 17:18:28 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:01:36 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 // Static prototypes
 
 static void	_get_texture_face(
-				t_game_ctx *ctx,
 				t_ray *ray);
 
 // Header implementations
@@ -29,7 +28,7 @@ void	update_screen_pixel(
 	int				y;
 	unsigned int	color;
 
-	_get_texture_face(ctx, ray);
+	_get_texture_face(ray);
 	ray->tex_cpt.bound.x = (int)(ray->wall_x * TEX_SIZE);
 	if ((ray->side == 0 && ray->dir.x < 0)
 		|| (ray->side == 1 && ray->dir.y > 0))
@@ -55,7 +54,6 @@ void	update_screen_pixel(
 // Static implementations
 
 static void	_get_texture_face(
-	t_game_ctx *ctx,
 	t_ray *ray
 )
 {
