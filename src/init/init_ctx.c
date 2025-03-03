@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:30:32 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 18:21:54 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:18:46 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	init_game(
 	t_game_ctx *ctx
 )
 {
+	init_mlx(ctx);
 	ctx->hex_ceiling = 0x0;
 	ctx->hex_floor = 0x0;
 	ctx->map = NULL;
-	ctx->mlx = NULL;
-	ctx->window = NULL;
 	ctx->texctx = (t_tex_ctx){};
+	ctx->texctx.door_path = NULL;
 	ctx->game_textures = NULL;
 	ctx->m_width = 0;
 	ctx->m_height = 0;

@@ -1,9 +1,9 @@
-NO textures/simonkraft/soul_sand.xpm
-SO textures/simonkraft/soul_soil_01.xpm
-WE textures/simonkraft/soul_soil.xpm
-EA textures/simonkraft/soul_sand.xpm
+NO assets/star_wars_mots/tile025.xpm
+SO assets/star_wars_mots/tile012.xpm
+WE assets/star_wars_mots/tile027.xpm
+EA assets/star_wars_mots/tile010.xpm
 
-C 53,41,34
+C 30,240,15
 F 45,33,27
 
 111111111111111
@@ -17,6 +17,5 @@ F 45,33,27
 111000010000111
 111100000001111
 111110000011111
-
 111111000111111
 111111111111111

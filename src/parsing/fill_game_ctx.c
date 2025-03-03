@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_game_ctx.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:10:53 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/03 12:49:11 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:33:49 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,16 @@ void	set_map_elem_cur(
 	curr->type = get_elem_type(curr_char);
 }
 
-t_tex_ctx	init_tex_ctx(char **map, int *start_of_minimap)
+void	init_tex_ctx(
+	t_game_ctx *ctx,
+	char **map,
+	int *start_of_minimap
+)
 {
 	int			i;
 	t_tex_ctx	textures;
 
+	textures = (t_tex_ctx){};
 	i = 0;
 	while (map[i])
 	{
@@ -39,9 +44,11 @@ t_tex_ctx	init_tex_ctx(char **map, int *start_of_minimap)
 		i++;
 	}
 	*start_of_minimap = i;
-	textures.is_ceil_rgb = true;
-	textures.is_floor_rgb = true;
-	return (textures);
+	ctx->texctx = textures;
+	ctx->texctx.is_ceil_rgb = !parse_str_to_hex(ctx, &ctx->hex_ceiling,
+			textures.ceiling);
+	ctx->texctx.is_floor_rgb = !parse_str_to_hex(ctx, &ctx->hex_floor,
+			textures.floor);
 }
 
 void	init_map_elem(t_map_element *map_element)
@@ -74,7 +81,8 @@ void	fill_game_ctx(char **map, t_game_ctx *ptr)
 {
 	int	start_of_minimap;
 
-	ptr->texctx = init_tex_ctx(map, &start_of_minimap);
+	init_tex_ctx(ptr, map, &start_of_minimap);
 	init_map_elems(ptr, map + start_of_minimap);
 	fill_map(ptr, map + start_of_minimap);
+	init_player_data(ptr, map + start_of_minimap);
 }

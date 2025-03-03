@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:06:01 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/25 14:54:39 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:25:19 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@
 # define ERR_FILE_IS_DIR			"%s%s:\t%s: File is a directory.%s\n"
 # define ERR_ERRNO					"%s%s:\t: %s%s\n"
 # define ERR_LOADING_XPM			"%s%s:\t: Error loading xpm file.%s\n"
+# define ERR_INIT_MLX				"%s%s:\t: Could not initialize mlx.%s\n"
+# define ERR_WIN_MLX				"%s%s:\t: Could not initialize window.%s\n"
 
 #endif
