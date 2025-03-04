@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 18:42:23 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:59:19 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ extern char	*g_pname;
 //		Movements
 
 # define MOUSE_ROT_SPEED			0.030
-# define MOUSE_EDGE_RESET_OFFSET	20
+# define MOUSE_EDGE_RESET_OFFSET	200
 # define MOUSE_PITCH_SPEED			25
 # define PLAYER_MOVE_SPEED			0.0725
 
@@ -465,17 +465,17 @@ int			key_released_hook(
 				int key,
 				t_game_ctx *ctx);
 
-void	fill_map(
-			t_game_ctx *game,
-			char **map);	
+void		fill_map(
+				t_game_ctx *game,
+				char **map);
 
-void	set_map_elem_cur(
-			t_map_element *curr,
-			unsigned int i,
-			unsigned int j,
-			char curr_char);
+void		set_map_elem_cur(
+				t_map_element *curr,
+				unsigned int i,
+				unsigned int j,
+				char curr_char);
 
-char	*skip_space(
-			char *line);
+char		*skip_space(
+				char *line);
 
 #endif
