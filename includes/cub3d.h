@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/04 17:59:19 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/04 18:02:29 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ extern char	*g_pname;
 
 //		Movements
 
-# define MOUSE_ROT_SPEED			0.030
+# define MOUSE_ROT_SPEED			0.05
 # define MOUSE_EDGE_RESET_OFFSET	200
 # define MOUSE_PITCH_SPEED			25
 # define PLAYER_MOVE_SPEED			0.0725
