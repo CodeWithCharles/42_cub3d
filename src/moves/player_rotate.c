@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 12:50:27 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 12:58:41 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:10:41 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	rotate_player(
 	t_player	*p;
 	double		tmp_x;
 
-	rot_speed = MOUSE_ROT_SPEED * rot_dir;
+	rot_speed = rot_dir * MOUSE_ROT_SPEED;
 	p = &ctx->player;
 	tmp_x = p->dir.x;
 	p->dir.x = p->dir.x * cos(rot_speed) - p->dir.y * sin(rot_speed);

@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/04 18:02:29 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:36:04 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ extern char	*g_pname;
 
 //		Screen
 
-# define WIN_WIDTH					1440
-# define WIN_HEIGHT					960
+# define WIN_WIDTH					1920
+# define WIN_HEIGHT					1080
 
 //		Textures
 
@@ -78,6 +78,30 @@ extern char	*g_pname;
 # define PLAYER_PITCH_INCREMENT		10
 # define PLAYER_ROT_INCREMENT		1
 # define PLAYER_MOVE				1
+
+//		Map elements
+
+# define _WALL						'1'
+# define _VOID						' '
+# define _FLOOR						'0'
+# define _PLAYER					'P'
+# define _SPAWNS					"NSEW"
+# define _DOOR						'D'
+
+//		Minimap
+
+# define MMAP_PIXEL_SIZE			128
+# define MMAP_VIEW_DIST				4
+# define MMAP_BORDER_PADDING		5
+
+//			Colors
+
+# define MMAP_COLOR_WALL			0xFFFFFF
+# define MMAP_COLOR_PLAYER			0x0000FF
+# define MMAP_COLOR_FLOOR			0xCCCCCC
+# define MMAP_COLOR_VOID			0x999999
+# define MMAP_COLOR_SPAWN			0x00FF00
+# define MMAP_COLOR_BORDER			0x222222
 
 //	Enums
 
@@ -237,6 +261,7 @@ typedef struct s_game_ctx
 	unsigned int	m_height;
 	t_player		player;
 	t_ray			ray;
+	t_img			minimap_img;
 }	t_game_ctx;
 
 //		Door
@@ -246,6 +271,18 @@ typedef struct s_door
 	t_door_state		is_closed;
 	t_door_anim_state	anim_state;
 }	t_door;
+
+//		Minimap
+
+typedef struct s_minimap
+{
+	char			**map;
+	t_img			*img;
+	unsigned int	size;
+	t_2d_vector		offset;
+	unsigned int	view_dist;
+	unsigned int	tile_size;
+}	t_minimap;
 
 // bool parsing
 
@@ -295,7 +332,12 @@ void		init_player_dir(
 
 void		init_img(
 				t_game_ctx *ctx,
-				t_img *img);
+				t_img *img,
+				int width,
+				int height);
+
+t_minimap	init_minimap(
+				t_game_ctx *ctx);
 
 //		Errors & Exits
 
@@ -434,6 +476,9 @@ void		render_screen(
 int			render(
 				t_game_ctx *ctx);
 
+void		render_minimap(
+				t_game_ctx *ctx);
+
 //		Movements
 
 int			rotate_player(
@@ -477,5 +522,48 @@ void		set_map_elem_cur(
 
 char		*skip_space(
 				char *line);
+
+//		Minimap
+
+//			Image
+
+void		draw_mmap_borders(
+				t_minimap *mmap);
+
+void		draw_mmap(
+				t_minimap *mmap);
+
+void		draw_mmap_tile(
+				t_minimap *mmap,
+				unsigned int x,
+				unsigned int y);
+
+void		set_tile_pixels(
+				t_minimap *mmap,
+				unsigned int x,
+				unsigned int y,
+				unsigned int color);
+
+//			Maker
+
+int			get_mmap_offset(
+				t_minimap *mmap,
+				unsigned int map_size,
+				unsigned int pos);
+
+char		get_mmap_tile(
+				t_game_ctx *ctx,
+				t_minimap *mmap,
+				unsigned int x,
+				unsigned int y);
+
+char		*generate_mmap_line(
+				t_game_ctx *ctx,
+				t_minimap *mmap,
+				unsigned int y);
+
+char		**generate_mmap(
+				t_game_ctx *ctx,
+				t_minimap *mmap);
 
 #endif
