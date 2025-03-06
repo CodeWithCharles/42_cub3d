@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:06:01 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/02/28 11:25:19 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:55:57 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,19 @@
 # define CODE_CANNOT_ALLOC			12
 # define CODE_EXEC_FAILED			256
 
-# define ERR_ARGS					"%s%s:\tUsage: ./cub3d <path/to/map.cub>"
-# define ERR_INVALID_RGB_DATA		"%s%s:\t%s: Invalid rgb data.%s\n"
-# define ERR_FATAL_ALLOC			"%s%s:\t%s: Could not allocate memory.%s\n"
-# define ERR_FILE_IS_DIR			"%s%s:\t%s: File is a directory.%s\n"
-# define ERR_ERRNO					"%s%s:\t: %s%s\n"
-# define ERR_LOADING_XPM			"%s%s:\t: Error loading xpm file.%s\n"
-# define ERR_INIT_MLX				"%s%s:\t: Could not initialize mlx.%s\n"
-# define ERR_WIN_MLX				"%s%s:\t: Could not initialize window.%s\n"
+# define ERR_ARGS				"%sError\n%s:\tUsage: ./cub3d <path/to/map.cub>"
+# define ERR_INVALID_RGB_DATA	"%sError\n%s:\t%s: Invalid rgb data.%s\n"
+# define ERR_FATAL_ALLOC	"%sError\n%s:\t%s: Could not allocate memory.%s\n"
+# define ERR_FILE_IS_DIR		"%sError\n%s:\t%s: File is a directory.%s\n"
+# define ERR_NO_FILE	"%sError\n%s:\t%s\t: No such file or directory.%s\n"
+# define ERR_ERRNO				"%sError\n%s:\t%s%s\n"
+# define ERR_LOADING_XPM		"%sError\n%s:\tError loading xpm file.%s\n"
+# define ERR_INIT_MLX			"%sError\n%s:\tCould not initialize mlx.%s\n"
+# define ERR_WIN_MLX		"%sError\n%s:\tCould not initialize window.%s\n"
+# define ERR_NO_SPAWN	"%sError:\n%s:\tPlayer spawn point not found.%s\n"
+# define ERR_MORE_SPAWN	"%sError:\n%s:\tMultiple spawn points.%s\n"
+# define ERR_MAP	"%sError:\n%s:\tInvalid map.%s\n"
+# define ERR_CONFIG	"%sError:\n%s:\tInvalid configuration file.%s\n"
+# define ERR_RGB	"%sError:\n%s:\t%s:\tInvalid rgb value.%s\n"
 
 #endif

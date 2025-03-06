@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 12:10:48 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:01:01 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ extern char	*g_pname;
 //		Screen
 
 # define WIN_WIDTH					1920
-# define WIN_HEIGHT					1280
+# define WIN_HEIGHT					1080
 
 //		Textures
 
@@ -67,6 +67,48 @@ extern char	*g_pname;
 
 # define RAY_BOUND_MIN_OFFSET		0.25
 # define RAY_BOUND_MAX_OFFSET		1.25
+
+//		Movements
+//			Pitch
+# define MAX_PITCH	90
+# define MIN_PITCH	-90
+//			Mouse
+# define MOUSE_EDGE_RESET_OFFSET	200
+//				Rotation
+# define MOUSE_ROT_SENSITIVITY		0.05
+//				Pitch
+# define MOUSE_PITCH_SENSITIVITY	4
+//			Player
+# define PLAYER_MOVE_SPEED			0.0725
+# define PLAYER_MOVE				1
+//				Pitch
+# define PLAYER_PITCH_INCREMENT		10
+//				Rotation
+# define PLAYER_ROT_INCREMENT		1
+
+//		Map elements
+
+# define _WALL						'1'
+# define _VOID						' '
+# define _FLOOR						'0'
+# define _PLAYER					'P'
+# define _SPAWNS					"NSEW"
+# define _DOOR						'D'
+
+//		Minimap
+
+# define MMAP_PIXEL_SIZE			128
+# define MMAP_VIEW_DIST				4
+# define MMAP_BORDER_PADDING		5
+
+//			Colors
+
+# define MMAP_COLOR_WALL			0xFFFFFF
+# define MMAP_COLOR_PLAYER			0x0000FF
+# define MMAP_COLOR_FLOOR			0xCCCCCC
+# define MMAP_COLOR_VOID			0x999999
+# define MMAP_COLOR_SPAWN			0x00FF00
+# define MMAP_COLOR_BORDER			0x222222
 
 //	Enums
 
@@ -140,6 +182,8 @@ typedef struct s_player
 	t_2dd_vector	plane;
 	int				has_moved;
 	int				rotate;
+	double			pitch;
+	t_2d_vector		move;
 }	t_player;
 
 //		Raycasting
@@ -224,6 +268,8 @@ typedef struct s_game_ctx
 	unsigned int	m_height;
 	t_player		player;
 	t_ray			ray;
+	t_img			minimap_img;
+	int				has_mouse_jumped;
 }	t_game_ctx;
 
 //		Door
@@ -233,6 +279,18 @@ typedef struct s_door
 	t_door_state		is_closed;
 	t_door_anim_state	anim_state;
 }	t_door;
+
+//		Minimap
+
+typedef struct s_minimap
+{
+	char			**map;
+	t_img			*img;
+	unsigned int	size;
+	t_2d_vector		offset;
+	unsigned int	view_dist;
+	unsigned int	tile_size;
+}	t_minimap;
 
 // bool parsing
 
@@ -282,9 +340,14 @@ void		init_player_dir(
 
 void		init_img(
 				t_game_ctx *ctx,
-				t_img *img);
+				t_img *img,
+				int width,
+				int height);
 
-//		Errors
+t_minimap	init_minimap(
+				t_game_ctx *ctx);
+
+//		Errors & Exits
 
 void		print_arg_error(
 				const char *error,
@@ -298,6 +361,9 @@ void		clean_exit(
 				char *error,
 				int code);
 
+int			quit_cube(
+				t_game_ctx *ctx);
+
 //		Texturing
 
 int			parse_str_to_hex(
@@ -310,6 +376,10 @@ void		set_image_pixel(
 				int x,
 				int y,
 				int color);
+
+void		hex_to_texture(
+				unsigned int **texture,
+				unsigned int hex);
 
 //		File validator
 
@@ -411,17 +481,97 @@ void		update_screen_pixel(
 void		render_screen(
 				t_game_ctx *ctx);
 
-void	fill_map(
-			t_game_ctx *game,
-			char **map);	
+int			render(
+				t_game_ctx *ctx);
 
-void	set_map_elem_cur(
-			t_map_element *curr,
-			unsigned int i,
-			unsigned int j,
-			char curr_char);
+void		render_minimap(
+				t_game_ctx *ctx);
 
-char	*skip_space(
-			char *line);
-	
+//		Movements
+
+int			rotate_player(
+				t_game_ctx *ctx,
+				double rot_dir);
+
+int			validate_player_pos(
+				t_game_ctx *ctx,
+				t_2dd_vector new_pos);
+
+int			move_player_handler(
+				t_game_ctx *ctx);
+
+//		Hooks
+
+void		init_hooks(
+				t_game_ctx *ctx);
+
+int			mouse_move_hook(
+				int x,
+				int y,
+				t_game_ctx *ctx);
+
+int			key_pressed_hook(
+				int key,
+				t_game_ctx *ctx);
+
+int			key_released_hook(
+				int key,
+				t_game_ctx *ctx);
+
+void		fill_map(
+				t_game_ctx *game,
+				char **map);
+
+void		set_map_elem_cur(
+				t_map_element *curr,
+				unsigned int i,
+				unsigned int j,
+				char curr_char);
+
+char		*skip_space(
+				char *line);
+
+//		Minimap
+
+//			Image
+
+void		draw_mmap_borders(
+				t_minimap *mmap);
+
+void		draw_mmap(
+				t_minimap *mmap);
+
+void		draw_mmap_tile(
+				t_minimap *mmap,
+				unsigned int x,
+				unsigned int y);
+
+void		set_tile_pixels(
+				t_minimap *mmap,
+				unsigned int x,
+				unsigned int y,
+				unsigned int color);
+
+//			Maker
+
+int			get_mmap_offset(
+				t_minimap *mmap,
+				unsigned int map_size,
+				unsigned int pos);
+
+char		get_mmap_tile(
+				t_game_ctx *ctx,
+				t_minimap *mmap,
+				unsigned int x,
+				unsigned int y);
+
+char		*generate_mmap_line(
+				t_game_ctx *ctx,
+				t_minimap *mmap,
+				unsigned int y);
+
+char		**generate_mmap(
+				t_game_ctx *ctx,
+				t_minimap *mmap);
+
 #endif

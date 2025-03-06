@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 12:43:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 12:41:28 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:36:41 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ void	render_screen(
 )
 {
 	_render_raycasting(ctx);
+	render_minimap(ctx);
 }
 
 int	render(
 	t_game_ctx *ctx
 )
 {
-	ctx->player.has_moved += move_player(ctx);
+	ctx->player.has_moved += move_player_handler(ctx);
 	if (ctx->player.has_moved == 0)
 		return (0);
 	render_screen(ctx);
@@ -68,7 +69,7 @@ static void	_render_frame(
 	int		y;
 
 	img.img = NULL;
-	init_img(ctx, &img);
+	init_img(ctx, &img, WIN_WIDTH, WIN_HEIGHT);
 	y = 0;
 	while (y < WIN_HEIGHT)
 	{
@@ -93,8 +94,8 @@ static void	_set_frame_image_pixel(
 {
 	if (ctx->screen_pixels[y][x] > 0)
 		set_image_pixel(img, x, y, ctx->screen_pixels[y][x]);
-	else if (y < WIN_HEIGHT / 2)
+	else if (y < WIN_HEIGHT / 2 + ctx->player.pitch)
 		set_image_pixel(img, x, y, ctx->hex_ceiling);
-	else if (y < WIN_HEIGHT - 1)
+	else if (y >= WIN_HEIGHT / 2 + ctx->player.pitch)
 		set_image_pixel(img, x, y, ctx->hex_floor);
 }

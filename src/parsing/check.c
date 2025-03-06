@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:32:34 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/03 12:28:47 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:45:17 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,17 @@ bool	check_mini_map_format(char **map, int i, bool door)
 	cpy_map = dup_map(map + i);
 	start_pos = find_start_pos(cpy_map);
 	if (start_pos.x == -1 && start_pos.y == -1)
-		return (fd_printf(2, "Error: player spawn point not found\n"), false);
+		return (free_tab((void **)cpy_map), print_gen_error(ERR_NO_SPAWN), 0);
 	cpy_map[start_pos.y][start_pos.x] = '0';
 	if (door == true)
 		flood_fill_parse_door(cpy_map, start_pos.x, start_pos.y, &valid);
 	else
 		flood_fill_parse(cpy_map, start_pos.x, start_pos.y, &valid);
 	if (valid == 0)
-		return (fd_printf(2, "Error: map not valid\n"), false);
+		return (free_tab((void **)cpy_map), print_gen_error(ERR_MAP), 0);
 	test = find_start_pos(cpy_map);
 	if (test.x != -1 && test.y != -1)
-		return (fd_printf(2, "Error: Multpile spawn points found\n", false));
+		return (free_tab((void **)cpy_map), print_gen_error(ERR_MORE_SPAWN), 0);
 	return (ft_free_split(&cpy_map), true);
 }
 
@@ -95,6 +95,6 @@ bool	check_map_format(char **map)
 	}
 	if (check_missing_texture(checker) == false
 		|| checker.wrong_param_found == true)
-		return (fd_printf(2, "Error: configuration file not valid\n"), false);
+		return (print_gen_error(ERR_CONFIG), false);
 	return (check_mini_map_format(map, i, checker.d_texture));
 }

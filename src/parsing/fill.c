@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:31:03 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/27 18:55:08 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:34:45 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	fill_map_line(
 	unsigned int	j;
 
 	j = 0;
-	while (j < m_width)
+	while (j < m_width && line[j])
 	{
 		set_map_elem_cur(&map_line[j], i, j, line[j]);
 		j++;
