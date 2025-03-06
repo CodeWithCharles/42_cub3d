@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/06 14:36:04 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:14:32 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,22 @@ extern char	*g_pname;
 # define RAY_BOUND_MAX_OFFSET		1.25
 
 //		Movements
-
-# define MOUSE_ROT_SPEED			0.05
+//			Pitch
+# define MAX_PITCH	90
+# define MIN_PITCH	-90
+//			Mouse
 # define MOUSE_EDGE_RESET_OFFSET	200
-# define MOUSE_PITCH_SPEED			25
+//				Rotation
+# define MOUSE_ROT_SENSITIVITY		0.05
+//				Pitch
+# define MOUSE_PITCH_SENSITIVITY	4
+//			Player
 # define PLAYER_MOVE_SPEED			0.0725
-
-# define PLAYER_PITCH_INCREMENT		10
-# define PLAYER_ROT_INCREMENT		1
 # define PLAYER_MOVE				1
+//				Pitch
+# define PLAYER_PITCH_INCREMENT		10
+//				Rotation
+# define PLAYER_ROT_INCREMENT		1
 
 //		Map elements
 
@@ -175,7 +182,7 @@ typedef struct s_player
 	t_2dd_vector	plane;
 	int				has_moved;
 	int				rotate;
-	int				pitch;
+	double			pitch;
 	t_2d_vector		move;
 }	t_player;
 
