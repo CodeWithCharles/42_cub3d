@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/06 16:14:32 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:01:01 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,7 @@ typedef struct s_game_ctx
 	t_player		player;
 	t_ray			ray;
 	t_img			minimap_img;
+	int				has_mouse_jumped;
 }	t_game_ctx;
 
 //		Door

@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 17:30:32 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 12:18:46 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:02:29 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	init_game(
 	ctx->m_width = 0;
 	ctx->m_height = 0;
 	ctx->screen_pixels = NULL;
+	ctx->has_mouse_jumped = 0;
 	refresh_screen_pixels(ctx);
 }
 
