@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:04:43 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 15:30:07 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:47:10 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	key_pressed_hook(
 	if (key == XK_Right)
 		ctx->player.rotate += PLAYER_ROT_INCREMENT;
 	if (key == XK_Up)
-		ctx->player.pitch -= PLAYER_PITCH_INCREMENT;
-	if (key == XK_Down)
 		ctx->player.pitch += PLAYER_PITCH_INCREMENT;
+	if (key == XK_Down)
+		ctx->player.pitch -= PLAYER_PITCH_INCREMENT;
 	if (key == XK_w)
 		ctx->player.move.y = PLAYER_MOVE;
 	if (key == XK_d)

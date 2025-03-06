@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 12:43:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 15:21:29 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:36:41 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	render_screen(
 )
 {
 	_render_raycasting(ctx);
+	render_minimap(ctx);
 }
 
 int	render(
@@ -68,7 +69,7 @@ static void	_render_frame(
 	int		y;
 
 	img.img = NULL;
-	init_img(ctx, &img);
+	init_img(ctx, &img, WIN_WIDTH, WIN_HEIGHT);
 	y = 0;
 	while (y < WIN_HEIGHT)
 	{
