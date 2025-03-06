@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 12:46:31 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/06 16:16:10 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:09:54 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int	mouse_move_hook(
 	_mouse_pos_handler(ctx, x, y);
 	delta.x = (x - _prev_pos.x) * MOUSE_ROT_SENSITIVITY;
 	delta.y = (y - _prev_pos.y) * MOUSE_PITCH_SENSITIVITY;
-	if (!(fabs(delta.x) > MOUSE_EDGE_RESET_OFFSET
-			|| fabs(delta.y) > MOUSE_EDGE_RESET_OFFSET))
+	if (ctx->has_mouse_jumped == 0)
 	{
 		if (delta.x != 0)
 			ctx->player.has_moved += rotate_player(ctx, delta.x);
@@ -46,6 +45,8 @@ int	mouse_move_hook(
 		if (ctx->player.pitch < -WIN_HEIGHT)
 			ctx->player.pitch = -WIN_HEIGHT;
 	}
+	else
+		ctx->has_mouse_jumped--;
 	_prev_pos.y = y;
 	_prev_pos.x = x;
 	return (0);
@@ -63,20 +64,24 @@ static void	_mouse_pos_handler(
 	{
 		x = MOUSE_EDGE_RESET_OFFSET;
 		mlx_mouse_move(ctx->mlx, ctx->window, x, y);
+		ctx->has_mouse_jumped = 2;
 	}
-	if (x < MOUSE_EDGE_RESET_OFFSET)
+	else if (x < MOUSE_EDGE_RESET_OFFSET)
 	{
 		x = WIN_WIDTH - MOUSE_EDGE_RESET_OFFSET;
 		mlx_mouse_move(ctx->mlx, ctx->window, x, y);
+		ctx->has_mouse_jumped = 2;
 	}
 	if (y > WIN_HEIGHT - MOUSE_EDGE_RESET_OFFSET)
 	{
 		y = MOUSE_EDGE_RESET_OFFSET;
 		mlx_mouse_move(ctx->mlx, ctx->window, x, y);
+		ctx->has_mouse_jumped = 2;
 	}
-	if (y < MOUSE_EDGE_RESET_OFFSET)
+	else if (y < MOUSE_EDGE_RESET_OFFSET)
 	{
 		y = WIN_HEIGHT - MOUSE_EDGE_RESET_OFFSET;
 		mlx_mouse_move(ctx->mlx, ctx->window, x, y);
+		ctx->has_mouse_jumped = 2;
 	}
 }
