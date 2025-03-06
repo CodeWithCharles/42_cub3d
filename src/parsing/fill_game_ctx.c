@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:10:53 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/02/28 12:33:49 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:29:18 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,17 @@ void	init_map_elems(t_game_ctx *game, char **map)
 
 	i = 0;
 	get_map_size(game, map);
-	game->map = malloc(sizeof(t_map_element *) * game->m_height);
-	ft_bzero(game->map, sizeof(t_map_element *) * game->m_height);
+	game->map = malloc(sizeof(t_map_element *) * (game->m_height + 1));
+	ft_bzero(game->map, sizeof(t_map_element *) * (game->m_height + 1));
 	while (i < game->m_height)
 	{
 		j = 0;
 		game->map[i] = malloc(sizeof(t_map_element) * game->m_width);
 		while (j < game->m_width)
 			init_map_elem(&game->map[i][j++]);
-		i++;
+		++i;
 	}
+	game->map[i] = NULL;
 }
 
 void	fill_game_ctx(char **map, t_game_ctx *ptr)

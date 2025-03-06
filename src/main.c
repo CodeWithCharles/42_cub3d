@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 15:48:23 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:57:12 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ int	main(int argc, char **argv)
 {
 	t_game_ctx	game;
 
-	g_pname = argv[0];
+	g_pname = ft_strrchr(argv[0], '/');
+	if (g_pname)
+		g_pname++;
+	else
+		g_pname = argv[0];
 	if (argc != 2)
 		return (print_gen_error(ERR_ARGS), RET_ERR);
 	init_game(&game);
@@ -38,7 +42,7 @@ int	main(int argc, char **argv)
 	init_textures(&game);
 	render_screen(&game);
 	init_hooks(&game);
-	mlx_mouse_hide(game.mlx, game.window);
+	//mlx_mouse_hide(game.mlx, game.window);
 	mlx_loop_hook(game.mlx, render, &game);
 	mlx_loop(game.mlx);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:07:25 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 13:03:26 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:24:24 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,22 @@ static void	free_game_ctx(
 		free_tab((void **)game->game_textures);
 	if (game->screen_pixels)
 		free_tab((void **)game->screen_pixels);
+	if (game->texctx.ceiling)
+		free(game->texctx.ceiling);
+	if (game->texctx.floor)
+		free(game->texctx.floor);
+	if (game->texctx.north_path)
+		free(game->texctx.north_path);
+	if (game->texctx.south_path)
+		free(game->texctx.south_path);
+	if (game->texctx.east_path)
+		free(game->texctx.east_path);
+	if (game->texctx.west_path)
+		free(game->texctx.west_path);
+	if (game->texctx.door_path)
+		free(game->texctx.door_path);
+	if (game->map)
+		free_tab((void **)game->map);
 }
 
 void	clean_exit(
