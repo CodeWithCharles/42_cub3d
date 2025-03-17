@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/06 17:01:01 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/17 17:34:04 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ extern char	*g_pname;
 # define _FLOOR						'0'
 # define _PLAYER					'P'
 # define _SPAWNS					"NSEW"
-# define _DOOR						'D'
+# define _DOORS						"HV"
 
 //		Minimap
 
@@ -136,25 +136,19 @@ typedef enum e_elem
 	ELEM_SPAWN_DIR_WEST,
 	ELEM_SPAWN_DIR_EAST,
 	ELEM_FLOOR,
-	ELEM_DOOR
+	ELEM_DOOR_H,
+	ELEM_DOOR_V
 }	t_elem;
-
-//		Door state
-
-typedef enum e_door_state
-{
-	DOOR_STATE_CLOSED,
-	DOOR_STATE_OPEN
-}	t_door_state;
 
 //		Door anim state
 
-typedef enum e_door_anim_state
+typedef enum e_door_state
 {
-	DOOR_ANIM_NONE,
-	DOOR_ANIM_OPENING,
-	DOOR_ANIM_CLOSING
-}	t_door_anim_state;
+	DOOR_CLOSED,
+	DOOR_OPENING,
+	DOOR_CLOSING,
+	DOOR_OPENED
+}	t_door_state;
 
 //	Structures
 
@@ -214,6 +208,12 @@ typedef struct s_ray
 	int				line_height;
 	t_2d_vector		draw_boundaries;
 	t_tex_computer	tex_cpt;
+	struct s_door_helper
+	{
+		int				hit;
+		t_elem			type;
+		double			timer;
+	}	door;
 }	t_ray;
 
 //		Texture context
@@ -264,6 +264,7 @@ typedef struct s_game_ctx
 	unsigned int	hex_floor;
 	unsigned int	hex_ceiling;
 	t_map_element	**map;
+	t_map_element	*doors;
 	unsigned int	m_width;
 	unsigned int	m_height;
 	t_player		player;
@@ -276,8 +277,8 @@ typedef struct s_game_ctx
 
 typedef struct s_door
 {
-	t_door_state		is_closed;
-	t_door_anim_state	anim_state;
+	t_door_state		anim_state;
+	double				timer;
 }	t_door;
 
 //		Minimap
@@ -470,6 +471,13 @@ void		fill_map(
 
 int			raycasting(
 				t_game_ctx *ctx);
+
+void		init_ray_dir(
+				t_ray *ray);
+
+int			is_ray_in_bound(
+				t_game_ctx *ctx,
+				t_ray *ray);
 
 //		Rendering
 
