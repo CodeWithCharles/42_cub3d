@@ -6,11 +6,30 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:31:03 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/06 16:34:45 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:33:49 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static int	_check_door_valid(char **map, int x, int y)
+{
+	if (map[x][y] == _DOORS[0])
+	{
+		if (map[x - 1][y] != _WALL || map[x + 1][y] != _WALL)
+			return (1);
+		if (map[x][y - 1] != _FLOOR && map[x][y + 1] != _FLOOR)
+			return (1);
+	}
+	else if (map[x][y] == _DOORS[1])
+	{
+		if (map[x][y - 1] != _WALL || map[x][y + 1] != _WALL)
+			return (1);
+		if (map[x - 1][y] != _FLOOR && map[x + 1][y] != _FLOOR)
+			return (1);
+	}
+	return (0);
+}
 
 void	flood_fill_parse_door(char **map, int x, int y, int *valid)
 {
@@ -19,10 +38,16 @@ void	flood_fill_parse_door(char **map, int x, int y, int *valid)
 		*valid = 0;
 		return ;
 	}
-	if (map[y][x] == '1' || map[y][x] == '2')
+	if (map[y][x] == _WALL || map[y][x] == _FILLER)
 		return ;
-	else if (map[y][x] == '0' || map[y][x] == 'D')
-		map[y][x] = '2';
+	else if (map[y][x] == _FLOOR)
+		map[y][x] = _FILLER;
+	else if (map[y][x] == _DOORS[0] || map[y][x] == _DOORS[1]
+		&& _check_door_valid(map, x, y))
+	{
+		*valid = 0;
+		return ;
+	}
 	else
 		*valid = 0;
 	flood_fill_parse_door(map, x + 1, y, valid);
@@ -38,10 +63,10 @@ void	flood_fill_parse(char **map, int x, int y, int *valid)
 		*valid = 0;
 		return ;
 	}
-	if (map[y][x] == '1' || map[y][x] == '2')
+	if (map[y][x] == _WALL || map[y][x] == _FILLER)
 		return ;
-	else if (map[y][x] == '0')
-		map[y][x] = '2';
+	else if (map[y][x] == _FLOOR)
+		map[y][x] = _FILLER;
 	else
 		*valid = 0;
 	flood_fill_parse(map, x + 1, y, valid);

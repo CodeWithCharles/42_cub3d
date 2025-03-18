@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:26:31 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/03 12:43:32 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:26:57 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,3 @@ char	**dup_map(char **map)
 	new_map[count] = NULL;
 	return (new_map);
 }
-

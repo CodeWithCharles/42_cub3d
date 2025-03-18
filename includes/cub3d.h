@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/17 17:34:04 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:33:20 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ extern char	*g_pname;
 # define _VOID						' '
 # define _FLOOR						'0'
 # define _PLAYER					'P'
+# define _FILLER					'2'
 # define _SPAWNS					"NSEW"
 # define _DOORS						"HV"
 

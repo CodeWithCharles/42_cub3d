@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:06:01 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/06 16:55:57 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:30:08 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,14 @@
 # define ERR_MAP	"%sError:\n%s:\tInvalid map.%s\n"
 # define ERR_CONFIG	"%sError:\n%s:\tInvalid configuration file.%s\n"
 # define ERR_RGB	"%sError:\n%s:\t%s:\tInvalid rgb value.%s\n"
+
+// Textures
+
+# define ERR_MIS_NO	"%sError:\n%s:\tNO texture not found.%s\n"
+# define ERR_MIS_SO	"%sError:\n%s:\tSO texture not found.%s\n"
+# define ERR_MIS_EA	"%sError:\n%s:\tEA texture not found.%s\n"
+# define ERR_MIS_WE	"%sError:\n%s:\tWE texture not found.%s\n"
+# define ERR_MIS_F	"%sError:\n%s:\tF texture or color not found.%s\n"
+# define ERR_MIS_C	"%sError:\n%s:\tC texture or color not found.%s\n"
 
 #endif
