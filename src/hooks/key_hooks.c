@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:04:43 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/17 17:36:10 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:35:09 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	key_pressed_hook(
 		ctx->player.move.y = -PLAYER_MOVE;
 	if (key == XK_a)
 		ctx->player.move.x = PLAYER_MOVE;
+	if (key == XK_e)
+		_handle_door_interaction(ctx);
 	return (0);
 }
 
@@ -64,8 +66,6 @@ int	key_released_hook(
 		ctx->player.rotate = 0;
 	if (key == XK_Right && ctx->player.rotate >= -1)
 		ctx->player.rotate = 0;
-	if (key == XK_e || key == XK_E)
-		_handle_door_interaction(ctx);
 	if (ctx->player.pitch > WIN_HEIGHT)
 		ctx->player.pitch = WIN_HEIGHT;
 	else if (ctx->player.pitch < -WIN_HEIGHT)
@@ -86,11 +86,12 @@ static void	_handle_door_interaction(
 
 	px = (int)ctx->player.pos.x;
 	py = (int)ctx->player.pos.y;
-	elem = &ctx->map[(int)(py + ctx->player.dir.y)]
-	[(int)(px + ctx->player.dir.x)];
+	elem = &ctx->map[(int)round(py + ctx->player.dir.y)]
+	[(int)round(px + ctx->player.dir.x)];
 	if (elem->type && (elem->type == ELEM_DOOR_H || elem->type == ELEM_DOOR_V))
 	{
 		door = (t_door *)elem->data;
+		printf("Door state : %s | Door timer : %lf\n", door->anim_state == DOOR_CLOSED ? "CLOSED" : door->anim_state == DOOR_OPENED ? "OPENED" : door->anim_state == DOOR_OPENING ? "OPENING" : "CLOSING", door->timer);
 		if (door->anim_state == DOOR_CLOSED)
 			door->anim_state = DOOR_OPENING;
 		else if (door->anim_state == DOOR_OPENED)

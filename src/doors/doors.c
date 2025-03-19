@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 17:36:55 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/17 17:42:29 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:44:30 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 // Static prototypes
 
-void	_update_door_timer(
-			t_door *door,
-			double dt);
+static void	_update_door_timer(
+				t_door *door,
+				double dt);
 
 // Header imlementations
 
@@ -25,8 +25,8 @@ void	update_doors(
 	double dt // Delta time
 )
 {
-	int				y;
-	int				x;
+	unsigned int	y;
+	unsigned int	x;
 	t_map_element	*elem;
 	t_door			*door;
 
@@ -34,6 +34,7 @@ void	update_doors(
 	x = 0;
 	while (y < ctx->m_height)
 	{
+		x = 0;
 		while (x < ctx->m_width)
 		{
 			elem = &ctx->map[y][x];
@@ -42,13 +43,15 @@ void	update_doors(
 				door = (t_door *)elem->data;
 				_update_door_timer(door, dt);
 			}
+			++x;
 		}
+		++y;
 	}
 }
 
 // Static implementations
 
-void	_update_door_timer(
+static void	_update_door_timer(
 	t_door *door,
 	double dt
 )

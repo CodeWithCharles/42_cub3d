@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:46:38 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/17 17:26:14 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:10:44 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	update_screen_pixel(
 	if ((ray->side == 0 && ray->dir.x < 0)
 		|| (ray->side == 1 && ray->dir.y > 0))
 		ray->tex_cpt.bound.x = TEX_SIZE - ray->tex_cpt.bound.x - 1;
+	_door_handling(ray);
 	ray->tex_cpt.step = 1.0 * TEX_SIZE / ray->line_height;
 	ray->tex_cpt.pos = (ray->draw_boundaries.x - (WIN_HEIGHT / 2
 				+ ctx->player.pitch) + ray->line_height / 2)
@@ -81,7 +82,7 @@ static void	_door_handling(
 		shift = (TEX_SIZE / 2) * ray->door.timer;
 		if (ray->door.type == ELEM_DOOR_H)
 			ray->tex_cpt.bound.x += shift * (-(ray->dir.x <= 0));
-		else if (ray->door.type == ELEM_DOOR_G)
+		else if (ray->door.type == ELEM_DOOR_V)
 			ray->tex_cpt.bound.y += shift * (-(ray->dir.y <= 0));
 		ray->tex_cpt.bound.x = min(max(ray->tex_cpt.bound.x, 0), TEX_SIZE - 1);
 		ray->tex_cpt.bound.y = min(max(ray->tex_cpt.bound.y, 0), TEX_SIZE - 1);
@@ -98,7 +99,7 @@ static unsigned int	_get_pixel_color(
 	ray->tex_cpt.bound.y = min((int)ray->tex_cpt.pos, TEX_SIZE - 1);
 	ray->tex_cpt.pos += ray->tex_cpt.step;
 	if (ray->door.hit)
-		color = ctx->game_textures[DOOR]
+		color = ctx->game_textures[5]
 		[TEX_SIZE * ray->tex_cpt.bound.y + ray->tex_cpt.bound.x];
 	else
 		color = ctx->game_textures[ray->tex_cpt.face]

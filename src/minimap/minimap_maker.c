@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 11:44:44 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/06 14:45:36 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/19 12:56:29 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ char	get_mmap_tile(
 		&& (int)ctx->player.pos.y == map_offset.y)
 		return (_PLAYER);
 	elem = ctx->map[map_offset.y][map_offset.x].type;
-	if (elem == ELEM_DOOR)
-		return (_DOOR);
+	if (elem == ELEM_DOOR_H || elem == ELEM_DOOR_V)
+		return (_DOORS[0]);
 	else if (elem == ELEM_FLOOR)
 		return (_FLOOR);
 	else if (elem == ELEM_WALL)

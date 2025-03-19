@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:28:33 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 13:43:54 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:16:49 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,14 @@ static int	_is_valid_pos(
 	double y
 )
 {
+	t_map_element	curr;
+
 	if (x < RAY_BOUND_MIN_OFFSET || x >= ctx->m_width - RAY_BOUND_MAX_OFFSET
 		|| y < RAY_BOUND_MIN_OFFSET
 		|| y >= ctx->m_height - RAY_BOUND_MIN_OFFSET)
 		return (0);
-	return (ctx->map[(int)y][(int)x].type != ELEM_WALL);
+	curr = ctx->map[(int)y][(int)x];
+	if (curr.type == ELEM_DOOR_H || curr.type == ELEM_DOOR_V)
+		return (((t_door *)curr.data)->anim_state == DOOR_OPENED);
+	return (curr.type != ELEM_WALL);
 }

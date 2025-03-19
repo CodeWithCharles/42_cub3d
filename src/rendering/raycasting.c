@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:22:11 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/17 17:20:07 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:43:06 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ static void	_init_dda(
 	t_player *player
 )
 {
-	ray->step.x = !(ray->dir.x < 0) - 1 * (ray->dir.x < 0);
-	ray->step.y = !(ray->dir.y < 0) - 1 * (ray->dir.y < 0);
+	ray->step.x = !(ray->dir.x < 0) - (ray->dir.x < 0);
+	ray->step.y = !(ray->dir.y < 0) - (ray->dir.y < 0);
 	if (ray->dir.x < 0)
 		ray->side_dist.x = (player->pos.x - ray->map.x) * ray->delta_dist.x;
 	else
@@ -105,7 +105,7 @@ static void	_perform_dda(
 		if (elem->type == ELEM_WALL
 			|| elem->type == ELEM_VOID)
 			break ;
-		if (elem->type == ELEM_DOOR_H || elem->type == ELEM_DOOR_G)
+		if (elem->type == ELEM_DOOR_H || elem->type == ELEM_DOOR_V)
 		{
 			ray->door.hit = 1;
 			ray->door.type = elem->type;

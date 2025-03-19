@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:32:34 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/18 17:34:31 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:31:09 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ bool	check_missing_texture(t_bool_format checker)
 	return (true);
 }
 
-bool	check_mini_map_format(char **map, int i, bool door)
+bool	check_mini_map_format(
+	char **map,
+	int i,
+	bool door
+)
 {
 	int			valid;
 	char		**cpy_map;
@@ -62,10 +66,7 @@ bool	check_mini_map_format(char **map, int i, bool door)
 	if (start_pos.x == -1 && start_pos.y == -1)
 		return (free_tab((void **)cpy_map), print_gen_error(ERR_NO_SPAWN), 0);
 	cpy_map[start_pos.y][start_pos.x] = _FLOOR;
-	if (door == true)
-		flood_fill_parse_door(cpy_map, start_pos.x, start_pos.y, &valid);
-	else
-		flood_fill_parse(cpy_map, start_pos.x, start_pos.y, &valid);
+	flood_fill_parse(cpy_map, start_pos, door, &valid);
 	if (valid == 0)
 		return (free_tab((void **)cpy_map), print_gen_error(ERR_MAP), 0);
 	test = find_start_pos(cpy_map);
@@ -74,7 +75,9 @@ bool	check_mini_map_format(char **map, int i, bool door)
 	return (ft_free_split(&cpy_map), true);
 }
 
-bool	check_map_format(char **map)
+bool	check_map_format(
+	char **map
+)
 {
 	t_bool_format	checker;
 	int				i;

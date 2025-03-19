@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/18 17:33:20 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:36:25 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -448,14 +448,8 @@ void		set_map_elem_cur(
 
 void		flood_fill_parse(
 				char **map,
-				int x,
-				int y,
-				int *valid);
-
-void		flood_fill_parse_door(
-				char **map,
-				int x,
-				int y,
+				t_2d_vector p,
+				bool has_door,
 				int *valid);
 
 void		fill_map_line(
@@ -582,5 +576,11 @@ char		*generate_mmap_line(
 char		**generate_mmap(
 				t_game_ctx *ctx,
 				t_minimap *mmap);
+
+//		DOORS
+
+void		update_doors(
+				t_game_ctx *ctx,
+				double dt);
 
 #endif
