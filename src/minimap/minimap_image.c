@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:20:09 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/06 13:36:04 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 15:43:26 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	set_tile_pixels(
 		j = 0;
 		while (j < mmap->tile_size)
 		{
-			set_image_pixel(mmap->img, x + j, y + i, color);
+			set_image_pixel(mmap->img, x + j + mmap->img_width_offset,
+				y + i + mmap->tile_size, color);
 			++j;
 		}
 		++i;
@@ -99,7 +100,8 @@ void	draw_mmap_borders(
 		{
 			if (x < padding || x > size - padding
 				|| y < padding || y > size - MMAP_BORDER_PADDING)
-				set_image_pixel(mmap->img, x, y, MMAP_COLOR_BORDER);
+				set_image_pixel(mmap->img, x + mmap->img_width_offset,
+					y + mmap->tile_size, MMAP_COLOR_BORDER);
 			++x;
 		}
 		++y;

@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/21 14:17:00 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 15:42:42 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,7 @@ typedef struct s_minimap
 	t_img			*img;
 	unsigned int	size;
 	t_2d_vector		offset;
+	unsigned int	img_width_offset;
 	unsigned int	view_dist;
 	unsigned int	tile_size;
 }	t_minimap;
