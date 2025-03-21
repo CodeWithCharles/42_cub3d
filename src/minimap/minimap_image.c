@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:20:09 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/21 15:43:26 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:29:59 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	draw_mmap_tile(
 		color = MMAP_COLOR_FLOOR;
 	else if (mmap->map[y][x] == _SPAWNS[0])
 		color = MMAP_COLOR_SPAWN;
+	else if (mmap->map[y][x] == _DOORS[0])
+		color = MMAP_COLOR_DOOR;
 	else
 		color = MMAP_COLOR_VOID;
 	set_tile_pixels(mmap, x * mmap->tile_size, y * mmap->tile_size, color);
