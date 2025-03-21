@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/21 15:42:42 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:21:10 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ extern char	*g_pname;
 //		Doors
 //			Timer
 # define DOOR_DT_FACTOR				1.5
+//			Collisions
+# define DOOR_COLLISION_THRESHOLD	0.3
 
 //		Map elements
 

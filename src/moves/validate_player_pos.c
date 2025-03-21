@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:28:33 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/21 16:51:43 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:22:41 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,6 @@ static int	_is_valid_pos(
 	if (curr.type == ELEM_DOOR_H || curr.type == ELEM_DOOR_V)
 		return (((t_door *)curr.data)->anim_state == DOOR_OPENED
 			|| (((t_door *)curr.data)->anim_state == DOOR_OPENING
-				&& ((t_door *)curr.data)->timer >= 0.5));
+				&& ((t_door *)curr.data)->timer >= DOOR_COLLISION_THRESHOLD));
 	return (curr.type != ELEM_WALL);
 }
