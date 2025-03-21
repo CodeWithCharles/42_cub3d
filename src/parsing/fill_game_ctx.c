@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:10:53 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/06 16:29:18 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:38:26 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,19 @@ void	set_map_elem_cur(
 	char curr_char
 )
 {
+	t_door	*door;
+
 	curr->pos.x = j;
 	curr->pos.y = i;
 	curr->type = get_elem_type(curr_char);
+	curr->data = NULL;
+	if (curr->type == ELEM_DOOR_H || curr->type == ELEM_DOOR_V)
+	{
+		door = malloc(sizeof(t_door));
+		door->anim_state = DOOR_CLOSED;
+		door->timer = 0.0;
+		curr->data = door;
+	}
 }
 
 void	init_tex_ctx(
@@ -37,9 +47,9 @@ void	init_tex_ctx(
 	i = 0;
 	while (map[i])
 	{
-		if (map[i][0] != '_' && map[i][0] != '1' && map[i][0] != ' ')
+		if (map[i][0] != '_' && map[i][0] != _WALL && map[i][0] != _VOID)
 			set_texture(&textures, map[i]);
-		else if (map[i][0] == '1' || map[i][0] == ' ')
+		else if (map[i][0] == _WALL || map[i][0] == _VOID)
 			break ;
 		i++;
 	}

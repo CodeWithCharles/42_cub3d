@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:22:11 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 15:20:47 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:02:15 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ static void	_init_dda(
 	t_player *player
 )
 {
-	ray->step.x = !(ray->dir.x < 0) - 1 * (ray->dir.x < 0);
-	ray->step.y = !(ray->dir.y < 0) - 1 * (ray->dir.y < 0);
+	ray->step.x = !(ray->dir.x < 0) - (ray->dir.x < 0);
+	ray->step.y = !(ray->dir.y < 0) - (ray->dir.y < 0);
 	if (ray->dir.x < 0)
 		ray->side_dist.x = (player->pos.x - ray->map.x) * ray->delta_dist.x;
 	else
@@ -96,26 +96,30 @@ static void	_perform_dda(
 	t_ray *ray
 )
 {
-	while (ray->map.y >= RAY_BOUND_MIN_OFFSET
-		&& ray->map.x >= RAY_BOUND_MIN_OFFSET
-		&& ray->map.y <= ctx->m_height - RAY_BOUND_MIN_OFFSET
-		&& ray->map.x <= ctx->m_width - RAY_BOUND_MAX_OFFSET)
+	t_map_element	*elem;
+	t_door			*door;
+	double			opening_fraction;
+
+	while (is_ray_in_bound(ctx, ray))
 	{
-		if (ray->side_dist.x < ray->side_dist.y)
-		{
-			ray->side_dist.x += ray->delta_dist.x;
-			ray->map.x += ray->step.x;
-			ray->side = 0;
-		}
-		else
-		{
-			ray->side_dist.y += ray->delta_dist.y;
-			ray->map.y += ray->step.y;
-			ray->side = 1;
-		}
-		if (ctx->map[ray->map.y][ray->map.x].type == ELEM_WALL
-			|| ctx->map[ray->map.y][ray->map.x].type == ELEM_VOID)
+		init_ray_dir(ray);
+		elem = &ctx->map[ray->map.y][ray->map.x];
+		if (elem->type == ELEM_WALL
+			|| elem->type == ELEM_VOID)
 			break ;
+		if (elem->type == ELEM_DOOR_H || elem->type == ELEM_DOOR_V)
+		{
+			door = (t_door *)elem->data;
+			ray->door.timer = door->timer;
+			ray->door.type = elem->type;
+			_calculate_line_length(ray, &ctx->player);
+			opening_fraction = (door->timer / 2.0);
+			if (ray->wall_x < (0.5 + opening_fraction)
+				&& ray->wall_x > (0.5 - opening_fraction))
+				continue ;
+			ray->door.hit = 1;
+			break ;
+		}
 	}
 }
 
