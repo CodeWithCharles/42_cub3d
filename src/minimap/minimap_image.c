@@ -88,10 +88,10 @@ void	draw_mmap_borders(
 	t_minimap *mmap
 )
 {
-	unsigned int	size;
-	unsigned int	x;
-	unsigned int	y;
-	const int		padding = MMAP_BORDER_PADDING;
+	unsigned int		size;
+	unsigned int		x;
+	unsigned int		y;
+	const unsigned int	padding = MMAP_BORDER_PADDING;
 
 	size = MMAP_PIXEL_SIZE + mmap->tile_size;
 	y = 0;
