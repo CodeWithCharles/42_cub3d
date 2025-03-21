@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:32:34 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/19 13:31:09 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 14:26:13 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	check_if_start_of_map(char *line, t_bool_format *checker)
 	i = 0;
 	while (line[i] && line[i] == ' ')
 		i++;
-	if (line[i] != _WALL)
+	if (line[i] != _WALL && line[i] != _FLOOR)
 		checker->wrong_param_found = true;
-	else if (line[i] == _WALL)
+	else if (line[i] == _WALL || line[i] == _FLOOR)
 		checker->map_found = true;
 }
 
@@ -62,6 +62,8 @@ bool	check_mini_map_format(
 
 	valid = 1;
 	cpy_map = dup_map(map + i);
+	if (cpy_map == NULL)
+		return (print_gen_error(ERR_MAP), 0);
 	start_pos = find_start_pos(cpy_map);
 	if (start_pos.x == -1 && start_pos.y == -1)
 		return (free_tab((void **)cpy_map), print_gen_error(ERR_NO_SPAWN), 0);
@@ -89,7 +91,7 @@ bool	check_map_format(
 	{
 		if (map[i][0] == '_' && map[i][1] == '\0')
 			i++;
-		else if (map[i][0] == _WALL)
+		else if (map[i][0] == _WALL || map[i][0] == _FLOOR)
 			checker.map_found = true;
 		else if (map[i][0] == _VOID)
 			check_if_start_of_map(map[i], &checker);

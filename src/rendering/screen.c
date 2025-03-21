@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 16:46:38 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/19 15:10:44 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 14:05:11 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static void			_get_texture_face(
 						t_ray *ray);
 
-static void			_door_handling(
+static double		_compute_door_wall_x(
 						t_ray *ray);
 
 static unsigned int	_get_pixel_color(
@@ -39,7 +39,6 @@ void	update_screen_pixel(
 	if ((ray->side == 0 && ray->dir.x < 0)
 		|| (ray->side == 1 && ray->dir.y > 0))
 		ray->tex_cpt.bound.x = TEX_SIZE - ray->tex_cpt.bound.x - 1;
-	_door_handling(ray);
 	ray->tex_cpt.step = 1.0 * TEX_SIZE / ray->line_height;
 	ray->tex_cpt.pos = (ray->draw_boundaries.x - (WIN_HEIGHT / 2
 				+ ctx->player.pitch) + ray->line_height / 2)
@@ -71,22 +70,23 @@ static void	_get_texture_face(
 	}
 }
 
-static void	_door_handling(
+static double	_compute_door_wall_x(
 	t_ray *ray
 )
 {
-	double	shift;
+	double	offset;
+	double	adjusted_wall_x;
 
-	if (ray->door.hit)
-	{
-		shift = (TEX_SIZE / 2) * ray->door.timer;
-		if (ray->door.type == ELEM_DOOR_H)
-			ray->tex_cpt.bound.x += shift * (-(ray->dir.x <= 0));
-		else if (ray->door.type == ELEM_DOOR_V)
-			ray->tex_cpt.bound.y += shift * (-(ray->dir.y <= 0));
-		ray->tex_cpt.bound.x = min(max(ray->tex_cpt.bound.x, 0), TEX_SIZE - 1);
-		ray->tex_cpt.bound.y = min(max(ray->tex_cpt.bound.y, 0), TEX_SIZE - 1);
-	}
+	offset = (ray->door.timer / 2.0) * TEX_SIZE;
+	if (ray->wall_x < 0.5)
+		adjusted_wall_x = ray->wall_x + (offset / TEX_SIZE);
+	else
+		adjusted_wall_x = ray->wall_x - (offset / TEX_SIZE);
+	if (adjusted_wall_x < 0.0)
+		adjusted_wall_x = 0.0;
+	if (adjusted_wall_x > 1.0)
+		adjusted_wall_x = 1.0;
+	return (adjusted_wall_x);
 }
 
 static unsigned int	_get_pixel_color(
@@ -99,13 +99,18 @@ static unsigned int	_get_pixel_color(
 	ray->tex_cpt.bound.y = min((int)ray->tex_cpt.pos, TEX_SIZE - 1);
 	ray->tex_cpt.pos += ray->tex_cpt.step;
 	if (ray->door.hit)
-		color = ctx->game_textures[5]
+	{
+		ray->tex_cpt.bound.x = (int)(_compute_door_wall_x(ray) * TEX_SIZE);
+		color = ctx->game_textures[DOOR]
 		[TEX_SIZE * ray->tex_cpt.bound.y + ray->tex_cpt.bound.x];
+	}
 	else
+	{
 		color = ctx->game_textures[ray->tex_cpt.face]
 		[TEX_SIZE * ray->tex_cpt.bound.y + ray->tex_cpt.bound.x];
-	if (ray->door.hit || ray->tex_cpt.face == NORTH
-		|| ray->tex_cpt.face == EAST)
+	}
+	if (ray->door.hit
+		|| ray->tex_cpt.face == NORTH || ray->tex_cpt.face == EAST)
 		color = (color & 0xFEFEFE) >> 1;
 	return (color);
 }

@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:22:11 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/19 16:43:06 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:02:15 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ static void	_perform_dda(
 )
 {
 	t_map_element	*elem;
+	t_door			*door;
+	double			opening_fraction;
 
 	while (is_ray_in_bound(ctx, ray))
 	{
@@ -107,9 +109,15 @@ static void	_perform_dda(
 			break ;
 		if (elem->type == ELEM_DOOR_H || elem->type == ELEM_DOOR_V)
 		{
-			ray->door.hit = 1;
+			door = (t_door *)elem->data;
+			ray->door.timer = door->timer;
 			ray->door.type = elem->type;
-			ray->door.timer = ((t_door *)elem->data)->timer;
+			_calculate_line_length(ray, &ctx->player);
+			opening_fraction = (door->timer / 2.0);
+			if (ray->wall_x < (0.5 + opening_fraction)
+				&& ray->wall_x > (0.5 - opening_fraction))
+				continue ;
+			ray->door.hit = 1;
 			break ;
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:31:03 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/19 15:07:57 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:03:37 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	flood_fill_parse(
 		map[p.y][p.x] = _FILLER;
 	else if (ft_strchr(_DOORS, map[p.y][p.x]))
 	{
-		if (has_door && _check_door_valid(map, p.x, p.y))
+		if (!has_door || (has_door && _check_door_valid(map, p.x, p.y)))
 		{
 			*valid = 0;
 			return ;

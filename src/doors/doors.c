@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 17:36:55 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/19 15:44:30 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 14:14:50 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,12 @@ static void	_update_door_timer(
 	double dt
 )
 {
+	double	ease_factor;
+
 	if (door->anim_state == DOOR_OPENING)
 	{
-		door->timer += dt;
+		ease_factor = door->timer * door->timer;
+		door->timer += dt * fmax(0.3, (1.0 - ease_factor));
 		if (door->timer > 1.0)
 		{
 			door->timer = 1.0;
@@ -67,7 +70,8 @@ static void	_update_door_timer(
 	}
 	else if (door->anim_state == DOOR_CLOSING)
 	{
-		door->timer -= dt;
+		ease_factor = (1.0 - door->timer) * (1.0 - door->timer);
+		door->timer -= dt * fmax(0.3, (1.0 - ease_factor));
 		if (door->timer <= 0)
 		{
 			door->timer = 0.0;

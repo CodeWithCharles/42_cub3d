@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/19 15:36:25 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 14:17:00 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,10 @@ extern char	*g_pname;
 # define PLAYER_PITCH_INCREMENT		10
 //				Rotation
 # define PLAYER_ROT_INCREMENT		1
+
+//		Doors
+//			Timer
+# define DOOR_DT_FACTOR				1.5
 
 //		Map elements
 

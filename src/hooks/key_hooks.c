@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:04:43 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/19 16:35:09 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 14:10:48 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ static void	_handle_door_interaction(
 	if (elem->type && (elem->type == ELEM_DOOR_H || elem->type == ELEM_DOOR_V))
 	{
 		door = (t_door *)elem->data;
-		printf("Door state : %s | Door timer : %lf\n", door->anim_state == DOOR_CLOSED ? "CLOSED" : door->anim_state == DOOR_OPENED ? "OPENED" : door->anim_state == DOOR_OPENING ? "OPENING" : "CLOSING", door->timer);
 		if (door->anim_state == DOOR_CLOSED)
 			door->anim_state = DOOR_OPENING;
 		else if (door->anim_state == DOOR_OPENED)
