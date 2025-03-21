@@ -1,6 +1,7 @@
 *.a
 bin/
-includes/*.h
+includes/libft.h
+includes/mlx.h
 build/
 third_party/*/
 .vscode/
