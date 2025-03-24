@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 15:29:56 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/19 13:30:59 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:41:12 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	main_parsing(t_game_ctx *game, char **argv)
 	char		*buffer;
 
 	buffer = fill_buffer(argv[1]);
+	if (buffer == NULL)
+		return(print_gen_error("Config File Empty\n"), RET_ERR);
 	map = ft_split(buffer, '\n');
 	free(buffer);
 	if (check_map_format(map) == false)
