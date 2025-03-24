@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/21 17:21:10 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:35:54 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,13 @@ extern char	*g_pname;
 
 //			Colors
 
-# define MMAP_COLOR_WALL			0xFFFFFF
+# define MMAP_COLOR_WALL			0x999999
 # define MMAP_COLOR_PLAYER			0x0000FF
-# define MMAP_COLOR_FLOOR			0xCCCCCC
-# define MMAP_COLOR_VOID			0x999999
-# define MMAP_COLOR_SPAWN			0x00FF00
+# define MMAP_COLOR_FLOOR			0xFFFFFF
+# define MMAP_COLOR_VOID			0x000000
+# define MMAP_COLOR_SPAWN			0x00CC00
 # define MMAP_COLOR_BORDER			0x222222
+# define MMAP_COLOR_DOOR			0xB60619
 
 //	Enums
 
