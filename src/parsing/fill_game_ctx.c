@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:10:53 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/18 17:38:26 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:27:02 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ void	init_tex_ctx(
 	i = 0;
 	while (map[i])
 	{
-		if (map[i][0] != '_' && map[i][0] != _WALL && map[i][0] != _VOID)
+		if (map[i][0] != '_' && map[i][0] != _WALL
+			&& map[i][0] != _VOID && map[i][0] != _FLOOR)
 			set_texture(&textures, map[i]);
-		else if (map[i][0] == _WALL || map[i][0] == _VOID)
+		else if (map[i][0] == _WALL || map[i][0] == _VOID
+			|| map[i][0] == _FLOOR)
 			break ;
 		i++;
 	}
