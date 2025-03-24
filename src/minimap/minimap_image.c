@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 12:20:09 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/06 13:36:04 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:29:59 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	set_tile_pixels(
 		j = 0;
 		while (j < mmap->tile_size)
 		{
-			set_image_pixel(mmap->img, x + j, y + i, color);
+			set_image_pixel(mmap->img, x + j + mmap->img_width_offset,
+				y + i + mmap->tile_size, color);
 			++j;
 		}
 		++i;
@@ -54,6 +55,8 @@ void	draw_mmap_tile(
 		color = MMAP_COLOR_FLOOR;
 	else if (mmap->map[y][x] == _SPAWNS[0])
 		color = MMAP_COLOR_SPAWN;
+	else if (mmap->map[y][x] == _DOORS[0])
+		color = MMAP_COLOR_DOOR;
 	else
 		color = MMAP_COLOR_VOID;
 	set_tile_pixels(mmap, x * mmap->tile_size, y * mmap->tile_size, color);
@@ -85,10 +88,10 @@ void	draw_mmap_borders(
 	t_minimap *mmap
 )
 {
-	unsigned int	size;
-	unsigned int	x;
-	unsigned int	y;
-	const int		padding = MMAP_BORDER_PADDING;
+	unsigned int		size;
+	unsigned int		x;
+	unsigned int		y;
+	const unsigned int	padding = MMAP_BORDER_PADDING;
 
 	size = MMAP_PIXEL_SIZE + mmap->tile_size;
 	y = 0;
@@ -99,7 +102,8 @@ void	draw_mmap_borders(
 		{
 			if (x < padding || x > size - padding
 				|| y < padding || y > size - MMAP_BORDER_PADDING)
-				set_image_pixel(mmap->img, x, y, MMAP_COLOR_BORDER);
+				set_image_pixel(mmap->img, x + mmap->img_width_offset,
+					y + mmap->tile_size, MMAP_COLOR_BORDER);
 			++x;
 		}
 		++y;

@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 12:43:30 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/06 13:36:41 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 15:37:01 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	render_screen(
 )
 {
 	_render_raycasting(ctx);
-	render_minimap(ctx);
 }
 
 int	render(
@@ -42,6 +41,7 @@ int	render(
 )
 {
 	ctx->player.has_moved += move_player_handler(ctx);
+	update_doors(ctx, (double)(DOOR_DT_FACTOR / (double)TEX_SIZE));
 	if (ctx->player.has_moved == 0)
 		return (0);
 	render_screen(ctx);
@@ -81,6 +81,8 @@ static void	_render_frame(
 		}
 		++y;
 	}
+	ctx->minimap_img = img;
+	render_minimap(ctx);
 	mlx_put_image_to_window(ctx->mlx, ctx->window, img.img, 0, 0);
 	mlx_destroy_image(ctx->mlx, img.img);
 }

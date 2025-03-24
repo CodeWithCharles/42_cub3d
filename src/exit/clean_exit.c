@@ -6,13 +6,43 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:07:25 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/06 16:24:24 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:02:03 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-static void	free_game_ctx(
+static void	_free_game_map(
+	t_game_ctx *ctx
+)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (ctx->map[i])
+	{
+		j = 0;
+		while (j < ctx->m_width)
+		{
+			if ((ctx->map[i][j].type == ELEM_DOOR_H
+				|| ctx->map[i][j].type == ELEM_DOOR_V) && ctx->map[i][j].data)
+				free(ctx->map[i][j].data);
+			++j;
+		}
+		++i;
+	}
+	i = 0;
+	while (ctx->map && ctx->map[i])
+		free(ctx->map[i++]);
+	if (ctx->map)
+	{
+		free(ctx->map);
+		ctx->map = NULL;
+	}
+}
+
+static void	_free_game_ctx(
 	t_game_ctx *game
 )
 {
@@ -35,7 +65,7 @@ static void	free_game_ctx(
 	if (game->texctx.door_path)
 		free(game->texctx.door_path);
 	if (game->map)
-		free_tab((void **)game->map);
+		_free_game_map(game);
 }
 
 void	clean_exit(
@@ -56,7 +86,7 @@ void	clean_exit(
 		mlx_loop_end(game->mlx);
 		free(game->mlx);
 	}
-	free_game_ctx(game);
+	_free_game_ctx(game);
 	exit (code);
 }
 

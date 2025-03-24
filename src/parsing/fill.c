@@ -6,48 +6,69 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:31:03 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/06 16:34:45 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:03:37 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	flood_fill_parse_door(char **map, int x, int y, int *valid)
+static int	_check_door_valid(char **map, int x, int y)
 {
-	if (x < 0 || y < 0 || map[y] == NULL || x >= (int)ft_strlen(map[y]))
+	if (map[y][x] == _DOORS[1])
 	{
-		*valid = 0;
-		return ;
+		if (!map[y - 1] || map[y - 1][x] == _VOID
+			|| !map[y + 1] || map[y + 1][x] == _VOID)
+			return (1);
+		if (map[y - 1][x] != _WALL || map[y + 1][x] != _WALL)
+			return (1);
+		if (map[y][x - 1] != _FILLER && map[y][x + 1] != _FILLER)
+			return (1);
 	}
-	if (map[y][x] == '1' || map[y][x] == '2')
-		return ;
-	else if (map[y][x] == '0' || map[y][x] == 'D')
-		map[y][x] = '2';
 	else
-		*valid = 0;
-	flood_fill_parse_door(map, x + 1, y, valid);
-	flood_fill_parse_door(map, x - 1, y, valid);
-	flood_fill_parse_door(map, x, y + 1, valid);
-	flood_fill_parse_door(map, x, y - 1, valid);
+	{
+		if (!map[y] || x - 1 < 0 || x + 1 >= (int)ft_strlen(map[y])
+			|| map[y][x - 1] == _VOID || map[y][x + 1] == _VOID)
+			return (1);
+		if (map[y][x - 1] != _WALL || map[y][x + 1] != _WALL)
+			return (1);
+		if (!map[y - 1] || !map[y + 1]
+			|| (map[y - 1][x] != _FILLER && map[y + 1][x] != _FILLER))
+			return (1);
+	}
+	return (0);
 }
 
-void	flood_fill_parse(char **map, int x, int y, int *valid)
+void	flood_fill_parse(
+	char **map,
+	t_2d_vector p,
+	bool has_door,
+	int *valid
+)
 {
-	if (x < 0 || y < 0 || map[y] == NULL || x >= (int)ft_strlen(map[y]))
+	if (p.x < 0 || p.y < 0 || map[p.y] == NULL
+		|| p.x >= (int)ft_strlen(map[p.y]))
 	{
 		*valid = 0;
 		return ;
 	}
-	if (map[y][x] == '1' || map[y][x] == '2')
+	if (map[p.y][p.x] == _WALL || map[p.y][p.x] == _FILLER)
 		return ;
-	else if (map[y][x] == '0')
-		map[y][x] = '2';
+	else if (map[p.y][p.x] == _FLOOR)
+		map[p.y][p.x] = _FILLER;
+	else if (ft_strchr(_DOORS, map[p.y][p.x]))
+	{
+		if (!has_door || (has_door && _check_door_valid(map, p.x, p.y)))
+		{
+			*valid = 0;
+			return ;
+		}
+	}
 	else
 		*valid = 0;
-	flood_fill_parse(map, x + 1, y, valid);
-	flood_fill_parse(map, x - 1, y, valid);
-	flood_fill_parse(map, x, y + 1, valid);
-	flood_fill_parse(map, x, y - 1, valid);
+	flood_fill_parse(map, (t_2d_vector){p.x + 1, p.y}, has_door, valid);
+	flood_fill_parse(map, (t_2d_vector){p.x - 1, p.y}, has_door, valid);
+	flood_fill_parse(map, (t_2d_vector){p.x, p.y + 1}, has_door, valid);
+	flood_fill_parse(map, (t_2d_vector){p.x, p.y - 1}, has_door, valid);
 }
 
 void	fill_map_line(

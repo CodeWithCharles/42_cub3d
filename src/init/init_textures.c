@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:43:35 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/03 18:44:29 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/19 15:12:47 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	init_textures(
 		ctx->game_textures[FLOOR] = _xpm_to_pixels(ctx, ctx->texctx.floor);
 	else
 		hex_to_texture(&ctx->game_textures[FLOOR], ctx->hex_floor);
+	if (ctx->texctx.door_path != NULL)
+		ctx->game_textures[DOOR] = _xpm_to_pixels(ctx, ctx->texctx.door_path);
 	ctx->game_textures[NORTH] = _xpm_to_pixels(ctx,
 			ctx->texctx.north_path);
 	ctx->game_textures[SOUTH] = _xpm_to_pixels(ctx,

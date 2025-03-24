@@ -114,13 +114,13 @@ minilibx:
 
 $(NAME): $(THDPTY_DEPS) $(OBJS)
 	@mkdir -p $(@D)
-	@$(CC) $(CFLAGS) $(LFLAGS) $(OBJS) -I$(INC_DIR) $(THDPTY_TARGETS) -o $@
+	@$(CC) $(CFLAGS) $(OBJS) -I$(INC_DIR) $(THDPTY_TARGETS) -o $@ $(LFLAGS)
 	@printf "$(TERM_CLEAR_LINE)\n  ✅  $(TERM_GREEN)Done building executable $(TERM_BLUE)\"%s\"$(TERM_GREEN) !$(TERM_RESET)\n" $(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
 	@printf "$(TERM_CLEAR_LINE)🔨 $(TERM_CYAN)Compiling $(TERM_MAGENTA)\"%s\"$(TERM_CYAN)...$(TERM_RESET)" $<
-	@$(CC) $(CFLAGS) -c $< -o $@ -I$(INC_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I$(INC_DIR) $(LFLAGS)
 
 # Third party compilation
 

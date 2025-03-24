@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/06 17:01:01 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/21 17:35:54 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,21 @@ extern char	*g_pname;
 //				Rotation
 # define PLAYER_ROT_INCREMENT		1
 
+//		Doors
+//			Timer
+# define DOOR_DT_FACTOR				1.5
+//			Collisions
+# define DOOR_COLLISION_THRESHOLD	0.3
+
 //		Map elements
 
 # define _WALL						'1'
 # define _VOID						' '
 # define _FLOOR						'0'
 # define _PLAYER					'P'
+# define _FILLER					'2'
 # define _SPAWNS					"NSEW"
-# define _DOOR						'D'
+# define _DOORS						"HV"
 
 //		Minimap
 
@@ -103,12 +110,13 @@ extern char	*g_pname;
 
 //			Colors
 
-# define MMAP_COLOR_WALL			0xFFFFFF
+# define MMAP_COLOR_WALL			0x999999
 # define MMAP_COLOR_PLAYER			0x0000FF
-# define MMAP_COLOR_FLOOR			0xCCCCCC
-# define MMAP_COLOR_VOID			0x999999
-# define MMAP_COLOR_SPAWN			0x00FF00
+# define MMAP_COLOR_FLOOR			0xFFFFFF
+# define MMAP_COLOR_VOID			0x000000
+# define MMAP_COLOR_SPAWN			0x00CC00
 # define MMAP_COLOR_BORDER			0x222222
+# define MMAP_COLOR_DOOR			0xB60619
 
 //	Enums
 
@@ -136,25 +144,19 @@ typedef enum e_elem
 	ELEM_SPAWN_DIR_WEST,
 	ELEM_SPAWN_DIR_EAST,
 	ELEM_FLOOR,
-	ELEM_DOOR
+	ELEM_DOOR_H,
+	ELEM_DOOR_V
 }	t_elem;
-
-//		Door state
-
-typedef enum e_door_state
-{
-	DOOR_STATE_CLOSED,
-	DOOR_STATE_OPEN
-}	t_door_state;
 
 //		Door anim state
 
-typedef enum e_door_anim_state
+typedef enum e_door_state
 {
-	DOOR_ANIM_NONE,
-	DOOR_ANIM_OPENING,
-	DOOR_ANIM_CLOSING
-}	t_door_anim_state;
+	DOOR_CLOSED,
+	DOOR_OPENING,
+	DOOR_CLOSING,
+	DOOR_OPENED
+}	t_door_state;
 
 //	Structures
 
@@ -214,6 +216,12 @@ typedef struct s_ray
 	int				line_height;
 	t_2d_vector		draw_boundaries;
 	t_tex_computer	tex_cpt;
+	struct s_door_helper
+	{
+		int				hit;
+		t_elem			type;
+		double			timer;
+	}	door;
 }	t_ray;
 
 //		Texture context
@@ -264,6 +272,7 @@ typedef struct s_game_ctx
 	unsigned int	hex_floor;
 	unsigned int	hex_ceiling;
 	t_map_element	**map;
+	t_map_element	*doors;
 	unsigned int	m_width;
 	unsigned int	m_height;
 	t_player		player;
@@ -276,8 +285,8 @@ typedef struct s_game_ctx
 
 typedef struct s_door
 {
-	t_door_state		is_closed;
-	t_door_anim_state	anim_state;
+	t_door_state		anim_state;
+	double				timer;
 }	t_door;
 
 //		Minimap
@@ -288,6 +297,7 @@ typedef struct s_minimap
 	t_img			*img;
 	unsigned int	size;
 	t_2d_vector		offset;
+	unsigned int	img_width_offset;
 	unsigned int	view_dist;
 	unsigned int	tile_size;
 }	t_minimap;
@@ -446,14 +456,8 @@ void		set_map_elem_cur(
 
 void		flood_fill_parse(
 				char **map,
-				int x,
-				int y,
-				int *valid);
-
-void		flood_fill_parse_door(
-				char **map,
-				int x,
-				int y,
+				t_2d_vector p,
+				bool has_door,
 				int *valid);
 
 void		fill_map_line(
@@ -470,6 +474,13 @@ void		fill_map(
 
 int			raycasting(
 				t_game_ctx *ctx);
+
+void		init_ray_dir(
+				t_ray *ray);
+
+int			is_ray_in_bound(
+				t_game_ctx *ctx,
+				t_ray *ray);
 
 //		Rendering
 
@@ -573,5 +584,11 @@ char		*generate_mmap_line(
 char		**generate_mmap(
 				t_game_ctx *ctx,
 				t_minimap *mmap);
+
+//		DOORS
+
+void		update_doors(
+				t_game_ctx *ctx,
+				double dt);
 
 #endif
