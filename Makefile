@@ -6,7 +6,7 @@
 #    By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 16:33:26 by cpoulain          #+#    #+#              #
-#    Updated: 2025/02/25 15:39:11 by cpoulain         ###   ########.fr        #
+#    Updated: 2025/03/24 16:17:39 by cpoulain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,12 +58,12 @@ dellibs:
 	@printf $(MSG_RM) $(LIBX_TARGET)
 
 cleanlibs:
-	@$(MAKE) clean -C $(LIBFT_PATH)
-	@$(MAKE) clean -C $(LIBX_PATH)
+	@$(MAKE) clean -sC $(LIBFT_PATH)
+	@$(MAKE) clean -sC $(LIBX_PATH)
 
 fcleanlibs:
-	@$(MAKE) fclean -C $(LIBFT_PATH)
-	@$(MAKE) fclean -C $(LIBX_PATH)
+	@$(MAKE) fclean -sC $(LIBFT_PATH)
+	@$(MAKE) clean -sC $(LIBX_PATH)
 	@$(RM) $(THDPTY_LIBFT_H)
 	@printf $(MSG_RM) $(THDPTY_LIBFT_H)
 	@$(RM) $(LIBFT_TARGET)
@@ -124,16 +124,20 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 # Third party compilation
 
-$(THDPTY_LIBFT_H): libft
+$(LIBFT_PATH)/$(LIBFT_INC_H) $(LIBFT_PATH)/$(LIBFT_TARGET): libft
+
+$(LIBX_PATH)/$(LIBX_INC_H) $(LIBX_PATH)/$(LIBX_TARGET): minilibx
+
+$(THDPTY_LIBFT_H): $(LIBFT_PATH)/$(LIBFT_INC_H)
 	@cp -u $(LIBFT_PATH)/$(LIBFT_INC_H) $@
 
-$(LIBFT_TARGET): libft
+$(LIBFT_TARGET): $(LIBFT_PATH)/$(LIBFT_TARGET)
 	@cp $(LIBFT_PATH)/$@ ./
 
-$(THDPTY_LIBX_H): minilibx
+$(THDPTY_LIBX_H): $(LIBX_PATH)/$(LIBX_INC_H)
 	@cp -u $(LIBX_PATH)/$(LIBX_INC_H) $@
 
-$(LIBX_TARGET): minilibx
+$(LIBX_TARGET): $(LIBX_PATH)/$(LIBX_TARGET)
 	@cp $(LIBX_PATH)/$@ ./
 
 .PHONY: all clean fclean re norminette cleanlibs fcleanlibs fclean_all dellibs libft minilibx
