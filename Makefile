@@ -6,7 +6,7 @@
 #    By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/18 16:33:26 by cpoulain          #+#    #+#              #
-#    Updated: 2025/03/24 16:17:39 by cpoulain         ###   ########.fr        #
+#    Updated: 2025/03/24 16:19:50 by cpoulain         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -124,9 +124,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 # Third party compilation
 
-$(LIBFT_PATH)/$(LIBFT_INC_H) $(LIBFT_PATH)/$(LIBFT_TARGET): libft
+$(LIBFT_PATH)/$(LIBFT_INC_H) $(LIBFT_PATH)/$(LIBFT_TARGET):
+	@$(MAKE) -s libft
 
-$(LIBX_PATH)/$(LIBX_INC_H) $(LIBX_PATH)/$(LIBX_TARGET): minilibx
+$(LIBX_PATH)/$(LIBX_INC_H) $(LIBX_PATH)/$(LIBX_TARGET):
+	@$(MAKE) -s minilibx
 
 $(THDPTY_LIBFT_H): $(LIBFT_PATH)/$(LIBFT_INC_H)
 	@cp -u $(LIBFT_PATH)/$(LIBFT_INC_H) $@
