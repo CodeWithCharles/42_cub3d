@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:06:01 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/18 17:30:08 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:17:20 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define ERR_MAP	"%sError:\n%s:\tInvalid map.%s\n"
 # define ERR_CONFIG	"%sError:\n%s:\tInvalid configuration file.%s\n"
 # define ERR_RGB	"%sError:\n%s:\t%s:\tInvalid rgb value.%s\n"
+# define ERR_FILE_EMPTY	"%sError:\n%s:\tConfig File Empty.%s\n"
 
 // Textures
 
