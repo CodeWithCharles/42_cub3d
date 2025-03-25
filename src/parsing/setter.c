@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setter.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:17:22 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/24 15:58:17 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:20:03 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,20 @@ void	set_bool_pain(bool *pain, char *line)
 
 void	set_bool_texture(char *line, t_bool_format *checker)
 {
-	if (ft_strncmp(line, "NO", 2) == 0)
-		set_bool_pain(&(checker->n_texture), line + 2);
-	else if (ft_strncmp(line, "SO", 2) == 0)
-		set_bool_pain(&(checker->s_texture), line + 2);
-	else if (ft_strncmp(line, "WE", 2) == 0)
-		set_bool_pain(&(checker->w_texture), line + 2);
-	else if (ft_strncmp(line, "EA", 2) == 0)
-		set_bool_pain(&(checker->e_texture), line + 2);
-	else if (line[0] == 'F')
-		set_bool_pain(&(checker->f_colors), line + 1);
-	else if (line[0] == 'C')
-		set_bool_pain(&(checker->c_colors), line + 1);
-	else if (ft_strncmp(line, "DO", 2) == 0)
-		set_bool_pain(&(checker->d_texture), line + 2);
+	if (ft_strncmp(line, "NO ", 3) == 0 && checker->n_texture == false)
+		set_bool_pain(&(checker->n_texture), line + 3);
+	else if (ft_strncmp(line, "SO ", 3) == 0 && checker->s_texture == false)
+		set_bool_pain(&(checker->s_texture), line + 3);
+	else if (ft_strncmp(line, "WE ", 3) == 0 && checker->w_texture == false)
+		set_bool_pain(&(checker->w_texture), line + 3);
+	else if (ft_strncmp(line, "EA ", 3) == 0 && checker->e_texture == false)
+		set_bool_pain(&(checker->e_texture), line + 3);
+	else if (ft_strncmp(line, "F ", 2) == 0 && checker->f_colors== false)
+		set_bool_pain(&(checker->f_colors), line + 2);
+	else if (ft_strncmp(line, "C ", 2) == 0 && checker->c_colors == false)
+		set_bool_pain(&(checker->c_colors), line + 2);
+	else if (ft_strncmp(line, "DO ", 3) == 0 && checker->d_texture == false)
+		set_bool_pain(&(checker->d_texture), line + 3);
 	else if (checker->wrong_param_found != true
 		&& checker->all_texture_found == false)
 		checker->wrong_param_found = true;
