@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 19:26:31 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/24 13:49:10 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/25 14:23:50 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,18 @@ static int	validate_line(char *line)
 	return (RET_OK);
 }
 
+bool	is_empty_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] == ' ')
+		i++;
+	if (line[i] == '\0')
+		return (true);
+	return (false);
+}
+
 char	*skip_space(char *line)
 {
 	while (*line == ' ')
@@ -54,7 +66,8 @@ char	**dup_map(char **map)
 	new_map = malloc((count + 1) * sizeof(char *));
 	while (i < count)
 	{
-		if (ft_strcmp(map[i], "_") == 0 || validate_line(map[i]) == RET_ERR)
+		if (ft_strcmp(map[i], "_") == 0 || validate_line(map[i]) == RET_ERR
+			|| is_empty_line(map[i]) == true)
 			invalid = true;
 		new_map[i] = ft_strdup(map[i]);
 		i++;

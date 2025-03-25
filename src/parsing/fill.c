@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:31:03 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/24 15:58:08 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:18:10 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	_check_door_valid(char **map, int x, int y)
 {
-	if (map[y][x] == _DOORS[1])
+	if (map[y][x] == _DOORS[1] && x > 0 && x < (int)ft_strlen(map[y]) && y > 0)
 	{
 		if (!map[y - 1] || map[y - 1][x] == _VOID
 			|| !map[y + 1] || map[y + 1][x] == _VOID)
@@ -24,7 +24,7 @@ static int	_check_door_valid(char **map, int x, int y)
 		if (map[y][x - 1] != _FILLER && map[y][x + 1] != _FILLER)
 			return (1);
 	}
-	else
+	else if (x > 0 && x < (int)ft_strlen(map[y]) && y > 0)
 	{
 		if (!map[y] || x - 1 < 0 || x + 1 >= (int)ft_strlen(map[y])
 			|| map[y][x - 1] == _VOID || map[y][x + 1] == _VOID)
