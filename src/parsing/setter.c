@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:17:22 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/25 14:20:03 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:18:38 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	set_bool_texture(char *line, t_bool_format *checker)
 		set_bool_pain(&(checker->w_texture), line + 3);
 	else if (ft_strncmp(line, "EA ", 3) == 0 && checker->e_texture == false)
 		set_bool_pain(&(checker->e_texture), line + 3);
-	else if (ft_strncmp(line, "F ", 2) == 0 && checker->f_colors== false)
+	else if (ft_strncmp(line, "F ", 2) == 0 && checker->f_colors == false)
 		set_bool_pain(&(checker->f_colors), line + 2);
 	else if (ft_strncmp(line, "C ", 2) == 0 && checker->c_colors == false)
 		set_bool_pain(&(checker->c_colors), line + 2);

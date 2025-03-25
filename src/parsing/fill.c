@@ -6,7 +6,7 @@
 /*   By: mkaliszc <mkaliszc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:31:03 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/25 15:39:22 by mkaliszc         ###   ########.fr       */
+/*   Updated: 2025/03/25 16:18:10 by mkaliszc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	_check_door_valid(char **map, int x, int y)
 {
 	if (map[y][x] == _DOORS[1] && x > 0 && x < (int)ft_strlen(map[y]) && y > 0)
-	{		
+	{
 		if (!map[y - 1] || map[y - 1][x] == _VOID
 			|| !map[y + 1] || map[y + 1][x] == _VOID)
 			return (1);
