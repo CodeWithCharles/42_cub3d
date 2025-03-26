@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:22:11 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/21 13:02:15 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:33:21 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	_init_raycasting_ray(
 )
 {
 	ft_bzero(ray, sizeof(t_ray));
-	ray->cam_x = 2 * ray_index / (double)WIN_WIDTH - 1;
+	ray->cam_x = 2 * (ray_index + 0.5) / (double)WIN_WIDTH - 1;
 	ray->dir.x = player->dir.x + player->plane.x * ray->cam_x;
 	ray->dir.y = player->dir.y + player->plane.y * ray->cam_x;
 	ray->map.x = (int)player->pos.x;
