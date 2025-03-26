@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:06:01 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/24 15:17:20 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:04:29 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define CODE_EXEC_FAILED			256
 
 # define ERR_ARGS				"%sError\n%s:\tUsage: ./cub3d <path/to/map.cub>"
-# define ERR_INVALID_RGB_DATA	"%sError\n%s:\t%s: Invalid rgb data.%s\n"
+# define ERR_INVALID_RGB_DATA	"%sError\n%s: Invalid rgb data.%s\n"
 # define ERR_FATAL_ALLOC	"%sError\n%s:\t%s: Could not allocate memory.%s\n"
 # define ERR_FILE_IS_DIR		"%sError\n%s:\t%s: File is a directory.%s\n"
 # define ERR_NO_FILE	"%sError\n%s:\t%s\t: No such file or directory.%s\n"

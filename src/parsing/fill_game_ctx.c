@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:10:53 by mkaliszc          #+#    #+#             */
-/*   Updated: 2025/03/24 15:27:02 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:03:20 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	init_tex_ctx(
 	}
 	*start_of_minimap = i;
 	ctx->texctx = textures;
-	ctx->texctx.is_ceil_rgb = !parse_str_to_hex(ctx, &ctx->hex_ceiling,
+	ctx->texctx.is_ceil_valid = !parse_str_to_hex(&ctx->hex_ceiling,
 			textures.ceiling);
-	ctx->texctx.is_floor_rgb = !parse_str_to_hex(ctx, &ctx->hex_floor,
+	ctx->texctx.is_floor_valid = !parse_str_to_hex(&ctx->hex_floor,
 			textures.floor);
 }
 

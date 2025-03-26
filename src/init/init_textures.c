@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 10:43:35 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/19 15:12:47 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:14:47 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,12 @@ void	init_textures(
 	t_game_ctx *ctx
 )
 {
+	if (!ctx->texctx.is_ceil_valid || !ctx->texctx.is_floor_valid)
+		clean_exit(ctx, ERR_INVALID_RGB_DATA, 1);
 	ctx->game_textures = ft_calloc(7 + (ctx->texctx.door_path != NULL),
 			sizeof(ctx->game_textures));
-	if (!ctx->texctx.is_ceil_rgb)
-		ctx->game_textures[CEILING] = _xpm_to_pixels(ctx, ctx->texctx.ceiling);
-	else
-		hex_to_texture(&ctx->game_textures[CEILING], ctx->hex_ceiling);
-	if (!ctx->texctx.is_floor_rgb)
-		ctx->game_textures[FLOOR] = _xpm_to_pixels(ctx, ctx->texctx.floor);
-	else
-		hex_to_texture(&ctx->game_textures[FLOOR], ctx->hex_floor);
+	hex_to_texture(&ctx->game_textures[CEILING], ctx->hex_ceiling);
+	hex_to_texture(&ctx->game_textures[FLOOR], ctx->hex_floor);
 	if (ctx->texctx.door_path != NULL)
 		ctx->game_textures[DOOR] = _xpm_to_pixels(ctx, ctx->texctx.door_path);
 	ctx->game_textures[NORTH] = _xpm_to_pixels(ctx,
@@ -86,7 +82,8 @@ static void	_init_texture_img(
 	char *path
 )
 {
-	int	tex_size;
+	int	width_tex;
+	int	height_tex;
 
 	img->img = NULL;
 	img->pixels_ptr = NULL;
@@ -94,9 +91,13 @@ static void	_init_texture_img(
 	img->line_len = 0;
 	img->endianess = 0;
 	ft_bzero(img, sizeof(t_img));
-	img->img = mlx_xpm_file_to_image(ctx->mlx, path, &tex_size, &tex_size);
-	if (!img->img)
+	img->img = mlx_xpm_file_to_image(ctx->mlx, path, &width_tex, &height_tex);
+	if (!img->img || width_tex != TEX_SIZE || height_tex != TEX_SIZE)
+	{
+		if (img->img)
+			mlx_destroy_image(ctx->mlx, img->img);
 		clean_exit(ctx, ERR_LOADING_XPM, 1);
+	}
 	img->pixels_ptr = (int *)mlx_get_data_addr(img->img, &img->bits_per_pixel,
 			&img->line_len, &img->endianess);
 	return ;

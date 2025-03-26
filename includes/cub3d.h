@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 13:21:42 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/21 17:35:54 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:24:04 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,8 +235,8 @@ typedef struct s_tex_ctx
 	char			*floor;
 	char			*ceiling;
 	char			*door_path;
-	bool			is_floor_rgb;
-	bool			is_ceil_rgb;
+	bool			is_floor_valid;
+	bool			is_ceil_valid;
 }	t_tex_ctx;
 
 //		Map element
@@ -334,10 +334,6 @@ void		init_mlx(
 void		init_textures(
 				t_game_ctx *ctx);
 
-int			init_hex_texture(
-				t_game_ctx *ctx,
-				int index);
-
 void		init_checker(
 				t_bool_format *checker);
 
@@ -377,7 +373,6 @@ int			quit_cube(
 //		Texturing
 
 int			parse_str_to_hex(
-				t_game_ctx *ctx,
 				unsigned int *var,
 				char *str);
 
