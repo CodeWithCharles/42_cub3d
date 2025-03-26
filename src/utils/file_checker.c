@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:23:07 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/06 16:49:47 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:41:16 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_file(
 		return (print_arg_error(ERR_NO_FILE, str), RET_ERR);
 	close(fd);
 	if (is_cub && _validate_extension(str, EXT_CUB))
-		return (RET_ERR);
+		return (print_gen_error(ERR_BAD_EXT), RET_ERR);
 	if (!is_cub && _validate_extension(str, EXT_XPM))
 		return (RET_ERR);
 	return (RET_OK);

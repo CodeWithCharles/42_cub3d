@@ -6,7 +6,7 @@
 /*   By: cpoulain <cpoulain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 13:06:01 by cpoulain          #+#    #+#             */
-/*   Updated: 2025/03/26 16:04:29 by cpoulain         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:41:09 by cpoulain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define ERR_CONFIG	"%sError:\n%s:\tInvalid configuration file.%s\n"
 # define ERR_RGB	"%sError:\n%s:\t%s:\tInvalid rgb value.%s\n"
 # define ERR_FILE_EMPTY	"%sError:\n%s:\tConfig File Empty.%s\n"
+# define ERR_BAD_EXT	"%sError:\n%s:\tFile doesn't have .cub extension.%s\n"
 
 // Textures
 
